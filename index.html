@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a13">
+<meta name="description" content="Lumen — search, research, discover images, and build with code.">
+<meta name="application-name" content="Lumen">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#080a13">
+<link rel="icon" href="./icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="512×512" href="./icons/icon-512.png">
+<title>Lumen — Search, Research & Code</title>
+<style>
+:root{color-scheme:dark;--bg:#06070d;--ink:#f8f9ff;--muted:#a0aac1;--line:#ffffff19;--accent:#9acbff;--glass:#ffffff09;--radius:22px}
+*{box-sizing:border-box;margin:0}
+html{width:100%;height:100%;overflow:hidden}
+body{width:100%;height:100vh;height:100dvh;min-height:0;overflow:hidden;display:flex;background:var(--bg);color:var(--ink);font:15px/1.6 Arial,Helvetica,sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
+.orb{position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(100px);opacity:.35}
+.orb1{width:48vw;height:48vw;top:-20vw;left:-20vw;background:#1648d2}
+.orb2{width:42vw;height:42vw;right:-20vw;bottom:-20vw;background:#7025bc}
+.orb3{width:30vw;height:30vw;left:30%;top:35%;background:#087e9b;opacity:.18}
+nav{width:250px;flex:0 0 250px;min-height:0;min-width:0;margin:14px;padding:22px 13px;border:1px solid var(--line);border-radius:var(--radius);background:#0c1124e8;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;gap:7px;overflow-y:auto;overscroll-behavior:contain}
+.logo{padding:0 12px 24px;font-size:23px;font-weight:900;letter-spacing:.3em;flex-shrink:0}
+.logo span{color:var(--accent)}
+nav button{border:1px solid transparent;border-radius:14px;padding:12px;background:transparent;color:var(--muted);font-weight:700;text-align:left;display:flex;align-items:center;gap:12px}
+nav button:hover,nav button.on{background:#ffffff10;border-color:var(--line);color:#fff}
+.navbottom{margin-top:auto;display:grid;gap:7px;padding-top:14px}
+main{position:relative;flex:1 1 0;min-width:0;min-height:0;height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:30px clamp(14px,4vw,54px) 60px}
+.wrap{width:100%;max-width:1100px;min-height:0;margin:0 auto}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px}
+.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--accent);font-weight:900;text-transform:uppercase}
+.status{font-size:12px;color:var(--muted)}
+h1{font-size:clamp(32px,5vw,58px);line-height:1.08;letter-spacing:-.045em;font-weight:900;overflow-wrap:anywhere}
+h2{font-size:23px;line-height:1.25;margin-bottom:12px;overflow-wrap:anywhere}
+h3{font-size:14px;letter-spacing:.1em;text-transform:uppercase;margin:20px 0 10px}
+p{overflow-wrap:anywhere}
+.sub{color:var(--muted);margin:13px 0 23px;max-width:760px}
+.panel{min-width:0;border:1px solid var(--line);background:var(--glass);border-radius:var(--radius);padding:22px;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:inset 0 1px #ffffff0b,0 20px 65px -35px #000;margin-bottom:16px;animation:appear .25s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(7px)}}
+.searchbar{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 8px 7px 18px;border:1px solid var(--line);border-radius:999px;background:#080a13dc;box-shadow:0 0 45px -25px var(--accent)}
+.searchbar:focus-within{border-color:var(--accent)}
+.searchbar input{min-width:0;flex:1;background:none;border:0;outline:none;padding:10px 0;font-size:16px}
+.primary,.secondary,.chip,.tab{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:999px;padding:10px 15px;font-weight:800;text-decoration:none;transition:background .2s,border-color .2s}
+.primary{border:0;background:#fff;color:#090b13;padding:12px 21px}
+.primary:hover{background:#dcecff}
+.secondary,.chip,.tab{background:#ffffff0b;color:var(--muted)}
+.secondary:hover,.chip:hover,.tab:hover,.tab.on{color:#fff;border-color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+.suggestions .chip{font-size:12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;padding:7px 1px 17px;margin-bottom:8px}
+.tab{flex-shrink:0;white-space:nowrap;font-size:13px}
+.tab.on{background:#8fc3ff20;color:var(--accent)}
+.word{font-size:clamp(25px,4vw,40px);font-weight:900;line-height:1.15;letter-spacing:-.03em;overflow-wrap:anywhere}
+.answer{margin-top:17px;color:#e1e6f1;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.85;font-size:15px}
+.muted{color:var(--muted)}
+.hero{display:block;width:100%;max-height:370px;object-fit:cover;border-radius:16px;margin:0 0 18px;background:#111522}
+.image-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}
+.image-preview a{min-width:0;display:block}
+.image-preview img{display:block;width:100%;height:145px;object-fit:cover;border-radius:13px;border:1px solid var(--line);background:#111522}
+.image-preview a:hover img{border-color:var(--accent)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(155px,100%),1fr));gap:13px}
+.gallery a{display:block;min-width:0;color:var(--muted);text-decoration:none;font-size:12px;overflow-wrap:anywhere}
+.gallery img{display:block;width:100%;height:170px;object-fit:cover;border-radius:13px;border:1px solid var(--line);background:#111522}
+.gallery a:hover img{border-color:var(--accent)}
+.result{display:flex;gap:13px;min-width:0;padding:14px 0;border-bottom:1px solid var(--line)}
+.result:last-child{border-bottom:0}
+.result>div{min-width:0;flex:1}
+.result img{width:94px;height:82px;object-fit:cover;border-radius:12px;flex-shrink:0}
+.result a,.link{color:var(--accent);text-decoration:none;font-weight:800;overflow-wrap:anywhere}
+.result a:hover,.link:hover{text-decoration:underline}
+.result p{font-size:13px;color:var(--muted);margin-top:5px}
+.empty{text-align:center;padding:42px 12px;color:var(--muted)}
+.loading{height:12px;margin:15px 0;border-radius:9px;background:linear-gradient(90deg,#ffffff08,#ffffff20,#ffffff08);background-size:200% 100%;animation:shine 1.2s infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row>div:first-child{min-width:0;overflow-wrap:anywhere}
+.row strong{display:block;overflow-wrap:anywhere}
+.row small{display:block;color:var(--muted);margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:14px}
+.cardlink{color:inherit;text-decoration:none}
+.cardlink:hover{border-color:var(--accent)}
+textarea,input,select{width:100%;border:1px solid var(--line);border-radius:12px;background:#0006;padding:12px;outline:none}
+textarea:focus,input:focus,select:focus{border-color:var(--accent)}
+.modal{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:18px;background:#000b;backdrop-filter:blur(12px);overflow-y:auto}
+.modal.on{display:flex}
+.dialog{width:min(430px,100%);max-height:90%;overflow-y:auto;border:1px solid var(--line);border-radius:22px;padding:25px;background:#121629}
+.dialog input{margin:12px 0}
+.toast{position:fixed;z-index:30;bottom:22px;left:50%;transform:translateX(-50%);padding:12px 20px;background:#20283a;border:1px solid var(--line);border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%;text-align:center}
+.toast.on{opacity:1}
+.lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px}
+.editors{display:grid;gap:12px;min-width:0}
+.editorbox{min-width:0;border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#090b12}
+.editorhead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 13px;background:#ffffff09;border-bottom:1px solid var(--line);font-size:12px;font-weight:800;letter-spacing:.1em}
+.editorbox textarea{display:block;min-height:160px;resize:vertical;border:0;border-radius:0;background:#080a10;font:13px/1.65 monospace;tab-size:2}
+.preview{display:block;width:100%;height:570px;border:1px solid var(--line);border-radius:15px;background:#fff}
+.labtoolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+@media(max-width:800px){
+body{flex-direction:column-reverse;height:100vh;height:100dvh;min-height:0;overflow:hidden}
+nav{width:auto;flex:0 0 auto;min-height:0;max-height:none;overflow:visible;margin:0 9px calc(7px + env(safe-area-inset-bottom));padding:6px;flex-direction:row;justify-content:space-around;border-radius:19px;gap:2px}
+.logo,.navbottom{display:none}
+nav button{flex:1 1 0;min-width:0;justify-content:center;flex-direction:column;gap:2px;padding:8px 2px;font-size:10px;text-align:center}
+main{flex:1 1 0;width:100%;min-width:0;min-height:0;height:auto;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:21px 14px 35px}
+.wrap{width:100%;min-height:0}
+.topline{margin-bottom:23px}
+.panel{padding:17px}
+.lab{grid-template-columns:minmax(0,1fr)}
+.preview{height:450px}
+.image-preview img{height:110px}
+.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+.gallery img{height:155px}
+}
+@media(max-width:380px){
+nav button{font-size:9px}
+.searchbar{padding-left:12px}
+.searchbar input{font-size:14px}
+.searchbar .primary{padding:10px 13px}
+.actions{gap:6px}
+.secondary{padding:8px 10px;font-size:12px}
+.result img{width:72px;height:72px}
+.image-preview img{height:90px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<nav aria-label="Main navigation">
+<div class="logo">LUM<span>E</span>N</div>
+<button data-view="search" class="on">⌕ <span>Ask</span></button>
+<button data-view="research">◉ <span>Research</span></button>
+<button data-view="lab">⌘ <span>Code </span></button>
+<button data-view="saved">☆ <span>Saved</span></button>
+<button data-view="projects">▤ <span>Projects</span></button>
+<button data-view="Google">G <span><a href="google.html" style="text-decoration: none; color:white;">Google</a></span></button>
+<div class="navbottom">
+<button data-action="newproject">＋ New project</button>
+<button data-action="clear">↺ Clear current search</button>
+</div>
+</nav>
+<main id="main">
+<div class="wrap" id="app"></div>
+</main>
+<div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const CONFIG={SEARCH_ENDPOINT:"",AI_ENDPOINT:""};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10);
+let state={saved:[],projects:[]};
+try{const old=JSON.parse(localStorage.getItem("lumen")||"{}");state.saved=Array.isArray(old.saved)?old.saved:[];state.projects=Array.isArray(old.projects)?old.projects:[]}catch(e){}
+let view="search",tab="all",current=null,openProject=null,query="",busy=false;
+const persist=()=>{try{localStorage.setItem("lumen",JSON.stringify(state))}catch(e){toast("Storage is full")}};
+function toast(message){const t=$("#toast");t.textContent=message;t.classList.add("on");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("on"),2300)}
+function safeURL(value){try{const u=new URL(value);return["https:","http:"].includes(u.protocol)?u.href:""}catch(e){return""}}
+function cleanContent(value){
+let text=String(value??"");
+for(let i=0;i<3;i++){
+text=text.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi," ").replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi," ").replace(/<(br|\/p|\/div|\/li|\/h[1-6]|\/section|\/article)\b[^>]*>/gi,"\n").replace(/<[^>]*>/g," ");
+const decoder=document.createElement("textarea");
+decoder.innerHTML=text;
+text=decoder.value;
+}
+return text.replace(/\r/g,"").replace(/[ \t]+\n/g,"\n").replace(/\n[ \t]+/g,"\n").replace(/\n{3,}/g,"\n\n").trim()
+}
+function cleanText(value){return cleanContent(value).replace(/\s+/g," ").trim()}
+function cleanItem(item){
+if(!item||typeof item!=="object")return item;
+const out={...item};
+for(const key of ["title","name","snippet","description","source","answer","extract","text","summary"]){
+if(typeof out[key]==="string")out[key]=["answer","extract","text"].includes(key)?cleanContent(out[key]):cleanText(out[key])
+}
+if(typeof out.url==="string")out.url=safeURL(out.url)||"";
+if(Array.isArray(out.results))out.results=out.results.map(cleanItem);
+if(Array.isArray(out.items))out.items=out.items.map(cleanItem);
+if(Array.isArray(out.images))out.images=out.images.map(cleanItem);
+return out
+}
+function searchURL(q,mode="search"){
+const p=new URLSearchParams({q});
+if(mode==="images")p.set("tbm","isch");
+if(mode==="videos")p.set("tbm","vid");
+if(mode==="news")p.set("tbm","nws");
+if(mode==="maps")return"https://www.google.com/maps/search/"+encodeURIComponent(q);
+return"https://www.google.com/search?"+p.toString()
+}
+async function getJSON(url,options={}){
+const r=await fetch(url,options);
+if(!r.ok)throw Error("Request failed");
+return r.json()
+}
+async function searchProvider(q,mode){
+if(!CONFIG.SEARCH_ENDPOINT)return null;
+return cleanItem(await getJSON(CONFIG.SEARCH_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:q,mode})}))
+}
+async function askAI(q,deep){
+if(!CONFIG.AI_ENDPOINT)return null;
+return cleanItem(await getJSON(CONFIG.AI_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:q,deep})}))
+}
+async function wikiSearch(q){
+return getJSON("https://en.wikipedia.org/w/api.php?"+new URLSearchParams({action:"query",list:"search",srsearch:q,srlimit:"6",format:"json",origin:"*"}))
+}
+async function publicAnswer(q,deep){
+const found=await wikiSearch(q);
+const results=found.query?.search||[];
+if(!results.length)return{title:q,empty:true,results:[]};
+const normalized=q.toLowerCase().replace(/[?!.]+$/g,"").trim();
+const exact=results.find(r=>r.title.toLowerCase()===normalized);
+const phraseMatch=results.find(r=>r.title.toLowerCase().includes(normalized)||normalized.includes(r.title.toLowerCase()));
+const best=exact||phraseMatch||results[0];
+const articleURL=title=>"https://en.wikipedia.org/w/api.php?"+new URLSearchParams({action:"query",prop:"extracts",explaintext:"1",exchars:deep?24000:18000,exsectionformat:"plain",titles:title,redirects:"1",format:"json",origin:"*"});
+let summary={};
+try{summary=await getJSON("https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(best.title))}catch(e){}
+let answer="";
+try{
+const detail=await getJSON(articleURL(best.title));
+const page=Object.values(detail.query?.pages||{})[0];
+answer=page?.extract||""
+}catch(e){}
+if(!answer.trim())answer=summary.extract||"";
+const related=results.filter(r=>r.title!==best.title).slice(0,5).map(r=>({title:cleanText(r.title),snippet:cleanText(r.snippet),url:"https://en.wikipedia.org/wiki/"+encodeURIComponent(r.title.replace(/ /g,"_"))}));
+if(answer.trim().length<4500&&related.length){
+const extra=[];
+for(const item of related.slice(0,deep?3:2)){
+try{
+const detail=await getJSON(articleURL(item.title));
+const page=Object.values(detail.query?.pages||{})[0];
+const extract=cleanContent(page?.extract||"");
+if(extract.length>450)extra.push({title:item.title,extract:extract.slice(0,deep?6500:4000)})
+}catch(e){}
+}
+if(extra.length)answer=answer.trim()+"\n\nADDITIONAL RELATED CONTEXT\n\n"+extra.map(item=>item.title+"\n\n"+item.extract).join("\n\n────────────────────\n\n")
+}
+if(!answer.trim())answer="A detailed article could not be retrieved for this topic. Try a more specific search or open the web results to explore reliable sources.";
+return cleanItem({title:best.title,description:summary.description||"",answer,hero:summary.originalimage?.source||summary.thumbnail?.source||"",source:"Wikipedia",sourceUrl:summary.content_urls?.desktop?.page||"https://en.wikipedia.org/wiki/"+encodeURIComponent(best.title.replace(/ /g,"_")),results,images:[]})
+}
+async function imageSearch(q){
+const data=await getJSON("https://commons.wikimedia.org/w/api.php?"+new URLSearchParams({action:"query",generator:"search",gsrsearch:q,gsrnamespace:"6",gsrlimit:"50",prop:"imageinfo",iiprop:"url|extmetadata",iiurlwidth:"600",format:"json",origin:"*"}));
+return Object.values(data.query?.pages||{}).map(p=>({title:cleanText(p.title.replace(/^File:/,"")),src:p.imageinfo?.[0]?.thumburl||p.imageinfo?.[0]?.url||"",url:p.imageinfo?.[0]?.descriptionurl||"",description:cleanText(p.imageinfo?.[0]?.extmetadata?.ImageDescription?.value||"")})).filter(i=>i.src&&safeURL(i.src))
+}
+function header(title,subtitle){
+return`<div class="topline"><div><div class="eyebrow">Lumen workspace</div><div class="status">${esc(cleanText(subtitle||"Search · Discover · Create"))}</div></div><button class="secondary" data-action="clear">Clear</button></div><h1>${esc(cleanText(title))}</h1>`
+}
+function searchBar(value=""){
+return`<form class="searchbar" id="searchform"><input id="query" value="${esc(value)}" placeholder="Ask anything or search the web…" autocomplete="off" aria-label="Search Lumen"><button class="primary" ${busy?"disabled":""}>${busy?"Searching…":"Search"}</button></form>`
+}
+function categoryTabs(){
+return`<div class="tabs" aria-label="Search categories">${[["all","All"],["images","Images"],["videos","Videos"],["news","News"],["maps","Maps"]].map(([id,label])=>`<button class="tab ${tab===id?"on":""}" data-tab="${id}">${label}</button>`).join("")}</div>`
+}
+function home(){
+return`${header(view==="research"?"Research anything.":"What do you want to know?",view==="research"?"Explore a topic in more depth.":"Answers, images, research and discovery.")}<p class="sub">Search for a topic, explore relevant images, and discover related resources. Each new search clears the previous results from the screen.</p>${searchBar(query)}${categoryTabs()}<div class="suggestions">${["How does Starlink work?","Ghana technology news","Solar system","HTML and CSS basics"].map(s=>`<button class="chip" data-query="${esc(s)}">${esc(s)}</button>`).join("")}</div><div id="results">${renderResults()}</div>`
+}
+function renderResults(){
+if(!current)return`<div class="panel empty"><div style="font-size:40px">✳</div><h2>Explore something new</h2><p>Start a search to see answers and related resources here.</p></div>`;
+if(current.loading)return`<div class="panel"><div class="loading"></div><div class="loading"></div><div class="loading"></div><p class="muted">Searching for ${esc(query)}…</p></div>`;
+if(current.error)return`<div class="panel"><h2>We couldn't load those results</h2><p class="muted">${esc(cleanText(current.error))}</p><button class="primary" data-action="retry">Try again</button></div>`;
+if(tab==="images"){
+if(current.imagesLoading)return`<div class="panel"><h2>Images for ${esc(query)}</h2><p class="muted">Finding related images…</p><div class="loading"></div><div class="loading"></div><div class="loading"></div></div>`;
+const imgs=current.images||[];
+if(!imgs.length)return`<div class="panel"><h2>Images for ${esc(query)}</h2><p class="muted">${current.imagesError?"Images could not be retrieved. Check your connection and try again.":"No images have been loaded for this search yet."}</p><div class="actions" style="margin-top:15px"><button class="primary" data-action="retryimages">Try again</button><a class="secondary" href="${esc(searchURL(query,"images"))}" target="_blank" rel="noopener">Open image search ↗</a></div></div>`;
+return`<div class="panel"><div class="eyebrow">Image gallery</div><h2 style="margin-top:8px">Images for ${esc(query)}</h2><p class="muted" style="margin-bottom:18px">Select an image to open its original source.</p><div class="gallery">${imgs.map(i=>`<a href="${esc(safeURL(i.url)||safeURL(i.src))}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(safeURL(i.src))}" alt="${esc(cleanText(i.title))}"><span>${esc(cleanText(i.title))}</span></a>`).join("")}</div><p class="muted" style="margin-top:18px">Images provided by Wikimedia Commons. Source pages contain further image details.</p><p style="margin-top:12px"><a class="link" href="${esc(searchURL(query,"images"))}" target="_blank" rel="noopener">Explore more images ↗</a></p></div>`
+}
+if(["videos","news","maps"].includes(tab)){
+const labels={videos:"Videos",news:"News",maps:"Maps"};
+const category=current.categoryResults?.[tab]||current.categoryResults;
+const items=category?.results||category?.items||[];
+return`<div class="panel"><div class="eyebrow">${labels[tab]}</div><h2 style="margin-top:8px">${labels[tab]} for ${esc(query)}</h2>${items.length?items.map(r=>`<div class="result"><div><a href="${esc(safeURL(r.url)||searchURL(query,tab))}" target="_blank" rel="noopener">${esc(cleanText(r.title||r.name||"Open result"))}</a><p>${esc(cleanText(r.snippet||r.description||""))}</p></div></div>`).join(""):`<p class="muted">Explore current ${labels[tab].toLowerCase()} results for your search.</p>`}<p style="margin-top:16px"><a class="primary" href="${esc(searchURL(query,tab))}" target="_blank" rel="noopener">Explore ${labels[tab]} ↗</a></p></div>`
+}
+const a=current;
+if(a.empty)return`<div class="panel"><h2>No matching answer found</h2><p class="muted">We couldn't find a matching article for "${esc(query)}". Try a more specific query or explore web results.</p><a class="link" href="${esc(searchURL(query))}" target="_blank" rel="noopener">Search the web ↗</a></div>`;
+return`${a.images?.length?`<div class="panel"><div class="eyebrow">Image preview</div><h2 style="margin-top:8px">Explore ${esc(cleanText(a.title||query))} visually</h2><div class="image-preview">${a.images.slice(0,3).map(i=>`<a href="${esc(safeURL(i.url)||safeURL(i.src))}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(safeURL(i.src))}" alt="${esc(cleanText(i.title))}"></a>`).join("")}</div><button class="secondary" data-tab="images">View all images for this search →</button></div>`:""}
+<div class="panel"><div class="eyebrow">Search answer</div><div class="word" style="margin-top:9px">${esc(cleanText(a.title||query))}</div>${a.description?`<p class="muted" style="margin-top:8px">${esc(cleanText(a.description))}</p>`:""}<div class="actions" style="margin-top:17px"><button class="secondary" data-action="speak">🔊 Listen</button><button class="secondary" data-action="save">${isSaved(a.title)?"★ Saved":"☆ Save answer"}</button><button class="secondary" data-action="addproject">＋ Add to project</button></div>${safeURL(a.hero)?`<img class="hero" src="${esc(safeURL(a.hero))}" alt="${esc(cleanText(a.title))}" loading="lazy">`:""}<div class="answer">${esc(cleanContent(a.answer||"No written answer was returned."))}</div>${safeURL(a.sourceUrl)?`<p style="margin-top:15px"><a class="link" href="${esc(safeURL(a.sourceUrl))}" target="_blank" rel="noopener">Source: ${esc(cleanText(a.source||"Original article"))} ↗</a></p>`:""}</div>
+${a.results?.length?`<div class="panel"><h2>Related results</h2>${a.results.map(r=>`<div class="result"><div><a href="${esc(safeURL(r.url)||searchURL(cleanText(r.title||query)))}" target="_blank" rel="noopener">${esc(cleanText(r.title||"Related result"))}</a><p>${esc(cleanText(r.snippet||r.description||"Open the source to read more."))}</p><button class="secondary" data-query="${esc(cleanText(r.title))}" style="margin-top:8px">Explore in Lumen</button></div></div>`).join("")}</div>`:""}
+<div class="panel"><h2>Explore more</h2><div class="actions"><button class="secondary" data-tab="images">Images</button><button class="secondary" data-tab="videos">Videos</button><button class="secondary" data-tab="news">News</button><button class="secondary" data-tab="maps">Maps</button><a class="secondary" href="${esc(searchURL(query))}" target="_blank" rel="noopener">Web results ↗</a></div></div>`
+}
+function isSaved(title){return state.saved.some(s=>cleanText(s.title).toLowerCase()===cleanText(title).toLowerCase())}
+function render(){
+document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===view));
+const app=$("#app");
+if(view==="search"||view==="research"){
+app.innerHTML=home();
+$("#searchform").onsubmit=e=>{e.preventDefault();performSearch($("#query").value.trim())}
+}else if(view==="lab"){
+app.innerHTML=`${header("Lumen Code Lab","Write code. Run it. Preview it live.")}<p class="sub">Build with HTML, CSS and JavaScript in a responsive live preview.</p><div class="labtoolbar"><button class="primary" data-action="run">▶ Run code</button><button class="secondary" data-action="download">Download HTML</button><button class="secondary" data-action="resetlab">Reset editor</button></div><div class="lab"><div class="editors"><div class="editorbox"><div class="editorhead">HTML <span>01</span></div><textarea id="htmlcode" spellcheck="false" aria-label="HTML editor"><main class="card">
+  <div class="tag">LUMEN / CODE LAB</div>
+  <h1>Your next idea starts here.</h1>
+  <p>Build something beautiful with HTML, CSS and JavaScript.</p>
+  <button id="action">Explore</button>
+  <p id="message"></p>
+</main></textarea></div><div class="editorbox"><div class="editorhead">CSS <span>02</span></div><textarea id="csscode" spellcheck="false" aria-label="CSS editor">*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top left,#263f9b,#090b17 60%);font-family:Arial,sans-serif;color:white}
+.card{max-width:520px;padding:38px;border:1px solid #ffffff30;border-radius:28px;background:#ffffff0d;backdrop-filter:blur(20px);box-shadow:0 25px 80px #0006}
+.tag{font-size:11px;letter-spacing:4px;color:#9ed5ff;font-weight:bold}
+h1{font-size:clamp(32px,7vw,55px);line-height:1.05}
+p{color:#c1cbe0;line-height:1.8}
+button{padding:12px 22px;border:0;border-radius:30px;background:white;color:#10131f;font-weight:bold;cursor:pointer}</textarea></div><div class="editorbox"><div class="editorhead">JAVASCRIPT <span>03</span></div><textarea id="jscode" spellcheck="false" aria-label="JavaScript editor">document.querySelector("#action").addEventListener("click",()=>{
+  document.querySelector("#message").textContent="Your code is running successfully.";
+});</textarea></div></div><div><div class="editorhead" style="margin-bottom:10px;border:1px solid var(--line);border-radius:12px">LIVE PREVIEW <span id="previewstatus">Ready</span></div><iframe id="preview" class="preview" title="Live code preview" sandbox="allow-scripts"></iframe><p class="muted" style="font-size:12px;margin-top:10px">The preview runs in a sandbox. Do not put private keys or passwords in your code.</p></div></div>`;
+runCode()
+}else if(view==="saved"){
+app.innerHTML=`${header("Your saved answers","Only items you explicitly save appear here.")}<div class="panel">${state.saved.length?state.saved.map((s,i)=>`<div class="row"><div><strong>${esc(cleanText(s.title))}</strong><small>${esc(cleanText(s.short||"Saved answer"))}</small></div><div class="actions"><button class="secondary" data-saved="${i}">Open</button><button class="secondary" data-remove="${i}">Remove</button></div></div>`).join(""):`<div class="empty">Nothing saved yet. Search for a topic and select Save answer.</div>`}</div>`
+}else if(view==="projects"){
+const p=state.projects.find(p=>p.id===openProject);
+if(p){
+app.innerHTML=`<button class="secondary" data-action="backprojects">← All projects</button><h1 style="margin-top:20px">${esc(cleanText(p.name))}</h1><p class="sub">${p.words.length} saved item(s)</p><div class="panel">${p.words.length?p.words.map((w,i)=>`<div class="row"><strong>${esc(cleanText(w.title))}</strong><div class="actions"><button class="secondary" data-projectitem="${i}">Open</button><button class="secondary" data-projectremove="${i}">Remove</button></div></div>`).join(""):`<div class="empty">This project is empty. Add an answer from a search.</div>`}</div><button class="secondary" data-action="deleteproject">Delete project</button>`
+}else{
+app.innerHTML=`${header("Your projects","Organize the answers you choose to keep.")}<button class="primary" data-action="newproject">＋ Create project</button><div class="grid" style="margin-top:20px">${state.projects.map(p=>`<button class="panel cardlink" data-project="${p.id}" style="text-align:left"><div style="font-size:26px">▤</div><h2 style="margin-top:15px">${esc(cleanText(p.name))}</h2><p class="muted">${p.words.length} saved item(s)</p></button>`).join("")}</div>${state.projects.length?"":`<div class="panel empty">No projects yet.</div>`}`
+}}
+$("#main").scrollTop=0
+}
+async function performSearch(q){
+if(!q||busy)return;
+query=q;
+tab="all";
+view=view==="research"?"research":"search";
+busy=true;
+current={loading:true};
+render();
+try{
+let result=await searchProvider(q,"all");
+if(!result){
+const ai=await askAI(q,view==="research");
+result=ai||await publicAnswer(q,view==="research")
+}
+if(!result||typeof result!=="object")throw Error("Invalid response");
+result=cleanItem(result);
+if(!result.title)result.title=q;
+if(!result.results)result.results=[];
+current=result;
+current.images=[];
+current.imagesLoading=false;
+current.imagesError=false;
+try{current.images=(await imageSearch(q)).slice(0,3)}catch(e){current.images=[]}
+if(!current.empty&&!current.answer&&!current.results.length)current.empty=true
+}catch(e){
+current={error:"No reliable answer could be retrieved. Check your connection or try another search.",title:q,images:[]}
+}finally{
+busy=false;
+render()
+}
+}
+async function changeTab(next){
+tab=next;
+render();
+if(!query||!current||current.loading)return;
+if(next==="images"){
+if(current.imagesLoading)return;
+current.imagesLoading=true;
+current.imagesError=false;
+render();
+try{
+const response=await searchProvider(query,"images");
+const images=response?.images||await imageSearch(query);
+current.images=images.map(cleanItem);
+current.imagesError=!current.images.length
+}catch(e){
+current.imagesError=true;
+toast("Images could not be loaded. Please try again.")
+}finally{
+current.imagesLoading=false;
+render()
+}
+}else if(["videos","news","maps"].includes(next)){
+try{
+const response=await searchProvider(query,next);
+if(response)current.categoryResults=cleanItem(response)
+}catch(e){toast("Live results are unavailable from the connected provider.")}
+render()
+}
+}
+function showModal(html){$("#dialog").innerHTML=html;$("#modal").classList.add("on")}
+function closeModal(){$("#modal").classList.remove("on")}
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+function saveCurrent(){
+if(!current||current.loading||current.empty)return;
+const title=cleanText(current.title);
+const i=state.saved.findIndex(s=>cleanText(s.title).toLowerCase()===title.toLowerCase());
+if(i>=0){state.saved.splice(i,1);toast("Removed from Saved")}else{
+state.saved.unshift({title,short:cleanText(current.answer||"").slice(0,180),answer:cleanContent(current.answer),description:cleanText(current.description),hero:current.hero,source:cleanText(current.source),sourceUrl:current.sourceUrl,results:(current.results||[]).map(cleanItem)});
+toast("Answer saved")
+}
+persist();
+render()
+}
+function addCurrentToProject(){
+if(!current||current.loading||current.empty)return;
+if(!state.projects.length){
+showModal(`<h2>New project</h2><input id="projectname" placeholder="Project name"><button class="primary" data-action="createandadd">Create and add answer</button>`);
+return
+}
+showModal(`<h2>Add to project</h2><select id="projectselect">${state.projects.map(p=>`<option value="${esc(p.id)}">${esc(cleanText(p.name))}</option>`).join("")}</select><button class="primary" data-action="addtoproject" style="margin-top:12px">Add answer</button><button class="secondary" data-action="newprojectfrommodal" style="margin:12px">New project</button>`)
+}
+function createProject(add){
+const name=cleanText($("#projectname")?.value);
+if(!name)return toast("Enter a project name");
+const p={id:uid(),name,words:[]};
+state.projects.unshift(p);
+if(add&&current)p.words.push({title:cleanText(current.title),answer:cleanContent(current.answer),description:cleanText(current.description),hero:current.hero,source:cleanText(current.source),sourceUrl:current.sourceUrl,results:(current.results||[]).map(cleanItem)});
+persist();
+closeModal();
+toast("Project created");
+view="projects";
+openProject=p.id;
+render()
+}
+function clearCurrent(){
+query="";
+current=null;
+tab="all";
+busy=false;
+view="search";
+openProject=null;
+render()
+}
+const defaultHTML=`<main class="card">
+  <div class="tag">LUMEN / CODE LAB</div>
+  <h1>Your next idea starts here.</h1>
+  <p>Build something beautiful with HTML, CSS and JavaScript.</p>
+  <button id="action">Explore</button>
+  <p id="message"></p>
+</main>`;
+const defaultCSS=`*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top left,#263f9b,#090b17 60%);font-family:Arial,sans-serif;color:white}
+.card{max-width:520px;padding:38px;border:1px solid #ffffff30;border-radius:28px;background:#ffffff0d;backdrop-filter:blur(20px);box-shadow:0 25px 80px #0006}
+.tag{font-size:11px;letter-spacing:4px;color:#9ed5ff;font-weight:bold}
+h1{font-size:clamp(32px,7vw,55px);line-height:1.05}
+p{color:#c1cbe0;line-height:1.8}
+button{padding:12px 22px;border:0;border-radius:30px;background:white;color:#10131f;font-weight:bold;cursor:pointer}`;
+const defaultJS=`document.querySelector("#action").addEventListener("click",()=>{
+  document.querySelector("#message").textContent="Your code is running successfully.";
+});`;
+function runCode(){
+const html=$("#htmlcode")?.value??"";
+const css=$("#csscode")?.value??"";
+const js=$("#jscode")?.value??"";
+const frame=$("#preview");
+if(!frame)return;
+frame.srcdoc="<!doctype html><html><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1\"><style>"+css.replace(/<\/style/gi,"<\\/style")+"</style></head><body>"+html.replace(/<\/script/gi,"<\\/script")+"<script>"+js.replace(/<\/script/gi,"<\\/script")+"<\/script></body></html>";
+$("#previewstatus").textContent="Running";
+frame.onload=()=>{$("#previewstatus").textContent="Live"}
+}
+function downloadCode(){
+const html=$("#htmlcode")?.value??"";
+const css=$("#csscode")?.value??"";
+const js=$("#jscode")?.value??"";
+const doc="<!doctype html><html><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1\"><style>"+css+"</style></head><body>"+html+"<script>"+js+"<\/script></body></html>";
+const url=URL.createObjectURL(new Blob([doc],{type:"text/html"}));
+const a=document.createElement("a");
+a.href=url;
+a.download="lumen-project.html";
+a.click();
+setTimeout(()=>URL.revokeObjectURL(url),1000)
+}
+document.addEventListener("click",async e=>{
+const t=e.target.closest("button,a");
+if(!t)return;
+if(t.dataset.view){view=t.dataset.view;openProject=null;render();return}
+if(t.dataset.tab){await changeTab(t.dataset.tab);return}
+if(t.dataset.query){performSearch(t.dataset.query);return}
+if(t.dataset.saved!==undefined){
+const s=state.saved[Number(t.dataset.saved)];
+if(s){query=cleanText(s.title);current=cleanItem({...s});view="search";tab="all";render()}
+return
+}
+if(t.dataset.remove!==undefined){state.saved.splice(Number(t.dataset.remove),1);persist();render();return}
+if(t.dataset.project){openProject=t.dataset.project;view="projects";render();return}
+if(t.dataset.projectitem!==undefined){
+const p=state.projects.find(p=>p.id===openProject);
+const item=p?.words[Number(t.dataset.projectitem)];
+if(item){query=cleanText(item.title);current=cleanItem({...item});view="search";tab="all";openProject=null;render()}
+return
+}
+if(t.dataset.projectremove!==undefined){state.projects.find(p=>p.id===openProject)?.words.splice(Number(t.dataset.projectremove),1);persist();render();return}
+switch(t.dataset.action){
+case"clear":clearCurrent();break;
+case"retry":performSearch(query);break;
+case"retryimages":current.images=[];current.imagesError=false;changeTab("images");break;
+case"newproject":showModal(`<h2>New project</h2><input id="projectname" placeholder="Project name"><button class="primary" data-action="createproject">Create project</button>`);break;
+case"createproject":createProject(false);break;
+case"createandadd":createProject(true);break;
+case"newprojectfrommodal":showModal(`<h2>New project</h2><input id="projectname" placeholder="Project name"><button class="primary" data-action="createandadd">Create and add answer</button>`);break;
+case"addproject":addCurrentToProject();break;
+case"addtoproject":{
+const p=state.projects.find(p=>p.id===$("#projectselect").value);
+if(p&&current&&!p.words.some(w=>cleanText(w.title)===cleanText(current.title)))p.words.push({title:cleanText(current.title),answer:cleanContent(current.answer),description:cleanText(current.description),hero:current.hero,source:cleanText(current.source),sourceUrl:current.sourceUrl,results:(current.results||[]).map(cleanItem)});
+persist();
+closeModal();
+toast("Added to project");
+break
+}
+case"save":saveCurrent();break;
+case"speak":
+if(current?.answer&&"speechSynthesis"in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(cleanContent(current.answer)))}
+break;
+case"run":runCode();break;
+case"download":downloadCode();break;
+case"resetlab":
+if(confirm("Reset all three editors?")){$("#htmlcode").value=defaultHTML;$("#csscode").value=defaultCSS;$("#jscode").value=defaultJS;runCode();toast("Editor reset")}
+break;
+case"backprojects":openProject=null;render();break;
+case"deleteproject":
+if(confirm("Delete this project?")){state.projects=state.projects.filter(p=>p.id!==openProject);openProject=null;persist();render()}
+break
+}
+});
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape")closeModal();
+if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&view==="lab"){e.preventDefault();runCode()}
+});
+render();
+if("serviceWorker"in navigator&&location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+const canvas=$("#stars"),ctx=canvas.getContext("2d");
+let W=0,H=0,stars=[];
+const reducedMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function resize(){
+const dpr=Math.min(devicePixelRatio||1,2);
+W=canvas.width=Math.round(innerWidth*dpr);
+H=canvas.height=Math.round(innerHeight*dpr);
+canvas.style.width=innerWidth+"px";
+canvas.style.height=innerHeight+"px";
+stars=Array.from({length:Math.min(220,Math.floor(innerWidth*innerHeight/7000))},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,a:Math.random()*.7+.2,s:Math.random()*.25+.04}))
+}
+function animate(){
+ctx.clearRect(0,0,W,H);
+for(const s of stars){
+ctx.fillStyle="rgba(220,235,255,"+s.a+")";
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+if(!reducedMotion){s.y-=s.s;if(s.y<0){s.y=H;s.x=Math.random()*W}}
+}
+if(!reducedMotion)requestAnimationFrame(animate)
+}
+resize();
+animate();
+addEventListener("resize",resize);
+</script>
+</body>
+</html>
