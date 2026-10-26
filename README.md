@@ -16,7 +16,7 @@
 
 <h2 align="center">◈ BEYOND AN ORDINARY WORKSPACE</h2><p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&size=15&duration=3200&pause=900&color=BDBDBD&center=true&vCenter=true&width=600&lines=Ideas+begin+with+curiosity.;Knowledge+grows+through+exploration.;Creation+turns+ideas+into+reality." alt="Animated project philosophy">
-</p>Lumen is a modern, dark-themed web application that brings search, research, image exploration, saved content, projects, and coding into one digital environment.
+</p>Lumen is a modern, space-themed web application that brings search, research, image exploration, saved content, projects, and coding into one digital environment.
 
 Designed around clarity, exploration, and creativity, Lumen gives users a unified place to discover information, develop ideas, and work on projects.
 
