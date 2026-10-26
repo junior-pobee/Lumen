@@ -1,4 +1,4 @@
-"Lumen Animated Header" (https://capsule-render.vercel.app/api?type=waving&height=240&color=0:050505,45:151515,100:303030&text=LUMEN&fontColor=ffffff&fontSize=76&fontAlignY=40&desc=Illuminate%20your%20ideas.&descAlignY=60&descSize=19&animation=fadeIn)
+![Lumen Animated Header] (https://capsule-render.vercel.app/api?type=waving&height=240&color=0:050505,45:151515,100:303030&text=LUMEN&fontColor=ffffff&fontSize=76&fontAlignY=40&desc=Illuminate%20your%20ideas.&descAlignY=60&descSize=19&animation=fadeIn)
 
 <p align="center">
   <a href="https://junior-pobee.github.io/repo/">
