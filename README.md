@@ -138,7 +138,7 @@ The project continues to evolve toward a more cohesive, reliable, and enjoyable 
   <a href="https://github.com/junior-pobee">
     <img src="https://img.shields.io/badge/GITHUB-JUNIOR--POBEE-FFFFFF?style=for-the-badge&logo=github&logoColor=black&labelColor=080808" alt="GitHub profile">
   </a>
-  <a href="https://junior-pobee.github.io/my-profile">
+  <a href="https://junior-pobee.github.io/my-portfolio">
     <img src="https://img.shields.io/badge/PORTFOLIO-EXPLORE-FFFFFF?style=for-the-badge&logo=googlechrome&logoColor=black&labelColor=080808" alt="Portfolio">
   </a>
 </p>---
