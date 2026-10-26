@@ -1,7 +1,7 @@
-![Lumen Animated Header] (https://capsule-render.vercel.app/api?type=waving&height=240&color=0:050505,45:151515,100:303030&text=LUMEN&fontColor=ffffff&fontSize=76&fontAlignY=40&desc=Illuminate%20your%20ideas.&descAlignY=60&descSize=19&animation=fadeIn)
+![Lumen Animated Header](https://capsule-render.vercel.app/api?type=waving&height=240&color=0:050505,45:151515,100:303030&text=LUMEN&fontColor=ffffff&fontSize=76&fontAlign=40&desc=Illuminate%20your%20Ideas&descAlignY=60&descSize=19&animation=fadeIn)
 
 <p align="center">
-  <a href="https://junior-pobee.github.io/repo/">
+  <a href="https://junior-pobee.github.io/Lumen/">
     <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&weight=700&size=20&duration=2800&pause=850&color=FFFFFF&center=true&vCenter=true&width=650&lines=SEARCH.+RESEARCH.+EXPLORE.+CREATE.;A+workspace+for+curiosity.;One+space.+New+possibilities.;Welcome+to+Lumen." alt="Animated Lumen introduction">
   </a>
 </p><p align="center">
@@ -87,12 +87,12 @@ Keep project-related work organized.
 ---
 
 <h2 align="center">◈ OPEN THE WORKSPACE</h2><p align="center">
-  <a href="https://junior-pobee.github.io/repo/">
+  <a href="https://junior-pobee.github.io/Lumen/">
     <img src="https://img.shields.io/badge/LAUNCH_LUMEN-OPEN_THE_APPLICATION-FFFFFF?style=for-the-badge&labelColor=080808" alt="Launch Lumen">
   </a>
 </p>Experience Lumen in your browser:
 
-Live application: https://junior-pobee.github.io/repo/
+Live application: https://junior-pobee.github.io/Lumen/
 
 Source code: https://github.com/junior-pobee/Lumen
 
