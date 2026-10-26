@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/INTERFACE-DARK-171717?style=for-the-badge&logo=github&logoColor=white" alt="Dark interface">
   <img src="https://img.shields.io/badge/PLATFORM-WEB-242424?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web platform">
 </p><p align="center">
-  <a href="https://junior-pobee.github.io/repo/"><strong>◈ OPEN LUMEN</strong></a>
+  <a href="https://junior-pobee.github.io/Lumen/"><strong>◈ OPEN LUMEN</strong></a>
   &nbsp; • &nbsp;
   <a href="https://github.com/junior-pobee/Lumen"><strong>⌘ EXPLORE SOURCE</strong></a>
 </p>---
