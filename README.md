@@ -1,94 +1,118 @@
-✦ Lumen
-
-Search. Research. Explore. Create.
-
-Lumen is a modern, dark-themed web application designed to bring search, research, image exploration, saved content, and coding into one workspace.
-
-Explore ideas, organize useful information, and build projects through a sleek interface designed for everyday use.
+"Lumen Animated Header" (https://capsule-render.vercel.app/api?type=waving&height=240&color=0:050505,45:151515,100:303030&text=LUMEN&fontColor=ffffff&fontSize=76&fontAlignY=40&desc=Illuminate%20your%20ideas.&descAlignY=60&descSize=19&animation=fadeIn)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-In%20Development-8b7cff?style=for-the-badge" alt="Project status">
-  <img src="https://img.shields.io/badge/Platform-Web-101828?style=for-the-badge" alt="Web platform">
-  <img src="https://img.shields.io/badge/Design-Dark%20UI-111827?style=for-the-badge" alt="Dark interface">
+  <a href="https://junior-pobee.github.io/repo/">
+    <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&weight=700&size=20&duration=2800&pause=850&color=FFFFFF&center=true&vCenter=true&width=650&lines=SEARCH.+RESEARCH.+EXPLORE.+CREATE.;A+workspace+for+curiosity.;One+space.+New+possibilities.;Welcome+to+Lumen." alt="Animated Lumen introduction">
+  </a>
+</p><p align="center">
+  <img src="https://img.shields.io/badge/✦_LUMEN-Digital_Workspace-white?style=for-the-badge&labelColor=080808" alt="Lumen">
+  <img src="https://img.shields.io/badge/INTERFACE-DARK-171717?style=for-the-badge&logo=github&logoColor=white" alt="Dark interface">
+  <img src="https://img.shields.io/badge/PLATFORM-WEB-242424?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Web platform">
+</p><p align="center">
+  <a href="https://junior-pobee.github.io/repo/"><strong>◈ OPEN LUMEN</strong></a>
+  &nbsp; • &nbsp;
+  <a href="https://github.com/junior-pobee/Lumen"><strong>⌘ EXPLORE SOURCE</strong></a>
 </p>---
 
-✨ About Lumen
+<h2 align="center">◈ BEYOND AN ORDINARY WORKSPACE</h2><p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&size=15&duration=3200&pause=900&color=BDBDBD&center=true&vCenter=true&width=600&lines=Ideas+begin+with+curiosity.;Knowledge+grows+through+exploration.;Creation+turns+ideas+into+reality." alt="Animated project philosophy">
+</p>Lumen is a modern, dark-themed web application that brings search, research, image exploration, saved content, projects, and coding into one digital environment.
 
-Lumen brings several useful digital tools together in one place. Instead of constantly switching between different pages, users can access search, research, image exploration, saved items, projects, and a Code Lab from a unified interface.
+Designed around clarity, exploration, and creativity, Lumen gives users a unified place to discover information, develop ideas, and work on projects.
 
-The project focuses on a clean dark aesthetic, convenient navigation, and a workspace that can be accessed through a modern web browser.
+«Illuminate your ideas. Build what comes next.»
 
-🚀 Features
+---
 
-Feature| Description
-🔎 Search| Search for information and explore useful content.
-🧠 Research| Explore topics and develop ideas.
-🖼️ Image Exploration| Discover visual content.
-🔖 Saved Items| Keep useful content for later.
-📁 Projects| Organize project-related work.
-💻 Code Lab| Access a dedicated coding workspace.
-🌙 Dark Interface| Enjoy a sleek, dark-themed visual experience.
-📱 Responsive Design| Designed with different screen sizes in mind.
-📲 PWA Support| Includes a web app manifest and service worker for installation and caching support.
+<h2 align="center">✧ EXPLORE THE EXPERIENCE</h2><table>
+<tr>
+<td width="50%" align="center">◉ DISCOVER
 
-Feature availability can depend on configuration and browser support.
+Search and explore information from one interface.
 
-🎨 Design Philosophy
+<img src="https://img.shields.io/badge/01-SEARCH-FFFFFF?style=flat-square&labelColor=111111"></td>
+<td width="50%" align="center">⌘ RESEARCH
 
-Lumen is built around a simple idea: your digital workspace should feel focused, modern, and easy to navigate.
+Explore subjects and develop new ideas.
 
-- Minimal visual clutter — keep attention on the task.
-- Dark aesthetics — a consistent, contemporary interface.
-- Unified workspace — bring useful tools together.
-- Practical functionality — prioritize useful interactions over decorative elements.
-- Accessibility across devices — aim for a comfortable experience on different screens.
+<img src="https://img.shields.io/badge/02-RESEARCH-FFFFFF?style=flat-square&labelColor=111111"></td>
+</tr>
+<tr>
+<td width="50%" align="center">▧ VISUAL EXPANSION
 
-🛠️ Built With
+Explore images and visual content.
 
-- HTML5
-- CSS3
-- JavaScript
-- Progressive Web App technologies
-- Web App Manifest
-- Service Workers
-- Browser storage for locally saved application data
+<img src="https://img.shields.io/badge/03-IMAGES-FFFFFF?style=flat-square&labelColor=111111"></td>
+<td width="50%" align="center">⌘ CODE LAB
 
-🌐 Try Lumen
+Access a dedicated coding workspace.
+
+<img src="https://img.shields.io/badge/04-CREATION-FFFFFF?style=flat-square&labelColor=111111"></td>
+</tr>
+<tr>
+<td width="50%" align="center">◈ SAVED CONTENT
+
+Keep useful items available for later.
+
+<img src="https://img.shields.io/badge/05-BOOKMARKS-FFFFFF?style=flat-square&labelColor=111111"></td>
+<td width="50%" align="center">▤ PROJECT SPACE
+
+Keep project-related work organized.
+
+<img src="https://img.shields.io/badge/06-PROJECTS-FFFFFF?style=flat-square&labelColor=111111"></td>
+</tr>
+</table>---
+
+<h2 align="center">⟡ THE DESIGN LANGUAGE</h2><p align="center">
+  <img src="https://img.shields.io/badge/01-OBSIDIAN-080808?style=for-the-badge&labelColor=080808" alt="Obsidian black">
+  <img src="https://img.shields.io/badge/02-MONOLITH-181818?style=for-the-badge&labelColor=181818" alt="Monolith grey">
+  <img src="https://img.shields.io/badge/03-SILVER-E0E0E0?style=for-the-badge&labelColor=E0E0E0" alt="Silver">
+</p>Lumen's visual direction is built around a dark, minimal, contemporary identity.
+
+- Monochrome aesthetics — black, charcoal, silver, and white.
+- Focused typography — strong titles and readable text.
+- Unified navigation — related tools in one workspace.
+- Responsive intentions — a design aimed at different screen sizes.
+- Motion and atmosphere — animated visuals in this README complement the application's identity.
+
+---
+
+<h2 align="center">⚙ TECHNOLOGY</h2><p align="center">
+  <img src="https://img.shields.io/badge/HTML5-FFFFFF?style=for-the-badge&logo=html5&logoColor=black" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-FFFFFF?style=for-the-badge&logo=css3&logoColor=black" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-FFFFFF?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/PWA-FFFFFF?style=for-the-badge&logo=pwa&logoColor=black" alt="Progressive Web App">
+</p>Lumen uses web technologies and includes a web app manifest and service worker intended to support progressive web app capabilities.
+
+---
+
+<h2 align="center">◈ OPEN THE WORKSPACE</h2><p align="center">
+  <a href="https://junior-pobee.github.io/repo/">
+    <img src="https://img.shields.io/badge/LAUNCH_LUMEN-OPEN_THE_APPLICATION-FFFFFF?style=for-the-badge&labelColor=080808" alt="Launch Lumen">
+  </a>
+</p>Experience Lumen in your browser:
 
 Live application: https://junior-pobee.github.io/repo/
 
-Open Lumen in a supported browser to explore the application.
+Source code: https://github.com/junior-pobee/Lumen
 
-📲 Installation
+---
 
-Lumen includes PWA-related files intended to support installation on compatible devices.
+<h2 align="center">⌘ RUN LOCALLY</h2>Clone the repository:
 
-1. Open the "Lumen web app" (https://junior-pobee.github.io/repo/) in a supported browser.
-2. Open the browser menu.
-3. Select the available install option if the browser offers it.
-4. Follow the on-screen instructions.
+git clone https://github.com/junior-pobee/Lumen.git
 
-Installation depends on browser compatibility and the application's current configuration. If installation fails, the web version can still be opened through the link above.
+Open the project directory:
 
-💻 Run Locally
+cd Lumen
 
-To explore the project on your computer:
+Open "index.html" in a browser or use a local development server.
 
-1. Clone the repository:
-   
-   git clone https://github.com/junior-pobee/repo.git
+For service worker and installation testing, use HTTPS or a supported localhost environment.
 
-2. Enter the project directory:
-   
-   cd repo
+---
 
-3. Open "index.html" in your browser, or use a local development server for testing PWA functionality.
-
-For service workers and installation testing, use a secure context such as HTTPS or a supported localhost environment.
-
-📂 Project Structure
-
-repo/
+<h2 align="center">◈ PROJECT STRUCTURE</h2>Lumen/
 ├── index.html
 ├── manifest.json
 ├── sw.js
@@ -97,39 +121,31 @@ repo/
     ├── icon-512.png
     └── icon-512-maskable.png
 
-🔐 Privacy and Local Data
+---
 
-Some Lumen content may be stored in the browser, depending on the feature being used. Browser-local data can be lost if the site's storage is cleared or the browser removes it.
+<h2 align="center">✧ THE VISION</h2><p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Space+Mono&weight=700&size=18&duration=3500&pause=1200&color=FFFFFF&center=true&vCenter=true&width=650&lines=Not+just+a+place+to+search.;A+space+to+think.;A+space+to+explore.;A+space+to+create." alt="Animated Lumen vision">
+</p>Lumen is built around the belief that technology should make exploration feel natural and creation feel accessible.
 
-Avoid storing sensitive information in the application unless the relevant feature provides appropriate protection.
-
-🗺️ Project Direction
-
-Lumen aims to bring search, research, visual exploration, and coding into a cohesive digital environment. Future improvements can focus on reliability, accessibility, mobile usability, and a smoother installation experience.
-
-🤝 Contributing
-
-Ideas, bug reports, and constructive suggestions are welcome.
-
-1. Fork the repository.
-2. Create a branch for your changes.
-3. Make and test your improvements.
-4. Submit a pull request describing your changes.
-
-👨‍💻 Developer
-
-Emmanuel Pobee Okpoti
-
-- GitHub: "@junior-pobee" (https://github.com/junior-pobee)
-- Portfolio: "junior-pobee.github.io/my-profile" (https://junior-pobee.github.io/my-profile)
-
-📄 License
-
-No license has been specified in this README. Add a license file to clarify how others may use, modify, and distribute the project.
+The project continues to evolve toward a more cohesive, reliable, and enjoyable digital workspace.
 
 ---
 
+<h2 align="center">DEVELOPED BY</h2><p align="center">
+  <strong>EMMANUEL POBEE OKPOTI</strong><br>
+  <sub>Developer · Creator of Lumen</sub>
+</p><p align="center">
+  <a href="https://github.com/junior-pobee">
+    <img src="https://img.shields.io/badge/GITHUB-JUNIOR--POBEE-FFFFFF?style=for-the-badge&logo=github&logoColor=black&labelColor=080808" alt="GitHub profile">
+  </a>
+  <a href="https://junior-pobee.github.io/my-profile">
+    <img src="https://img.shields.io/badge/PORTFOLIO-EXPLORE-FFFFFF?style=for-the-badge&logo=googlechrome&logoColor=black&labelColor=080808" alt="Portfolio">
+  </a>
+</p>---
+
 <p align="center">
-  <strong>✦ Lumen</strong><br>
-  <em>Illuminate your ideas. Build what comes next.</em>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:303030,50:151515,100:050505&height=120&section=footer&animation=fadeIn" alt="Animated footer">
+</p><p align="center">
+  <strong>L U M E N</strong><br>
+  <sub>Illuminate your ideas. Build what comes next.</sub>
 </p>
