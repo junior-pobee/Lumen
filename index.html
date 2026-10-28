@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -54,8 +54,10 @@ p{overflow-wrap:anywhere}
 .primary{border:0;background:#fff;color:#090b13;padding:12px 21px}
 .primary:hover{background:#dcecff}
 .secondary,.chip,.tab{background:#ffffff0b;color:var(--muted)}
-.tabs .tab{background:#f97316;border-color:#fdba74;color:#fff}
-.tabs .tab.on{background:#c2410c;border-color:#fff;color:#fff}
+.tabs .tab{background:#c0c0c0;border-color:#e5e5e5;color:#111;transition:background .35s,color .35s,border-color .35s}
+.tabs .tab:hover{background:#d4d4d4}
+.tabs .tab.on{background:#000;border-color:#fff;color:#fff;animation:tabtoblack .4s ease-out}
+@keyframes tabtoblack{from{background:#c0c0c0;color:#111;border-color:#e5e5e5}to{background:#000;color:#fff;border-color:#fff}}
 .panel.empty{background:#f97316;border-color:#fdba74;color:#fff}
 .panel.empty h2{color:#fff;font-weight:900;font-size:27px;text-shadow:0 2px 10px #00000066}
 .panel.empty p{color:#fff;font-weight:600;text-shadow:0 1px 6px #00000055}
@@ -141,6 +143,135 @@ nav button{font-size:9px}
 @media(min-width:801px){
 nav{background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 }
+
+/* ===== Code Lab IDE (Spck-style) ===== */
+body.labmode main{overflow:hidden;padding:10px;display:flex;flex-direction:column;touch-action:auto}
+body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
+.ide{position:relative;height:100%;display:flex;flex-direction:column;min-height:0;border:1px solid var(--line);border-radius:16px;background:#0a0c14;overflow:hidden;font-size:13px}
+.ide button{font:inherit;color:inherit}
+.ide-bar{display:flex;align-items:center;gap:4px;padding:6px 8px;background:#0e1120;border-bottom:1px solid var(--line);flex:0 0 auto}
+.ib{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:36px;height:36px;padding:0 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:#cfd8ec;font-weight:700;white-space:nowrap;position:relative}
+.ib:hover,.ib.on{background:#ffffff14;border-color:var(--line)}
+.ib.run{background:#16a34a;color:#fff}
+.ib.run:hover{background:#22c55e}
+.ib.proj{max-width:46vw;min-width:0}
+.ib.proj span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ide-sp{flex:1}
+.ide-save{font-size:11px;color:var(--muted);white-space:nowrap;padding:0 6px}
+.ide-body{position:relative;flex:1 1 0;min-height:0;display:flex}
+.ide-files,.ide-edit,.ide-prev{min-width:0;min-height:0;display:flex;flex-direction:column}
+.ide-files{flex:0 0 232px;border-right:1px solid var(--line);background:#0c0f1a}
+.ide-edit{flex:1 1 0;background:#080a10}
+.ide-prev{flex:0 0 40%;border-left:1px solid var(--line);background:#0c0f1a}
+.ide:not(.files-on) .ide-files{display:none}
+.ide:not(.prev-on) .ide-prev{display:none}
+.ide[data-mode=mid] .ide-files{position:absolute;z-index:6;left:0;top:0;bottom:0;width:min(280px,86%);box-shadow:14px 0 40px #000b}
+.ide.maxprev[data-mode=wide] .ide-files,.ide.maxprev[data-mode=wide] .ide-edit,.ide.maxprev[data-mode=mid] .ide-edit{display:none}
+.ide.maxprev[data-mode=wide] .ide-prev,.ide.maxprev[data-mode=mid] .ide-prev{display:flex;flex:1 1 0;border-left:0}
+.ide[data-mode=narrow] .ide-files,.ide[data-mode=narrow] .ide-edit,.ide[data-mode=narrow] .ide-prev{flex:1 1 0;border:0;display:none;position:static;width:auto;box-shadow:none}
+.ide[data-mode=narrow][data-pane=files] .ide-files{display:flex}
+.ide[data-mode=narrow][data-pane=editor] .ide-edit{display:flex}
+.ide[data-mode=narrow][data-pane=preview] .ide-prev{display:flex}
+.ide[data-mode=narrow] .hide-n{display:none}
+.cl-fhead{display:flex;align-items:center;justify-content:space-between;gap:4px;padding:6px 8px;border-bottom:1px solid var(--line);flex:0 0 auto;flex-wrap:wrap}
+.cl-fhead>span{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);padding-left:4px}
+.cl-fact{display:flex;gap:4px;flex-wrap:wrap}
+.cl-fb{height:30px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:#ffffff0b;color:#dbe4f7;font-weight:700;font-size:12px}
+.cl-fb:hover{background:#ffffff18}
+.cl-tree{flex:1;overflow:auto;padding:6px 0;-webkit-overflow-scrolling:touch}
+.cl-row{display:flex;align-items:center;gap:7px;min-height:36px;padding:2px 4px 2px 8px;cursor:pointer;color:#cbd5e8;white-space:nowrap;user-select:none}
+.cl-row:hover{background:#ffffff0d}
+.cl-row.on{background:#3b82f626;color:#fff}
+.cl-row.sel{background:#ffffff10}
+.cl-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.cl-m{flex:0 0 auto;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-size:16px}
+.cl-m:hover{background:#ffffff18;color:#fff}
+.cl-none{padding:18px 14px;color:var(--muted);font-size:13px}
+.fi{flex:0 0 auto;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:9px;font-weight:900;color:#fff;background:#475569}
+.fi-html{background:#e44d26}.fi-css{background:#2965f1}.fi-js{background:#d4a800;color:#111}.fi-json{background:#6b7280}.fi-md{background:#0ea5e9}.fi-img{background:#a855f7}.fi-dir{background:transparent;color:#fbbf24;font-size:12px}
+.cl-tabs{display:flex;overflow-x:auto;background:#0e1120;border-bottom:1px solid var(--line);scrollbar-width:none;flex:0 0 auto;min-height:38px}
+.cl-tabs::-webkit-scrollbar{display:none}
+.cl-tab{display:flex;align-items:center;gap:7px;padding:0 4px 0 12px;height:38px;border-right:1px solid var(--line);color:var(--muted);white-space:nowrap;cursor:pointer;flex:0 0 auto}
+.cl-tab.on{background:#080a10;color:#fff;box-shadow:inset 0 -2px var(--accent)}
+.cl-tab button{width:26px;height:26px;border:0;border-radius:6px;background:transparent;color:inherit;font-size:15px}
+.cl-tab button:hover{background:#ffffff18}
+.cl-find{display:none;gap:6px;flex-wrap:wrap;padding:8px;background:#0e1120;border-bottom:1px solid var(--line);flex:0 0 auto}
+.cl-find.on{display:flex}
+.cl-find input{flex:1 1 110px;min-width:0;width:auto;padding:7px 10px;border-radius:8px;font-size:13px}
+.cl-ed{position:relative;flex:1 1 0;min-height:0;overflow:hidden;background:#080a10}
+.cl-gut,.cl-gutin,.cl-hl,.cl-ta{font:13px/20px "SFMono-Regular",Consolas,Menlo,"Liberation Mono",monospace;tab-size:2;-moz-tab-size:2;-webkit-text-size-adjust:100%;letter-spacing:0}
+.cl-gut{position:absolute;left:0;top:0;bottom:0;width:46px;overflow:hidden;background:#080a10;border-right:1px solid #ffffff0c;user-select:none;z-index:2;pointer-events:none}
+.cl-gutin{margin:0;padding:10px 8px 60px 0;white-space:pre;text-align:right;color:#586079;will-change:transform}
+.cl-hl{position:absolute;left:46px;top:0;margin:0;padding:10px 12px 60px;white-space:pre;pointer-events:none;color:#d6deef;min-width:max-content;will-change:transform}
+.cl-ta{position:absolute;left:46px;top:0;right:0;bottom:0;width:calc(100% - 46px);height:100%;margin:0;padding:10px 12px 60px;border:0;border-radius:0;background:transparent;color:transparent;caret-color:#fff;resize:none;white-space:pre;overflow:auto;overflow-wrap:normal;outline:none;z-index:1;-webkit-overflow-scrolling:touch}
+.ide textarea:focus-visible,.ide input:focus-visible{outline:none}
+.cl-ta::selection{background:#3b82f666;color:transparent}
+.t-c{color:#6b7a99;font-style:italic}.t-s{color:#a5d6a7}.t-k{color:#c792ea}.t-n{color:#f78c6c}.t-t{color:#7fd1ff}.t-a{color:#ffcb6b}.t-p{color:#82aaff}.t-f{color:#82aaff}.t-d{color:#89ddff}
+.cl-empty{display:grid;place-items:center;text-align:center;gap:12px;height:100%;padding:24px;color:var(--muted)}
+.cl-img{height:100%;overflow:auto;display:grid;place-items:center;padding:16px;text-align:center;color:var(--muted);gap:10px;background:repeating-conic-gradient(#ffffff08 0 25%,transparent 0 50%) 0 0/20px 20px}
+.cl-img img{max-width:100%;max-height:60vh;border-radius:8px}
+.cl-keys{display:none;gap:5px;overflow-x:auto;padding:6px;background:#0e1120;border-top:1px solid var(--line);scrollbar-width:none;flex:0 0 auto}
+.cl-keys::-webkit-scrollbar{display:none}
+.cl-keys button{flex:0 0 auto;min-width:40px;height:36px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:#ffffff0d;color:#e5ecff;font:700 14px monospace}
+@media(pointer:coarse){.cl-keys{display:flex}}
+.cl-status{display:flex;gap:16px;align-items:center;padding:5px 10px;font-size:11px;color:var(--muted);background:#0e1120;border-top:1px solid var(--line);flex:0 0 auto;white-space:nowrap;overflow:hidden}
+.cl-phead{display:flex;align-items:center;gap:4px;padding:6px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.cl-phead select{flex:1;min-width:0;width:auto;padding:7px 8px;font-size:12px;border-radius:8px}
+.badge{display:none;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:#ef4444;color:#fff;font-size:10px;line-height:16px;text-align:center;position:absolute;top:2px;right:2px}
+.cl-pv{position:relative;flex:1 1 0;min-height:0;background:#161927;overflow:auto;display:flex;justify-content:center}
+.cl-pv iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+.cl-pv[data-w="375"] iframe{width:375px;max-width:100%}
+.cl-pv[data-w="768"] iframe{width:768px;max-width:100%}
+.cl-con{display:none;flex:0 0 36%;min-height:110px;flex-direction:column;border-top:1px solid var(--line);background:#080a10}
+.cl-con.on{display:flex}
+.cl-chead{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);border-bottom:1px solid var(--line)}
+.cl-chead button{border:0;background:transparent;color:var(--accent);font-weight:800;padding:4px 8px}
+.cl-log{flex:1;overflow:auto;padding:6px 10px;font:12px/1.5 monospace}
+.lg{border-bottom:1px solid #ffffff0a;padding:2px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.lg-error{color:#fca5a5}.lg-warn{color:#fde68a}.lg-info{color:#93c5fd}.lg-cmd{color:#86efac}
+.cl-conin input{width:100%;border:0;border-top:1px solid var(--line);border-radius:0;background:#05070c;padding:9px 10px;font:12px monospace}
+.cl-switch{display:none;flex:0 0 auto;border-top:1px solid var(--line);background:#0e1120}
+.ide[data-mode=narrow] .cl-switch{display:flex}
+.cl-switch button{flex:1;height:44px;border:0;background:transparent;color:var(--muted);font-weight:800}
+.cl-switch button.on{color:#fff;box-shadow:inset 0 2px var(--accent)}
+.ide.drag{outline:2px dashed var(--accent);outline-offset:-6px}
+.cl-menu{display:grid;gap:4px;margin-top:12px}
+.cl-menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:13px 14px;border:0;border-radius:12px;background:#ffffff08;color:#e5ecff;font-weight:700}
+.cl-menu button:hover{background:#ffffff14}
+.cl-menu button.danger{color:#fca5a5}
+.cl-menu button.cur{box-shadow:inset 0 0 0 1px var(--accent)}
+@supports(-webkit-touch-callout:none){.cl-gut,.cl-gutin,.cl-hl,.cl-ta{font-size:16px;line-height:24px}}
+@media(max-width:800px){body.labmode main{padding:6px 6px 4px}.ide{border-radius:14px}}
+@media(max-width:560px){.ide .hide-s{display:none}.ib{min-width:34px;padding:0 8px}}
+
+/* ===== search-only screen while loading ===== */
+.searchonly{min-height:58vh;display:flex;align-items:center}
+.searchonly .searchbar{width:100%}
+
+.fi-py{background:#3776ab}.fi-java{background:#e76f00}.fi-c{background:#00599c}.fi-cs{background:#68217a}.fi-go{background:#00add8;color:#012}.fi-rs{background:#b7410e}.fi-php{background:#777bb4}.fi-rb{background:#cc342d}.fi-sh{background:#4eaa25}.fi-sql{background:#e38c00}.fi-ts{background:#3178c6}
+.cl-con.big{flex:2 1 0}
+
+/* ===== Learn ===== */
+.ln-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;width:100%;cursor:pointer;transition:transform .2s,border-color .2s;color:inherit;margin:0}
+.ln-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.ln-card h2{margin:8px 0 6px}
+.ln-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:16px}
+.ln-item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 4px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:inherit}
+.ln-item:last-child{border-bottom:0}
+.ln-item:hover{background:#ffffff08}
+.ln-item small{display:block;color:var(--muted);font-weight:400;margin-top:2px}
+.ln-num{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font-weight:900;background:#ffffff0b}
+.ln-num.done{background:#16a34a;border-color:#16a34a;color:#fff}
+.ln-body p,.ln-body ul{margin:12px 0;line-height:1.85}
+.ln-body ul{padding-left:22px}
+.ln-body code{font-family:monospace;background:#ffffff14;padding:1px 6px;border-radius:6px;font-size:.92em}
+.ln-task{margin:16px 0;padding:14px 16px;border-left:3px solid var(--accent);background:#9acbff12;border-radius:0 12px 12px 0}
+.ln-play{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:14px}
+.ln-play textarea{min-height:340px;font:13px/1.65 monospace;tab-size:2;white-space:pre;overflow:auto;resize:vertical}
+.ln-frame{width:100%;height:250px;border:1px solid var(--line);border-radius:12px;background:#fff;display:block}
+.ln-out{margin-top:10px;max-height:150px;overflow:auto;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#05070c;font:12px/1.5 monospace}
+.ln-nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:800px){.ln-play{grid-template-columns:minmax(0,1fr)}.ln-play textarea{min-height:250px;font-size:16px}.ln-frame{height:230px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -153,7 +284,8 @@ nav{background:transparent;border-color:transparent;box-shadow:none;backdrop-fil
 <div class="logo">LUM<span>E</span>N</div>
 <button data-view="search" class="on">⌕ <span>Ask</span></button>
 <button data-view="research">◉ <span>Research</span></button>
-<button data-view="lab">⌘ <span>Code Lab</span></button>
+<button data-view="lab">⌘ <span>Code </span></button>
+<button data-view="learn">◈ <span>Learn</span></button>
 <button data-view="saved">☆ <span>Saved</span></button>
 <button data-view="projects">▤ <span>Projects</span></button>
 <div class="navbottom">
@@ -167,7 +299,7 @@ nav{background:transparent;border-color:transparent;box-shadow:none;backdrop-fil
 <div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
 <div class="toast" id="toast"></div>
 <script>
-const CONFIG={SEARCH_ENDPOINT:"",AI_ENDPOINT:""};
+const CONFIG={SEARCH_ENDPOINT:"",AI_ENDPOINT:"",RUN_ENDPOINT:"https://emkc.org/api/v2/piston/execute"};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=()=>Math.random().toString(36).slice(2,10);
@@ -272,7 +404,7 @@ function categoryTabs(){
 return`<div class="tabs" aria-label="Search categories">${[["all","All"],["images","Images"],["videos","Videos"],["news","News"],["maps","Maps"]].map(([id,label])=>`<button class="tab ${tab===id?"on":""}" data-tab="${id}">${label}</button>`).join("")}</div>`
 }
 function home(){
-return`${header(view==="research"?"Research anything.":"What do you want to know?",view==="research"?"Explore a topic in more depth.":"Answers, images, research and discovery.")}<p class="sub">Search for a topic, explore relevant images, and discover related resources. Each new search clears the previous results from the screen.</p>${searchBar(query)}${categoryTabs()}<div class="suggestions">${["How does Starlink work?","Ghana technology news","Solar system","HTML and CSS basics"].map(s=>`<button class="chip" data-query="${esc(s)}">${esc(s)}</button>`).join("")}</div><div id="results">${renderResults()}</div>`
+return`${header(view==="research"?"Research anything.":"What do you want to know?",view==="research"?"Explore a topic in more depth.":"Answers, images, research and discovery.")}<p class="sub">Search for a topic, explore relevant images, and discover related resources. Each new search clears the previous results from the screen.</p>${searchBar(query)}${categoryTabs()}${current?"":`<div class="suggestions">${["How does Starlink work?","Ghana technology news","Solar system","HTML and CSS basics"].map(s=>`<button class="chip" data-query="${esc(s)}">${esc(s)}</button>`).join("")}</div>`}<div id="results">${renderResults()}</div>`
 }
 function renderResults(){
 if(!current)return`<div class="panel empty"><div style="font-size:40px">✳</div><h2>Explore something new</h2><p>Start a search to see answers and related resources here.</p></div>`;
@@ -299,28 +431,16 @@ ${a.results?.length?`<div class="panel"><h2>Related results</h2>${a.results.map(
 }
 function isSaved(title){return state.saved.some(s=>cleanText(s.title).toLowerCase()===cleanText(title).toLowerCase())}
 function render(){
+clTeardown();document.body.classList.toggle("labmode",view==="lab");
 document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===view));
 const app=$("#app");
 if(view==="search"||view==="research"){
-app.innerHTML=home();
+app.innerHTML=(current&&current.loading)?`<div class="searchonly">${searchBar(query)}</div>`:home();
 $("#searchform").onsubmit=e=>{e.preventDefault();performSearch($("#query").value.trim())}
 }else if(view==="lab"){
-app.innerHTML=`${header("Lumen Code Lab","Write code. Run it. Preview it live.")}<p class="sub">Build with HTML, CSS and JavaScript in a responsive live preview.</p><div class="labtoolbar"><button class="primary" data-action="run">▶ Run code</button><button class="secondary" data-action="download">Download HTML</button><button class="secondary" data-action="resetlab">Reset editor</button></div><div class="lab"><div class="editors"><div class="editorbox"><div class="editorhead">HTML <span>01</span></div><textarea id="htmlcode" spellcheck="false" aria-label="HTML editor"><main class="card">
-  <div class="tag">LUMEN / CODE LAB</div>
-  <h1>Your next idea starts here.</h1>
-  <p>Build something beautiful with HTML, CSS and JavaScript.</p>
-  <button id="action">Explore</button>
-  <p id="message"></p>
-</main></textarea></div><div class="editorbox"><div class="editorhead">CSS <span>02</span></div><textarea id="csscode" spellcheck="false" aria-label="CSS editor">*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top left,#263f9b,#090b17 60%);font-family:Arial,sans-serif;color:white}
-.card{max-width:520px;padding:38px;border:1px solid #ffffff30;border-radius:28px;background:#ffffff0d;backdrop-filter:blur(20px);box-shadow:0 25px 80px #0006}
-.tag{font-size:11px;letter-spacing:4px;color:#9ed5ff;font-weight:bold}
-h1{font-size:clamp(32px,7vw,55px);line-height:1.05}
-p{color:#c1cbe0;line-height:1.8}
-button{padding:12px 22px;border:0;border-radius:30px;background:white;color:#10131f;font-weight:bold;cursor:pointer}</textarea></div><div class="editorbox"><div class="editorhead">JAVASCRIPT <span>03</span></div><textarea id="jscode" spellcheck="false" aria-label="JavaScript editor">document.querySelector("#action").addEventListener("click",()=>{
-  document.querySelector("#message").textContent="Your code is running successfully.";
-});</textarea></div></div><div><div class="editorhead" style="margin-bottom:10px;border:1px solid var(--line);border-radius:12px">LIVE PREVIEW <span id="previewstatus">Ready</span></div><iframe id="preview" class="preview" title="Live code preview" sandbox="allow-scripts"></iframe><p class="muted" style="font-size:12px;margin-top:10px">The preview runs in a sandbox. Do not put private keys or passwords in your code.</p></div></div>`;
-runCode()
+clMount()
+}else if(view==="learn"){
+lnRender()
 }else if(view==="saved"){
 app.innerHTML=`${header("Your saved answers","Only items you explicitly save appear here.")}<div class="panel">${state.saved.length?state.saved.map((s,i)=>`<div class="row"><div><strong>${esc(cleanText(s.title))}</strong><small>${esc(cleanText(s.short||"Saved answer"))}</small></div><div class="actions"><button class="secondary" data-saved="${i}">Open</button><button class="secondary" data-remove="${i}">Remove</button></div></div>`).join(""):`<div class="empty">Nothing saved yet. Search for a topic and select Save answer.</div>`}</div>`
 }else if(view==="projects"){
@@ -453,28 +573,1187 @@ button{padding:12px 22px;border:0;border-radius:30px;background:white;color:#101
 const defaultJS=`document.querySelector("#action").addEventListener("click",()=>{
   document.querySelector("#message").textContent="Your code is running successfully.";
 });`;
-function runCode(){
-const html=$("#htmlcode")?.value??"";
-const css=$("#csscode")?.value??"";
-const js=$("#jscode")?.value??"";
-const frame=$("#preview");
-if(!frame)return;
-frame.srcdoc="<!doctype html><html><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1\"><style>"+css.replace(/<\/style/gi,"<\\/style")+"</style></head><body>"+html.replace(/<\/script/gi,"<\\/script")+"<script>"+js.replace(/<\/script/gi,"<\\/script")+"<\/script></body></html>";
-$("#previewstatus").textContent="Running";
-frame.onload=()=>{$("#previewstatus").textContent="Live"}
+/* ================= CODE LAB — Spck-style IDE ================= */
+function runCode(){clRunActive()}
+function downloadCode(){clDownloadHTML()}
+const CL_HTML=`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+${defaultHTML.split("\n").map(l=>"  "+l).join("\n")}
+  <script src="script.js"><\/script>
+</body>
+</html>
+`;
+const CL_STARTER_HTML=`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+`;
+let clRunnerKind=null,clRunnerReady=false,clPyJob=null;
+let clDB=null,cl=null,clReady=false,clTimer=null,clPvTimer=null,clLogs=[],clRO=null,clPvPath=null,clDirty=false,clMode=null,clSelDirV="",clModalCb=null;
+const clViewState={};
+const clUI={files:false,prev:true,pane:"editor",live:true,con:false,find:false,w:"fit",maxprev:false};
+const TEXT_EXT=new Set(["html","htm","css","js","mjs","cjs","json","md","markdown","txt","svg","xml","csv","tsv","yml","yaml","ts","tsx","jsx","vue","php","py","java","c","h","cpp","cs","go","rs","rb","sh","sql","ini","toml","env","log","gitignore","map","webmanifest","less","scss","sass"]);
+const MIMES={html:"text/html",htm:"text/html",css:"text/css",js:"text/javascript",mjs:"text/javascript",json:"application/json",svg:"image/svg+xml",png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg",gif:"image/gif",webp:"image/webp",ico:"image/x-icon",bmp:"image/bmp",avif:"image/avif",mp3:"audio/mpeg",wav:"audio/wav",ogg:"audio/ogg",mp4:"video/mp4",webm:"video/webm",woff:"font/woff",woff2:"font/woff2",ttf:"font/ttf",otf:"font/otf",pdf:"application/pdf",txt:"text/plain",md:"text/markdown",xml:"application/xml",csv:"text/csv",webmanifest:"application/manifest+json"};
+const extOf=p=>{const n=String(p).split("/").pop();return n.includes(".")?n.split(".").pop().toLowerCase():""};
+const baseOf=p=>String(p).split("/").pop();
+const dirOf=p=>String(p).includes("/")?String(p).slice(0,String(p).lastIndexOf("/")):"";
+const mimeOf=p=>MIMES[extOf(p)]||"application/octet-stream";
+const isImgExt=p=>["png","jpg","jpeg","gif","webp","ico","svg","bmp","avif"].includes(extOf(p));
+const isHtmlPath=p=>/\.html?$/i.test(p);
+const FI_CLASS={html:"fi-html",htm:"fi-html",css:"fi-css",scss:"fi-css",less:"fi-css",js:"fi-js",mjs:"fi-js",ts:"fi-js",jsx:"fi-js",tsx:"fi-js",json:"fi-json",md:"fi-md",markdown:"fi-md",png:"fi-img",jpg:"fi-img",jpeg:"fi-img",gif:"fi-img",webp:"fi-img",svg:"fi-img",ico:"fi-img"};
+const FI_LABEL={html:"H",htm:"H",css:"#",scss:"#",less:"#",js:"JS",mjs:"JS",ts:"TS",jsx:"JS",tsx:"TS",json:"{}",md:"M",markdown:"M",png:"▣",jpg:"▣",jpeg:"▣",gif:"▣",webp:"▣",svg:"▣",ico:"▣"};
+const fiClass=p=>FI_CLASS[extOf(p)]||"fi-file";
+const fiLabel=p=>FI_LABEL[extOf(p)]||"•";
+function normPath(v){
+const out=[];
+for(const part of String(v||"").replace(/\\/g,"/").split("/")){
+if(!part||part===".")continue;
+if(part==="..")out.pop();else out.push(part.trim())
 }
-function downloadCode(){
-const html=$("#htmlcode")?.value??"";
-const css=$("#csscode")?.value??"";
-const js=$("#jscode")?.value??"";
-const doc="<!doctype html><html><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1\"><style>"+css+"</style></head><body>"+html+"<script>"+js+"<\/script></body></html>";
-const url=URL.createObjectURL(new Blob([doc],{type:"text/html"}));
-const a=document.createElement("a");
-a.href=url;
-a.download="lumen-project.html";
-a.click();
-setTimeout(()=>URL.revokeObjectURL(url),1000)
+return out.join("/")
 }
+function resolvePath(base,ref){return ref.charAt(0)==="/"?normPath(ref):normPath((base?base+"/":"")+ref)}
+const badName=p=>/[:*?"<>|]/.test(p);
+const fmtBytes=n=>n<1024?n+" B":n<1048576?(n/1024).toFixed(1)+" KB":(n/1048576).toFixed(1)+" MB";
+
+/* ---------- storage ---------- */
+function idbOpen(){return new Promise((res,rej)=>{try{const r=indexedDB.open("lumen-codelab",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+function clNewProjectData(name){
+return{id:uid(),name,files:[{path:"index.html",content:CL_HTML},{path:"style.css",content:defaultCSS+"\n"},{path:"script.js",content:defaultJS+"\n"}],dirs:[],open:["index.html"],active:"index.html",expanded:{},created:Date.now(),updated:Date.now()}
+}
+async function clLoad(){
+let data=null;
+try{
+clDB=await idbOpen();
+data=await new Promise((res,rej)=>{const q=clDB.transaction("kv").objectStore("kv").get("ws");q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})
+}catch(e){
+clDB=null;
+try{data=JSON.parse(localStorage.getItem("lumen-codelab")||"null")}catch(_){}
+}
+if(!data||!Array.isArray(data.projects)||!data.projects.length){const p0=clNewProjectData("My first project");data={projects:[p0],current:p0.id}}
+cl=data;clReady=true
+}
+function clSetSave(t){const e=$("#clsave");if(e)e.textContent=t}
+function clSaveNow(){
+if(!cl)return;
+clearTimeout(clTimer);clDirty=false;
+if(clDB){
+try{const tx=clDB.transaction("kv","readwrite");tx.objectStore("kv").put(cl,"ws");tx.oncomplete=()=>clSetSave("Saved");tx.onerror=()=>clSetSave("Save failed")}catch(e){clSetSave("Save failed")}
+}else{
+try{localStorage.setItem("lumen-codelab",JSON.stringify(cl));clSetSave("Saved")}catch(e){clSetSave("Storage full");toast("Storage is full — export your project as ZIP")}
+}
+}
+function clChanged(){clDirty=true;clSetSave("Saving…");clearTimeout(clTimer);clTimer=setTimeout(clSaveNow,450)}
+addEventListener("pagehide",()=>{if(clDirty)clSaveNow()});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&clDirty)clSaveNow()});
+const clP=()=>cl.projects.find(x=>x.id===cl.current)||cl.projects[0];
+const clF=(path,p)=>(p||clP()).files.find(f=>f.path===path);
+
+/* ---------- syntax highlighting ---------- */
+function hl(src,rules,flags){
+const re=new RegExp(rules.map(r=>"("+r[0]+")").join("|"),flags||"g");
+let out="",last=0,m;
+while((m=re.exec(src))!==null){
+if(m[0]===""){re.lastIndex++;continue}
+out+=esc(src.slice(last,m.index));
+let g=1;while(g<=rules.length&&m[g]===undefined)g++;
+const c=rules[g-1][1];
+out+=c?'<span class="'+c+'">'+esc(m[0])+"</span>":esc(m[0]);
+last=re.lastIndex
+}
+return out+esc(src.slice(last))
+}
+const HL_JS=[
+[/\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|$)/.source,"t-c"],
+[/"(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?|`(?:[^`\\]|\\[\s\S])*`?/.source,"t-s"],
+[/\b(?:const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|extends|import|export|from|default|async|await|try|catch|finally|throw|typeof|instanceof|in|of|this|super|yield|delete|void|static)\b/.source,"t-k"],
+[/\b(?:true|false|null|undefined|NaN|Infinity)\b/.source,"t-n"],
+[/\b0x[0-9a-fA-F]+\b|\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/.source,"t-n"],
+[/\b[A-Za-z_$][\w$]*(?=\s*\()/.source,"t-f"]
+];
+const HL_CSS=[
+[/\/\*[\s\S]*?(?:\*\/|$)/.source,"t-c"],
+[/"(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?/.source,"t-s"],
+[/@[\w-]+/.source,"t-k"],
+[/#[0-9a-fA-F]{3,8}\b/.source,"t-n"],
+[/-?\b\d+(?:\.\d+)?(?:px|r?em|vh|vw|vmin|vmax|ms|deg|fr|ch|s|%)?/.source,"t-n"],
+[/-{0,2}[a-zA-Z][\w-]*(?=\s*:)/.source,"t-p"],
+[/[{}]/.source,"t-d"]
+];
+function hlTag(t){
+const m=/^(<\/?)([A-Za-z][\w:-]*)([\s\S]*?)(\/?>?)$/.exec(t);
+if(!m)return esc(t);
+let out=esc(m[1])+'<span class="t-t">'+esc(m[2])+"</span>";
+const attrs=m[3];let last=0,a;
+const re=/([^\s"'<>\/=]+)(\s*=\s*)?("[^"]*"?|'[^']*'?|[^\s"'<>]+)?/g;
+while((a=re.exec(attrs))!==null){
+if(a[0]===""){re.lastIndex++;continue}
+out+=esc(attrs.slice(last,a.index))+'<span class="t-a">'+esc(a[1])+"</span>";
+if(a[2])out+=esc(a[2]);
+if(a[3])out+='<span class="t-s">'+esc(a[3])+"</span>";
+last=re.lastIndex
+}
+return out+esc(attrs.slice(last))+esc(m[4])
+}
+function hlHTML(src){
+const re=/<!-{2}[\s\S]*?(?:-{2}>|$)|<(script|style)\b[^>]*>[\s\S]*?(?:<\/\1\s*>|$)|<\/?[A-Za-z][^>]*>?|<![^>]*>?/gi;
+let out="",last=0,m;
+while((m=re.exec(src))!==null){
+out+=esc(src.slice(last,m.index));
+const t=m[0];
+if(t.startsWith("<!-")&&t.charAt(3)==="-")out+='<span class="t-c">'+esc(t)+"</span>";
+else if(m[1]){
+const open=/^<[^>]*>/.exec(t)[0];
+const rest=t.slice(open.length);
+const closeM=/<\/(?:script|style)\s*>$/i.exec(rest);
+const inner=closeM?rest.slice(0,rest.length-closeM[0].length):rest;
+out+=hlTag(open)+(m[1].toLowerCase()==="script"?hl(inner,HL_JS):hl(inner,HL_CSS))+(closeM?hlTag(closeM[0]):"")
+}else if(t.startsWith("<!"))out+='<span class="t-c">'+esc(t)+"</span>";
+else out+=hlTag(t);
+last=re.lastIndex
+}
+return out+esc(src.slice(last))
+}
+const KW_C="abstract|as|async|await|bool|boolean|break|byte|case|catch|char|class|const|continue|data|def|default|defer|delete|do|double|else|enum|export|extends|extern|false|final|finally|float|fn|for|fun|func|function|go|goto|if|impl|implements|import|in|inline|instanceof|int|interface|internal|let|long|match|mod|mut|namespace|new|nil|null|object|operator|override|package|private|protected|pub|public|readonly|ref|return|sealed|select|self|short|signed|static|string|struct|super|switch|this|throw|throws|trait|true|try|type|typedef|typeof|union|unsigned|use|using|val|var|virtual|void|volatile|where|while|with|yield";
+const KW_PY="and|as|assert|async|await|break|class|continue|def|del|elif|else|except|False|finally|for|from|global|if|import|in|is|lambda|None|nonlocal|not|or|pass|raise|return|True|try|while|with|yield|self|print";
+const KW_RB="alias|and|begin|break|case|class|def|defined|do|else|elsif|end|ensure|false|for|if|in|module|next|nil|not|or|redo|rescue|retry|return|self|super|then|true|undef|unless|until|when|while|yield|puts|require|attr_accessor";
+const KW_SH="if|then|else|elif|fi|for|while|do|done|case|esac|in|function|echo|export|local|return|exit|cd|ls|cat|grep|sudo|source";
+const KW_SQL="select|from|where|insert|into|values|update|set|delete|create|table|drop|alter|add|index|view|join|inner|left|right|outer|on|group|by|order|having|limit|offset|distinct|as|and|or|not|null|is|in|like|between|union|all|primary|key|foreign|references|default|count|sum|avg|min|max|case|when|then|else|end|begin|commit|rollback";
+const KW_PHP="abstract|and|array|as|break|case|catch|class|clone|const|continue|declare|default|do|echo|else|elseif|empty|extends|final|finally|for|foreach|function|global|if|implements|include|interface|isset|list|namespace|new|null|or|print|private|protected|public|require|return|static|switch|throw|trait|true|false|try|use|var|while";
+const KW_LUA="and|break|do|else|elseif|end|false|for|function|goto|if|in|local|nil|not|or|repeat|return|then|true|until|while";
+const R_SL=/\/\/[^\n]*/.source,R_HASH=/#[^\n]*/.source,R_DASH=/--[^\n]*/.source,R_BLK=/\/\*[\s\S]*?(?:\*\/|$)/.source;
+const R_STR=/"(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?/.source,R_TICK=/`[^`]*`?/.source,R_TRI=/"{3}[\s\S]*?(?:"{3}|$)|'{3}[\s\S]*?(?:'{3}|$)/.source;
+const R_NUM=/\b0x[0-9a-fA-F]+\b|\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b/.source,R_FN=/\b[A-Za-z_]\w*(?=\s*\()/.source,R_VAR=/\$[A-Za-z_]\w*/.source;
+const LANGS={};
+["c","h","cpp","cc","hpp","cs","java","go","rs","kt","kts","swift","dart","scala","groovy"].forEach(x=>{LANGS[x]={kw:KW_C,line:"//",block:true,tick:x==="go"}});
+LANGS.py={kw:KW_PY,line:"#",triple:true};LANGS.rb={kw:KW_RB,line:"#"};
+["sh","bash","zsh"].forEach(x=>{LANGS[x]={kw:KW_SH,line:"#"}});
+["yml","yaml","toml","ini","r","pl","conf","cfg"].forEach(x=>{LANGS[x]={kw:"true|false|null|yes|no|TRUE|FALSE|NULL",line:"#"}});
+LANGS.php={kw:KW_PHP,line:"//",block:true,dollar:true};LANGS.sql={kw:KW_SQL,line:"--",block:true,ci:true};LANGS.lua={kw:KW_LUA,line:"--"};
+const LANG_NAMES={html:"HTML",htm:"HTML",css:"CSS",scss:"SCSS",less:"Less",js:"JavaScript",mjs:"JavaScript",ts:"TypeScript",tsx:"TSX",jsx:"JSX",json:"JSON",md:"Markdown",svg:"SVG",txt:"Text",xml:"XML",py:"Python",java:"Java",c:"C",h:"C header",cpp:"C++",cc:"C++",hpp:"C++ header",cs:"C#",go:"Go",rs:"Rust",kt:"Kotlin",swift:"Swift",dart:"Dart",scala:"Scala",rb:"Ruby",sh:"Shell",bash:"Shell",php:"PHP",sql:"SQL",lua:"Lua",r:"R",pl:"Perl",yml:"YAML",yaml:"YAML",toml:"TOML",ini:"INI"};
+const LANG_RULES={};
+function langRules(ext){
+if(LANG_RULES[ext])return LANG_RULES[ext];
+const c=LANGS[ext];if(!c)return null;
+const r=[];
+if(c.block)r.push([R_BLK,"t-c"]);
+r.push([c.line==="#"?R_HASH:c.line==="--"?R_DASH:R_SL,"t-c"]);
+if(c.triple)r.push([R_TRI,"t-s"]);
+r.push([R_STR+(c.tick?"|"+R_TICK:""),"t-s"]);
+if(c.dollar)r.push([R_VAR,"t-a"]);
+r.push(["\\b(?:"+c.kw+")\\b","t-k"]);
+r.push([R_NUM,"t-n"]);
+r.push([R_FN,"t-f"]);
+return LANG_RULES[ext]=r
+}
+["kts","dart","scala","groovy","lua","r","pl","hs","jl","ex","exs","erl","clj","gradle","bash","zsh","bat","cmd","ps1","dockerfile","makefile","conf","properties","lock","tex","rst","graphql","proto","ipynb","hpp","cc"].forEach(x=>TEXT_EXT.add(x));
+Object.assign(FI_CLASS,{py:"fi-py",java:"fi-java",c:"fi-c",h:"fi-c",cpp:"fi-c",cc:"fi-c",hpp:"fi-c",cs:"fi-cs",go:"fi-go",rs:"fi-rs",php:"fi-php",rb:"fi-rb",sh:"fi-sh",bash:"fi-sh",sql:"fi-sql",kt:"fi-java",swift:"fi-rs",lua:"fi-c",ts:"fi-ts",tsx:"fi-ts",yml:"fi-json",yaml:"fi-json",xml:"fi-html"});
+Object.assign(FI_LABEL,{py:"Py",java:"Jv",c:"C",h:"H",cpp:"C+",cc:"C+",hpp:"H+",cs:"C#",go:"Go",rs:"Rs",php:"Ph",rb:"Rb",sh:"$",bash:"$",sql:"Sq",kt:"Kt",swift:"Sw",lua:"Lu",yml:"Y",yaml:"Y",xml:"‹›"});
+const CL_STARTERS={js:'console.log("Hello, world!");\n',py:'print("Hello, world!")\n',java:'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, world!");\n  }\n}\n',c:'#include <stdio.h>\n\nint main(void) {\n  printf("Hello, world!\\n");\n  return 0;\n}\n',cpp:'#include <iostream>\n\nint main() {\n  std::cout << "Hello, world!" << std::endl;\n  return 0;\n}\n',cs:'using System;\n\nclass Program {\n  static void Main() {\n    Console.WriteLine("Hello, world!");\n  }\n}\n',go:'package main\n\nimport "fmt"\n\nfunc main() {\n  fmt.Println("Hello, world!")\n}\n',rs:'fn main() {\n    println!("Hello, world!");\n}\n',php:'<?php\necho "Hello, world!\\n";\n',rb:'puts "Hello, world!"\n',sh:'echo "Hello, world!"\n',kt:'fun main() {\n    println("Hello, world!")\n}\n',swift:'print("Hello, world!")\n',lua:'print("Hello, world!")\n',ts:'const msg: string = "Hello, world!";\nconsole.log(msg);\n',sql:'SELECT "Hello, world!" AS greeting;\n',css:'/* Styles */\n',json:'{\n  \n}\n',md:'# Title\n'};
+const PISTON={c:"c",cpp:"c++",cc:"c++",cs:"csharp",java:"java",go:"go",rs:"rust",rb:"ruby",php:"php",sh:"bash",bash:"bash",kt:"kotlin",swift:"swift",dart:"dart",lua:"lua",r:"r",pl:"perl",ts:"typescript",sql:"sqlite3",scala:"scala",hs:"haskell",jl:"julia",ex:"elixir"};
+function clRunKind(path,p){
+const ext=extOf(path);
+if(ext==="py")return"py";
+if(ext==="js"||ext==="mjs")return p.files.some(f=>isHtmlPath(f.path))?null:"js";
+return PISTON[ext]?"online":null
+}
+function clHL(src,ext){
+if(["html","htm","vue","xml","svg"].includes(ext))return hlHTML(src);
+if(["css","scss","less"].includes(ext))return hl(src,HL_CSS);
+if(["js","mjs","cjs","ts","tsx","jsx","json"].includes(ext))return hl(src,HL_JS);
+const lr=langRules(ext);
+if(lr)return hl(src,lr,LANGS[ext].ci?"gi":"g");
+return esc(src)
+}
+
+/* ---------- mount / layout ---------- */
+function clTemplate(){
+return`<div class="ide" id="ide" data-mode="wide" data-pane="${clUI.pane}">
+<div class="ide-bar">
+<button class="ib" data-cl="togfiles" title="Files" aria-label="Toggle file explorer">☰</button>
+<button class="ib proj" data-cl="projects" title="Projects"><span id="clpname">${esc(clP().name)}</span> ▾</button>
+<span class="ide-sp"></span>
+<span class="ide-save" id="clsave">Saved</span>
+<button class="ib hide-n" data-cl="togprev" title="Show / hide preview" aria-label="Toggle preview">◨</button>
+<button class="ib run" data-cl="run" title="Run (Ctrl+Enter)" aria-label="Run">▶<span class="hide-s"> Run</span></button>
+<button class="ib" data-cl="openbrowser" title="Open in browser" aria-label="Open in browser">↗</button>
+<button class="ib" data-cl="menu" title="More" aria-label="More options">⋮</button>
+</div>
+<div class="ide-body">
+<aside class="ide-files" id="clfiles">
+<div class="cl-fhead"><span>FILES</span><div class="cl-fact"><button class="cl-fb" data-cl="newfile">+ File</button><button class="cl-fb" data-cl="newfolder">+ Folder</button><button class="cl-fb" data-cl="upload">Upload</button></div></div>
+<div class="cl-tree" id="cltree"></div>
+</aside>
+<section class="ide-edit">
+<div class="cl-tabs" id="cltabs"></div>
+<div class="cl-find" id="clfind"><input id="clfq" placeholder="Find" autocomplete="off" spellcheck="false"><input id="clfr" placeholder="Replace" autocomplete="off" spellcheck="false"><button class="cl-fb" data-cl="fprev">↑</button><button class="cl-fb" data-cl="fnext">↓</button><button class="cl-fb" data-cl="frep">Replace</button><button class="cl-fb" data-cl="fall">All</button><button class="cl-fb" data-cl="fclose">✕</button></div>
+<div class="cl-ed" id="cled"></div>
+<div class="cl-keys" id="clkeys">${["Tab","{","}","(",")","[","]","<",">","/",";",":","=","\"","'","`","$","#","undo","redo"].map(k=>`<button data-cl="key" data-k="${esc(k)}">${k==="undo"?"↶":k==="redo"?"↷":esc(k)}</button>`).join("")}</div>
+<div class="cl-status" id="clstatus"></div>
+</section>
+<section class="ide-prev">
+<iframe id="clrunner" sandbox="allow-scripts" title="Code runner" style="display:none"></iframe>
+<div class="cl-phead"><select id="clsel" aria-label="Page to preview"></select><button class="ib" data-cl="reload" title="Reload preview" aria-label="Reload">⟳</button><button class="ib" data-cl="pvw" title="Device width" aria-label="Device width">▭</button><button class="ib" data-cl="console" title="Console" aria-label="Console">⌨<span class="badge" id="clconbadge"></span></button><button class="ib hide-n" data-cl="maxprev" title="Maximize preview" aria-label="Maximize preview">⛶</button><button class="ib" data-cl="openbrowser" title="Open in browser" aria-label="Open in browser">↗</button></div>
+<div class="cl-pv" id="clpv" data-w="${clUI.w}"><iframe id="clframe" title="Live preview" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads"></iframe></div>
+<div class="cl-con${clUI.con?" on":""}" id="clcon"><div class="cl-chead"><span>CONSOLE</span><button data-cl="clearcon">Clear</button></div><div class="cl-log" id="cllog"></div><div class="cl-conin"><input id="clcmd" placeholder="Run JavaScript in the preview…" autocomplete="off" spellcheck="false" autocapitalize="off"></div></div>
+</section>
+</div>
+<div class="cl-switch"><button data-cl="pane" data-p="files">Files</button><button data-cl="pane" data-p="editor">Editor</button><button data-cl="pane" data-p="preview">Preview</button></div>
+<input type="file" id="clupload" multiple hidden>
+<input type="file" id="clzip" accept=".zip,application/zip,application/x-zip-compressed" hidden>
+</div>`
+}
+function clMount(){
+const app=$("#app");
+if(!clReady){
+app.innerHTML=`<div class="ide"><div class="cl-empty">Loading Code Lab…</div></div>`;
+clLoad().then(()=>{if(view==="lab")render()});
+return
+}
+app.innerHTML=clTemplate();
+const ide=$("#ide");
+clMode=null;
+clRO=new ResizeObserver(clResize);clRO.observe(ide);clResize();
+clRenderFiles();clRenderTabs();clLoadEditor();clFillSel();clRenderLogs();
+$("#clkeys").addEventListener("pointerdown",e=>e.preventDefault());
+$("#clupload").onchange=async e=>{const f=[...e.target.files];e.target.value="";await clUpload(f)};
+$("#clzip").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(f)await clNewProjectFromZip(f)};
+ide.addEventListener("dragover",e=>{e.preventDefault();ide.classList.add("drag")});
+ide.addEventListener("dragleave",e=>{if(e.target===ide)ide.classList.remove("drag")});
+ide.addEventListener("drop",async e=>{e.preventDefault();ide.classList.remove("drag");const f=[...(e.dataTransfer?.files||[])];if(f.length)await clUpload(f)});
+$("#clcmd").addEventListener("keydown",e=>{
+if(e.key!=="Enter")return;
+const v=e.target.value.trim();if(!v)return;
+e.target.value="";
+clLogs.push({level:"cmd",text:"> "+v});clRenderLogs();
+const fr=$("#clframe");try{fr.contentWindow.postMessage({lumenEval:v},"*")}catch(_){}
+});
+$("#clfq").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clFindNext(e.shiftKey?-1:1)}});
+$("#clsel").onchange=e=>{clPvPath=e.target.value;clRun(true)};
+clSetPane(clUI.pane,true);
+setTimeout(()=>clRun(false),30)
+}
+function clTeardown(){
+if(clRO){clRO.disconnect();clRO=null}
+clearTimeout(clPvTimer);
+if(clDirty)clSaveNow();
+const ta=document.getElementById("clta");if(ta&&cl)clRemember()
+}
+function clResize(){
+const ide=$("#ide");if(!ide)return;
+const w=ide.clientWidth;
+const mode=w>=920?"wide":w>=720?"mid":"narrow";
+if(mode!==clMode){clMode=mode;clUI.files=mode==="wide";if(mode!=="narrow"&&clUI.pane==="files")clUI.pane="editor"}
+ide.dataset.mode=mode;ide.dataset.pane=clUI.pane;
+ide.classList.toggle("files-on",!!clUI.files);
+ide.classList.toggle("prev-on",clUI.prev!==false);
+ide.classList.toggle("maxprev",!!clUI.maxprev);
+clSync()
+}
+function clSetPane(p,noRun){
+clUI.pane=p;
+const ide=$("#ide");if(ide)ide.dataset.pane=p;
+document.querySelectorAll(".cl-switch button").forEach(b=>b.classList.toggle("on",b.dataset.p===p));
+if(p==="preview"&&!noRun)clRun(false);
+setTimeout(clSync,0)
+}
+const clNarrow=()=>$("#ide")?.dataset.mode==="narrow";
+
+/* ---------- explorer, tabs ---------- */
+function clTree(p){
+const root={dirs:{},files:[],path:""};
+const dive=(parts,upto)=>{let n=root;for(let i=0;i<upto;i++){const k=parts[i];n=n.dirs[k]||(n.dirs[k]={dirs:{},files:[],path:parts.slice(0,i+1).join("/")})}return n};
+for(const f of p.files){const parts=f.path.split("/");dive(parts,parts.length-1).files.push(f)}
+for(const d of p.dirs){const parts=d.split("/");dive(parts,parts.length)}
+return root
+}
+function clTreeHTML(n,depth,p){
+let h="";
+for(const k of Object.keys(n.dirs).sort((a,b)=>a.localeCompare(b))){
+const d=n.dirs[k],open=p.expanded[d.path]!==false;
+h+=`<div class="cl-row${clSelDirV===d.path?" sel":""}" data-cl="dir" data-path="${esc(d.path)}" style="padding-left:${8+depth*14}px"><span class="fi fi-dir">${open?"▾":"▸"}</span><span class="cl-name">📁 ${esc(k)}</span><button class="cl-m" data-cl="fmenu" data-kind="dir" data-path="${esc(d.path)}" aria-label="Folder options">⋯</button></div>`;
+if(open)h+=clTreeHTML(d,depth+1,p)
+}
+for(const f of n.files.slice().sort((a,b)=>baseOf(a.path).localeCompare(baseOf(b.path)))){
+h+=`<div class="cl-row${f.path===p.active?" on":""}" data-cl="open" data-path="${esc(f.path)}" style="padding-left:${8+depth*14}px"><span class="fi ${fiClass(f.path)}">${fiLabel(f.path)}</span><span class="cl-name">${esc(baseOf(f.path))}</span><button class="cl-m" data-cl="fmenu" data-kind="file" data-path="${esc(f.path)}" aria-label="File options">⋯</button></div>`
+}
+return h
+}
+function clRenderFiles(){
+const el=$("#cltree");if(!el)return;
+const p=clP();
+el.innerHTML=p.files.length||p.dirs.length?clTreeHTML(clTree(p),0,p):`<div class="cl-none">No files yet.<br>Tap “+ File” to create one, or “Upload” to add your own.</div>`;
+const pn=$("#clpname");if(pn)pn.textContent=p.name
+}
+function clRenderTabs(){
+const el=$("#cltabs");if(!el)return;
+const p=clP();
+p.open=p.open.filter(x=>clF(x));
+if(p.active&&!clF(p.active))p.active=p.open[p.open.length-1]||null;
+el.innerHTML=p.open.map(x=>`<div class="cl-tab${x===p.active?" on":""}" data-cl="tab" data-path="${esc(x)}"><span class="fi ${fiClass(x)}">${fiLabel(x)}</span><span>${esc(baseOf(x))}</span><button data-cl="closetab" data-path="${esc(x)}" aria-label="Close ${esc(baseOf(x))}">×</button></div>`).join("");
+const on=el.querySelector(".cl-tab.on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"nearest",block:"nearest"})
+}
+function clOpen(path){
+const p=clP();if(!clF(path))return;
+clRemember();
+if(!p.open.includes(path))p.open.push(path);
+p.active=path;clSelDirV=dirOf(path);
+if(isHtmlPath(path))clPvPath=path;
+clChanged();clRenderTabs();clRenderFiles();clLoadEditor();clFillSel();
+if(clNarrow())clSetPane("editor");
+if(isHtmlPath(path))clRun(false);
+if(!clNarrow()&&clMode==="mid"){clUI.files=false;clResize()}
+}
+function clCloseTab(path){
+const p=clP(),i=p.open.indexOf(path);if(i<0)return;
+clRemember();
+p.open.splice(i,1);
+if(p.active===path)p.active=p.open[Math.min(i,p.open.length-1)]||null;
+clChanged();clRenderTabs();clRenderFiles();clLoadEditor()
+}
+
+/* ---------- editor ---------- */
+function clRemember(){const ta=document.getElementById("clta");if(!ta||!cl)return;const a=clP().active;if(a)clViewState[a]={s:ta.selectionStart,e:ta.selectionEnd,top:ta.scrollTop,left:ta.scrollLeft}}
+function clLoadEditor(){
+const p=clP(),f=clF(p.active),ed=$("#cled");if(!ed)return;
+if(!f){
+ed.innerHTML=`<div class="cl-empty"><div style="font-size:34px">⌨</div><div>No file open.<br>Pick a file from the explorer or create a new one.</div><button class="primary" data-cl="newfile">+ New file</button></div>`;
+clStatus();return
+}
+if(f.bin){
+if(isImgExt(f.path))ed.innerHTML=`<div class="cl-img"><img src="${esc(f.content)}" alt="${esc(baseOf(f.path))}"><div>${esc(baseOf(f.path))} · ${fmtBytes(f.content.length*0.75|0)}</div></div>`;
+else ed.innerHTML=`<div class="cl-empty"><div style="font-size:34px">📄</div><div><b>${esc(baseOf(f.path))}</b><br>Binary file · ${fmtBytes(f.content.length*0.75|0)}<br>It can't be edited here.</div><button class="primary" data-cl="mact" data-do="dl" data-path="${esc(f.path)}">Download</button></div>`;
+clStatus();return
+}
+ed.innerHTML=`<div class="cl-gut"><pre class="cl-gutin" id="clgutin"></pre></div><pre class="cl-hl" id="clhl" aria-hidden="true"></pre><textarea class="cl-ta" id="clta" wrap="off" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" aria-label="Code editor"></textarea>`;
+const ta=$("#clta");ta.value=f.content;
+ta.addEventListener("input",clOnInput);
+ta.addEventListener("scroll",clSync,{passive:true});
+ta.addEventListener("keydown",clKeydown);
+ta.addEventListener("blur",clRemember);
+const v=clViewState[f.path];
+clHighlight();
+if(v){try{ta.setSelectionRange(v.s,v.e)}catch(_){}ta.scrollTop=v.top;ta.scrollLeft=v.left;clSync()}
+clStatus()
+}
+function clHighlight(){
+const ta=$("#clta"),hlEl=$("#clhl"),gut=$("#clgutin");if(!ta||!hlEl)return;
+const f=clF(clP().active);
+const v=ta.value;
+hlEl.innerHTML=(v.length>250000?esc(v):clHL(v,extOf(f?f.path:"")))+"\n";
+const n=v.split("\n").length;
+if(gut.dataset.n!==String(n)){gut.textContent=Array.from({length:n},(_,i)=>i+1).join("\n");gut.dataset.n=String(n)}
+clSync()
+}
+function clSync(){
+const ta=document.getElementById("clta");if(!ta)return;
+const hlEl=document.getElementById("clhl"),gut=document.getElementById("clgutin");
+if(hlEl)hlEl.style.transform="translate("+(-ta.scrollLeft)+"px,"+(-ta.scrollTop)+"px)";
+if(gut)gut.style.transform="translateY("+(-ta.scrollTop)+"px)"
+}
+function clStatus(){
+const el=$("#clstatus");if(!el)return;
+const p=clP(),f=clF(p.active);
+if(!f){el.textContent="No file open";return}
+const ta=document.getElementById("clta");
+let pos="";
+if(ta){const s=ta.selectionStart,b=ta.value.slice(0,s);pos="Ln "+b.split("\n").length+", Col "+(s-b.lastIndexOf("\n"))+(ta.selectionEnd!==s?" ("+(ta.selectionEnd-s)+" selected)":"")+" · "}
+const ext=extOf(f.path);
+const lang=LANG_NAMES[ext]||(ext||"text").toUpperCase();
+el.innerHTML="<span>"+pos+lang+"</span><span>Spaces: 2</span><span>UTF-8</span>"
+}
+document.addEventListener("selectionchange",()=>{if(document.activeElement&&document.activeElement.id==="clta")clStatus()});
+function clOnInput(){
+const p=clP(),f=clF(p.active),ta=$("#clta");if(!f||!ta)return;
+f.content=ta.value;p.updated=Date.now();
+clHighlight();clStatus();clChanged();clLiveRun()
+}
+function clInsert(ta,text,back){
+ta.focus();
+let ok=false;
+try{ok=document.execCommand&&document.execCommand("insertText",false,text)}catch(e){}
+if(!ok){ta.setRangeText(text,ta.selectionStart,ta.selectionEnd,"end");ta.dispatchEvent(new Event("input",{bubbles:true}))}
+if(back){const q=ta.selectionEnd-back;ta.setSelectionRange(q,q)}
+}
+function clIndent(ta){
+const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
+if(s===e){clInsert(ta,"  ");return}
+const ls=v.lastIndexOf("\n",s-1)+1,block=v.slice(ls,e);
+ta.setSelectionRange(ls,e);
+clInsert(ta,block.replace(/^/gm,"  "));
+ta.setSelectionRange(s+2,e+2*block.split("\n").length)
+}
+function clOutdent(ta){
+const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;
+const ls=v.lastIndexOf("\n",s-1)+1,block=v.slice(ls,e);
+const out=block.replace(/^(?: {1,2}|\t)/gm,"");
+if(out===block)return;
+ta.setSelectionRange(ls,e);clInsert(ta,out);
+const removedFirst=block.length-block.replace(/^(?: {1,2}|\t)/,"").length;
+ta.setSelectionRange(Math.max(ls,s-removedFirst),ls+out.length)
+}
+const VOID_TAGS=new Set(["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"]);
+function clKeydown(e){
+const ta=e.target,f=clF(clP().active);
+if(!f)return;
+const mod=e.ctrlKey||e.metaKey;
+if(mod&&e.key.toLowerCase()==="s"){e.preventDefault();clSaveNow();toast("Saved");return}
+if(mod&&e.key.toLowerCase()==="f"){e.preventDefault();clToggleFind(true);return}
+if(e.key==="Tab"){e.preventDefault();e.shiftKey?clOutdent(ta):clIndent(ta);return}
+if(mod||e.altKey||e.isComposing)return;
+const v=ta.value,s=ta.selectionStart,en=ta.selectionEnd;
+if(e.key==="Enter"){
+e.preventDefault();
+const ls=v.lastIndexOf("\n",s-1)+1,line=v.slice(ls,s),ind=line.match(/^[ \t]*/)[0];
+const prev=v.charAt(s-1),next=v.charAt(en);
+const pairOpen="{[(".includes(prev)&&prev!==""&&"}])"["{[(".indexOf(prev)]===next;
+const tagPair=prev===">"&&v.slice(en,en+2)==="</";
+if(pairOpen||tagPair)clInsert(ta,"\n"+ind+"  \n"+ind,1+ind.length);
+else clInsert(ta,"\n"+ind+(/[{(\[]\s*$/.test(line)?"  ":""));
+return
+}
+const closing=")]}\"'`";
+if(s===en&&closing.includes(e.key)&&v.charAt(s)===e.key){e.preventDefault();ta.setSelectionRange(s+1,s+1);return}
+const pairs={"(":")","[":"]","{":"}",'"':'"',"'":"'","`":"`"};
+if(pairs[e.key]&&s===en){
+const before=v.charAt(s-1),after=v.charAt(s);
+const quote=e.key==='"'||e.key==="'"||e.key==="`";
+if(quote&&/[\w]/.test(before))return;
+if(after&&/[\w]/.test(after))return;
+e.preventDefault();clInsert(ta,e.key+pairs[e.key],1);return
+}
+if(e.key==="Backspace"&&s===en&&s>0){
+const a=v.charAt(s-1),b=v.charAt(s);
+if(pairs[a]&&pairs[a]===b){e.preventDefault();ta.setSelectionRange(s-1,s+1);clInsert(ta,"");return}
+}
+if(e.key===">"&&["html","htm","vue","xml","svg"].includes(extOf(f.path))&&s===en){
+const lt=v.lastIndexOf("<",s-1);
+if(lt>=0&&v.slice(lt,s).indexOf(">")<0){
+const m=/^<([A-Za-z][\w:-]*)(?:\s[^<>]*)?$/.exec(v.slice(lt,s));
+if(m&&!VOID_TAGS.has(m[1].toLowerCase())&&v.charAt(s-1)!=="/"){e.preventDefault();clInsert(ta,"></"+m[1]+">",m[1].length+3)}
+}
+}
+}
+function clKeyPress(k){
+const ta=document.getElementById("clta");if(!ta)return;
+ta.focus();
+if(k==="Tab")clIndent(ta);
+else if(k==="undo")document.execCommand("undo");
+else if(k==="redo")document.execCommand("redo");
+else clInsert(ta,k)
+}
+
+/* ---------- find & replace ---------- */
+function clToggleFind(on){
+clUI.find=on===undefined?!clUI.find:on;
+const el=$("#clfind");if(el)el.classList.toggle("on",clUI.find);
+if(clUI.find)setTimeout(()=>{const q=$("#clfq");if(q){q.focus();q.select()}},30)
+}
+function clFindNext(dir){
+const ta=document.getElementById("clta"),q=$("#clfq").value;
+if(!ta||!q)return;
+const v=ta.value;
+let i=dir>0?v.indexOf(q,ta.selectionEnd):(ta.selectionStart>0?v.lastIndexOf(q,ta.selectionStart-1):-1);
+if(i<0)i=dir>0?v.indexOf(q):v.lastIndexOf(q);
+if(i<0){toast("No matches");return}
+ta.setSelectionRange(i,i+q.length);
+const line=v.slice(0,i).split("\n").length-1;
+ta.scrollTop=Math.max(0,line*(parseFloat(getComputedStyle(ta).lineHeight)||20)-ta.clientHeight/3);
+clSync();clStatus()
+}
+function clReplace(all){
+const ta=document.getElementById("clta"),q=$("#clfq").value,r=$("#clfr").value;
+if(!ta||!q)return;
+if(all){
+const n=ta.value.split(q).length-1;if(!n){toast("No matches");return}
+ta.focus();ta.setSelectionRange(0,ta.value.length);clInsert(ta,ta.value.split(q).join(r));toast("Replaced "+n+" match"+(n>1?"es":""));return
+}
+if(ta.value.slice(ta.selectionStart,ta.selectionEnd)===q){ta.focus();clInsert(ta,r)}
+clFindNext(1)
+}
+
+/* ---------- file operations ---------- */
+function clAddFile(path,content,bin,quiet){
+const p=clP();path=normPath(path);
+if(!path||badName(path)){if(!quiet)toast("Enter a valid file name");return false}
+if(p.files.some(f=>f.path===path)){if(!quiet)toast("“"+path+"” already exists");return false}
+if(p.dirs.includes(path)||p.files.some(f=>path.startsWith(f.path+"/"))||p.files.some(f=>f.path.startsWith(path+"/"))){if(!quiet)toast("That name conflicts with a folder");return false}
+p.files.push({path,content:content||"",bin:!!bin});
+return true
+}
+function clNewFile(dir){
+const d=typeof dir==="string"?dir:clSelDirV;
+clPrompt("New file",d?d+"/":"","Create",val=>{
+const path=normPath(val);if(!path)return;
+const start=isHtmlPath(path)?CL_STARTER_HTML:(CL_STARTERS[extOf(path)]||"");
+if(clAddFile(path,start,false)){clChanged();clOpen(path)}
+},"Use folders like css/theme.css")
+}
+function clNewFolder(dir){
+const d=typeof dir==="string"?dir:clSelDirV;
+clPrompt("New folder",d?d+"/":"","Create",val=>{
+const path=normPath(val);if(!path||badName(path))return;
+const p=clP();
+if(p.dirs.includes(path)||p.files.some(f=>f.path===path)){toast("Already exists");return}
+p.dirs.push(path);p.expanded[path]=true;clSelDirV=path;clChanged();clRenderFiles()
+})
+}
+function clDelete(path,kind){
+const p=clP();
+if(!confirm("Delete "+(kind==="dir"?"folder “"+path+"” and everything inside it":"“"+path+"”")+"?"))return;
+const inside=x=>x===path||x.startsWith(path+"/");
+if(kind==="dir"){p.files=p.files.filter(f=>!inside(f.path));p.dirs=p.dirs.filter(d=>!inside(d))}
+else p.files=p.files.filter(f=>f.path!==path);
+p.open=p.open.filter(x=>!inside(x));
+if(p.active&&inside(p.active))p.active=p.open[p.open.length-1]||null;
+if(clPvPath&&inside(clPvPath))clPvPath=null;
+if(clSelDirV&&inside(clSelDirV))clSelDirV="";
+clChanged();clRenderTabs();clRenderFiles();clLoadEditor();clFillSel();clRun(false);toast("Deleted")
+}
+function clRename(path,kind){
+clPrompt("Rename / move "+(kind==="dir"?"folder":"file"),path,"Rename",val=>{
+const np=normPath(val),p=clP();
+if(!np||np===path||badName(np))return;
+if(kind==="dir"&&np.startsWith(path+"/")){toast("Can't move a folder into itself");return}
+const map=x=>x===path?np:x.startsWith(path+"/")?np+x.slice(path.length):x;
+const moving=p.files.filter(f=>kind==="dir"?(f.path===path||f.path.startsWith(path+"/")):f.path===path).map(f=>map(f.path));
+const others=p.files.filter(f=>!(kind==="dir"?(f.path===path||f.path.startsWith(path+"/")):f.path===path)).map(f=>f.path);
+if(moving.some(x=>others.includes(x))||(kind==="file"&&p.dirs.includes(np))){toast("That name already exists");return}
+p.files.forEach(f=>{f.path=map(f.path)});
+p.dirs=p.dirs.map(map);
+p.open=p.open.map(map);
+if(p.active)p.active=map(p.active);
+const ex={};for(const k in p.expanded)ex[map(k)]=p.expanded[k];p.expanded=ex;
+if(clPvPath)clPvPath=map(clPvPath);
+if(clSelDirV)clSelDirV=map(clSelDirV);
+clChanged();clRenderTabs();clRenderFiles();clLoadEditor();clFillSel();clRun(false)
+})
+}
+function clDupFile(path){
+const p=clP(),f=clF(path);if(!f)return;
+const ext=extOf(path),stem=ext?path.slice(0,-(ext.length+1)):path;
+let n=path,i=1;
+while(p.files.some(x=>x.path===n)){n=stem+"-copy"+(i>1?i:"")+(ext?"."+ext:"");i++}
+p.files.push({path:n,content:f.content,bin:f.bin});
+clChanged();clOpen(n)
+}
+function clSaveBlob(blob,name){
+const url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),4000)
+}
+function dataURLToBytes(u){
+const i=u.indexOf(","),meta=u.slice(0,i),b=u.slice(i+1);
+if(/;base64/i.test(meta)){const bin=atob(b),out=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)out[k]=bin.charCodeAt(k);return out}
+return new TextEncoder().encode(decodeURIComponent(b))
+}
+function bytesToB64(u8){let t="";for(let i=0;i<u8.length;i+=32768)t+=String.fromCharCode.apply(null,u8.subarray(i,i+32768));return btoa(t)}
+function clDownloadFile(path){
+const f=clF(path);if(!f)return;
+clSaveBlob(f.bin?new Blob([dataURLToBytes(f.content)],{type:mimeOf(path)}):new Blob([f.content],{type:"text/plain;charset=utf-8"}),baseOf(path))
+}
+
+/* ---------- ZIP ---------- */
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function zipBlob(entries){
+const enc=new TextEncoder(),chunks=[],central=[];let off=0;
+const d=new Date(),dt=((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate(),tm=(d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1);
+for(const e of entries){
+const name=enc.encode(e.name),data=e.data,crc=crc32(data);
+const lh=new DataView(new ArrayBuffer(30));
+lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);lh.setUint16(8,0,true);lh.setUint16(10,tm,true);lh.setUint16(12,dt,true);lh.setUint32(14,crc,true);lh.setUint32(18,data.length,true);lh.setUint32(22,data.length,true);lh.setUint16(26,name.length,true);lh.setUint16(28,0,true);
+chunks.push(lh.buffer,name,data);
+const ch=new DataView(new ArrayBuffer(46));
+ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);ch.setUint16(10,0,true);ch.setUint16(12,tm,true);ch.setUint16(14,dt,true);ch.setUint32(16,crc,true);ch.setUint32(20,data.length,true);ch.setUint32(24,data.length,true);ch.setUint16(28,name.length,true);ch.setUint32(42,off,true);
+central.push(ch.buffer,name);
+off+=30+name.length+data.length
+}
+const cs=central.reduce((a,b)=>a+b.byteLength,0);
+const end=new DataView(new ArrayBuffer(22));
+end.setUint32(0,0x06054b50,true);end.setUint16(8,entries.length,true);end.setUint16(10,entries.length,true);end.setUint32(12,cs,true);end.setUint32(16,off,true);
+return new Blob([...chunks,...central,end.buffer],{type:"application/zip"})
+}
+function clExportZip(){
+const p=clP(),enc=new TextEncoder();
+const entries=[];
+for(const d of p.dirs)entries.push({name:d+"/",data:new Uint8Array(0)});
+for(const f of p.files)entries.push({name:f.path,data:f.bin?dataURLToBytes(f.content):enc.encode(f.content)});
+const slug=(p.name||"project").replace(/[^\w.-]+/g,"-").replace(/^-+|-+$/g,"")||"project";
+clSaveBlob(zipBlob(entries),slug+".zip");
+toast("Exported "+slug+".zip")
+}
+async function inflateRaw(u8){
+const ds=new DecompressionStream("deflate-raw");
+return new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(ds)).arrayBuffer())
+}
+async function clReadZip(file){
+if(typeof DecompressionStream==="undefined")throw new Error("This browser can't open ZIP files");
+const buf=new Uint8Array(await file.arrayBuffer()),dv=new DataView(buf.buffer);
+let e=-1;
+for(let i=buf.length-22;i>=Math.max(0,buf.length-70000);i--){if(dv.getUint32(i,true)===0x06054b50){e=i;break}}
+if(e<0)throw new Error("That doesn't look like a ZIP file");
+const n=dv.getUint16(e+10,true);let q=dv.getUint32(e+16,true);
+const out=[],dec=new TextDecoder();
+for(let k=0;k<n;k++){
+if(dv.getUint32(q,true)!==0x02014b50)break;
+const method=dv.getUint16(q+10,true),csize=dv.getUint32(q+20,true),nl=dv.getUint16(q+28,true),el=dv.getUint16(q+30,true),cl2=dv.getUint16(q+32,true),off=dv.getUint32(q+42,true);
+const name=dec.decode(buf.subarray(q+46,q+46+nl));
+q+=46+nl+el+cl2;
+if(name.endsWith("/")||name.startsWith("__MACOSX/")||baseOf(name)===".DS_Store")continue;
+const lnl=dv.getUint16(off+26,true),lel=dv.getUint16(off+28,true);
+const data=buf.subarray(off+30+lnl+lel,off+30+lnl+lel+csize);
+if(method===0)out.push({name,bytes:data.slice()});
+else if(method===8)out.push({name,bytes:await inflateRaw(data)})
+}
+return out
+}
+function clStripRoot(entries){
+if(entries.length&&entries.every(x=>x.name.includes("/"))){
+const first=entries[0].name.split("/")[0];
+if(entries.every(x=>x.name.split("/")[0]===first))return entries.map(x=>({...x,name:x.name.slice(first.length+1)}))
+}
+return entries
+}
+function clImportEntries(p,entries,prefix){
+let added=0,replaced=0;
+const dec=new TextDecoder();
+for(const en of entries){
+const path=normPath((prefix?prefix+"/":"")+en.name);
+if(!path||badName(path))continue;
+const text=TEXT_EXT.has(extOf(path));
+const rec={path,content:text?dec.decode(en.bytes):"data:"+mimeOf(path)+";base64,"+bytesToB64(en.bytes),bin:!text};
+const ex=p.files.find(f=>f.path===path);
+if(ex){ex.content=rec.content;ex.bin=rec.bin;replaced++}else{p.files.push(rec);added++}
+}
+return{added,replaced}
+}
+function blobToDataURL(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(file)})}
+async function clUpload(files){
+const p=clP();let added=0,replaced=0,last=null;
+for(const file of files){
+try{
+if(/\.zip$/i.test(file.name)){
+const entries=clStripRoot(await clReadZip(file));
+const r=clImportEntries(p,entries,clSelDirV);added+=r.added;replaced+=r.replaced;
+const idx=entries.find(x=>baseOf(x.name)==="index.html");if(idx)last=normPath((clSelDirV?clSelDirV+"/":"")+idx.name);
+continue
+}
+const ext=extOf(file.name);
+const path=normPath((clSelDirV?clSelDirV+"/":"")+file.name);
+if(badName(path))continue;
+let rec;
+if(TEXT_EXT.has(ext)||/^text\//.test(file.type)||/json|javascript|xml/.test(file.type))rec={path,content:await file.text(),bin:false};
+else{
+if(file.size>15*1024*1024){toast(file.name+" is too large (max 15 MB)");continue}
+rec={path,content:await blobToDataURL(file),bin:true}
+}
+const ex=p.files.find(f=>f.path===path);
+if(ex){ex.content=rec.content;ex.bin=rec.bin;replaced++}else{p.files.push(rec);added++}
+last=path
+}catch(err){toast(String(err.message||err))}
+}
+if(added||replaced){
+clChanged();clRenderFiles();
+toast((added?added+" added":"")+(added&&replaced?" · ":"")+(replaced?replaced+" replaced":""));
+if(last&&clF(last))clOpen(last);else clRun(false)
+}
+}
+async function clNewProjectFromZip(file){
+try{
+const entries=clStripRoot(await clReadZip(file));
+if(!entries.length){toast("The ZIP file is empty");return}
+const np={id:uid(),name:file.name.replace(/\.zip$/i,"")||"Imported project",files:[],dirs:[],open:[],active:null,expanded:{},created:Date.now(),updated:Date.now()};
+clImportEntries(np,entries,"");
+const first=np.files.find(f=>f.path==="index.html")||np.files.find(f=>!f.bin);
+if(first){np.open=[first.path];np.active=first.path}
+cl.projects.unshift(np);cl.current=np.id;clPvPath=null;
+clChanged();render();toast("Imported “"+np.name+"”")
+}catch(err){toast(String(err.message||err))}
+}
+
+/* ---------- preview ---------- */
+const CL_BRIDGE='(function(){var P=parent;function s(a){try{if(typeof a==="string")return a;if(a instanceof Error)return a.stack||a.message;var f=function(k,v){return typeof v==="function"?"[Function]":v};var t=JSON.stringify(a,f);return t&&t.length>70?JSON.stringify(a,f,2):String(t)}catch(e){return String(a)}}'
++'["log","info","warn","error","debug"].forEach(function(l){var o=console[l];console[l]=function(){try{P.postMessage({lumenConsole:{level:l==="debug"?"log":l,text:[].map.call(arguments,s).join(" ")}},"*")}catch(e){}if(o)o.apply(console,arguments)}});'
++'console.clear=function(){P.postMessage({lumenConsole:{level:"clear"}},"*")};'
++'addEventListener("error",function(e){P.postMessage({lumenConsole:{level:"error",text:e.message+(e.lineno?" (line "+e.lineno+")":"")}},"*")});'
++'addEventListener("unhandledrejection",function(e){P.postMessage({lumenConsole:{level:"error",text:"Unhandled promise rejection: "+s(e.reason)}},"*")});'
++'addEventListener("message",function(e){if(e.data&&typeof e.data.lumenEval==="string"){try{var r=(0,eval)(e.data.lumenEval);console.log(r===undefined?"undefined":r)}catch(x){console.error(String(x))}}});'
++'document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;var h=a.getAttribute("href")||"";if(!h||h.charAt(0)==="#"||h.indexOf("javascript:")===0)return;if(h.indexOf("//")===0||/^[a-z][a-z0-9+.-]*:/i.test(h)){if(/^https?:/i.test(h)){e.preventDefault();window.open(h,"_blank")}return}e.preventDefault();P.postMessage({lumenNav:h},"*")});'
++'})();';
+const CL_STORAGE_SHIM='try{localStorage.getItem("_")}catch(x){(function(){function mk(){var d={};return{getItem:function(k){return k in d?d[k]:null},setItem:function(k,v){d[k]=String(v)},removeItem:function(k){delete d[k]},clear:function(){for(var k in d)delete d[k]},key:function(i){return Object.keys(d)[i]||null},get length(){return Object.keys(d).length}}}try{Object.defineProperty(window,"localStorage",{value:mk()});Object.defineProperty(window,"sessionStorage",{value:mk()})}catch(e){}})()}';
+function clEntry(p){
+if(clPvPath&&isHtmlPath(clPvPath)&&p.files.some(f=>f.path===clPvPath))return clPvPath;
+if(p.files.some(f=>f.path==="index.html"))return"index.html";
+const h=p.files.find(f=>isHtmlPath(f.path));return h?h.path:null
+}
+function clBuildDoc(p,entry,bridge){
+const files=new Map(p.files.map(f=>[f.path,f]));
+const dataURL=f=>f.bin?f.content:"data:"+mimeOf(f.path)+";charset=utf-8,"+encodeURIComponent(f.content);
+const find=(dir,ref)=>{
+if(!ref||/^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(ref))return null;
+let r=ref.split(/[?#]/)[0];try{r=decodeURIComponent(r)}catch(e){}
+return files.get(resolvePath(dir,r))||null
+};
+const cssFix=(css,dir)=>css.replace(/url\(\s*(["']?)([^"')]+)\1\s*\)/gi,(m,q,ref)=>{const f=find(dir,ref);return f?'url("'+dataURL(f)+'")':m});
+const base=dirOf(entry);
+let html=(files.get(entry)||{content:""}).content;
+html=html.replace(/<(?:img|video|audio|source|track|iframe|embed|object|input)\b[^>]*>/gi,tag=>tag.replace(/\b(src|poster|data)\s*=\s*(["'])([^"']+)\2/gi,(m,attr,q,ref)=>{const f=find(base,ref);return f?attr+"="+q+dataURL(f)+q:m}));
+html=html.replace(/<link\b[^>]*>/gi,tag=>{
+if(!/rel\s*=\s*["']?stylesheet/i.test(tag))return tag;
+const m=tag.match(/href\s*=\s*["']([^"']+)["']/i);const f=m&&find(base,m[1]);
+return f&&!f.bin?"<style>"+cssFix(f.content,dirOf(f.path)).replace(/<\/style/gi,"<\\/style")+"</style>":tag
+});
+html=html.replace(/<script\b([^>]*?)\bsrc\s*=\s*["']([^"']+)["']([^>]*)>\s*<\/script>/gi,(m,a,src,b)=>{
+const f=find(base,src);
+return f&&!f.bin?"<script"+a+b+">"+f.content.replace(/<\/script/gi,"<\\/script")+"<\/script>":m
+});
+html=html.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi,(m,a,c,b)=>a+cssFix(c,base)+b);
+const lf={};
+for(const f of p.files){
+if(f.bin||["html","htm","css","js","mjs"].includes(extOf(f.path))||f.content.length>200000)continue;
+lf[f.path]=f.content;
+if(base&&f.path.startsWith(base+"/"))lf[f.path.slice(base.length+1)]=f.content
+}
+const fetchShim='window.__LF='+JSON.stringify(lf).replace(/</g,"\\u003c")+';(function(){var F=window.fetch;if(!F)return;window.fetch=function(u){try{var s=(typeof u==="string"?u:u.url).split("#")[0].split("?")[0];while(s.indexOf("./")===0)s=s.slice(2);while(s.charAt(0)==="/")s=s.slice(1);if(window.__LF&&Object.prototype.hasOwnProperty.call(window.__LF,s))return Promise.resolve(new Response(window.__LF[s],{status:200,headers:{"Content-Type":s.slice(-5)===".json"?"application/json":"text/plain"}}))}catch(e){}return F.apply(this,arguments)}})();';
+const shim="<script>"+CL_STORAGE_SHIM+";"+(bridge?CL_BRIDGE:"")+fetchShim+"<\/script>";
+if(/<head\b[^>]*>/i.test(html))html=html.replace(/<head\b[^>]*>/i,m=>m+shim);
+else if(/<html\b[^>]*>/i.test(html))html=html.replace(/<html\b[^>]*>/i,m=>m+"<head>"+shim+"</head>");
+else html='<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+shim+html;
+return html
+}
+
+const CL_PY_DOC='<!doctype html><html><head><script>'+CL_STORAGE_SHIM+';'+CL_BRIDGE+'<\/script><script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"><\/script></head><body><script>'
++'var py=null;async function init(){if(typeof loadPyodide!=="function")throw new Error("Python could not be loaded. Connect to the internet and try again (needed the first time).");console.log("Loading Python (first run takes a few seconds)…");py=await loadPyodide();py.setStdout({batched:function(s){console.log(s)}});py.setStderr({batched:function(s){console.error(s)}})}'
++'async function run(d){try{if(!py)await init();for(var n in d.files){var i=n.lastIndexOf("/");if(i>0)py.FS.mkdirTree(n.slice(0,i));py.FS.writeFile(n,d.files[n])}await py.runPythonAsync(d.main);console.log("[finished]")}catch(e){console.error(String(e&&e.message||e))}}'
++'addEventListener("message",function(e){if(e.data&&e.data.lumenPy)run(e.data.lumenPy)});parent.postMessage({lumenReady:1},"*");'
++'<\/script></body></html>';
+function clRunActive(){
+const p=clP(),f=clF(p.active),kind=f&&!f.bin?clRunKind(f.path,p):null;
+if(kind)clRunCode(f,kind);else clRun(true)
+}
+async function clRunCode(f,kind){
+const p=clP(),rn=$("#clrunner");if(!rn)return;
+clUI.con=true;const con=$("#clcon");if(con)con.classList.add("on");
+if(clNarrow())clSetPane("preview",true);
+clLogs=[{level:"cmd",text:"▶ Running "+f.path+(kind==="online"?" (online runner)":"")+"…"}];clRenderLogs();
+if(kind==="js"){
+clRunnerKind="js";clRunnerReady=false;
+rn.srcdoc='<!doctype html><html><head><script>'+CL_STORAGE_SHIM+';'+CL_BRIDGE+'<\/script></head><body><script>'+f.content.replace(/<\/script/gi,"<\\/script")+'\n<\/script></body></html>';
+return
+}
+if(kind==="py"){
+const files={};for(const x of p.files){if(!x.bin&&extOf(x.path)==="py")files[x.path]=x.content}
+const job={files,main:f.content};
+if(clRunnerKind==="py"&&clRunnerReady)rn.contentWindow.postMessage({lumenPy:job},"*");
+else{clRunnerKind="py";clRunnerReady=false;clPyJob=job;rn.srcdoc=CL_PY_DOC}
+return
+}
+try{
+let ok=false;try{ok=localStorage.getItem("lumen-run-consent")==="1"}catch(e){}
+if(!ok){
+if(!confirm("This language runs on an online code runner ("+CONFIG.RUN_ENDPOINT.replace(/^https?:\/\//,"").split("/")[0]+"). Your code is sent to that service to be executed. Continue?")){clLogs.push({level:"warn",text:"Cancelled."});clRenderLogs();return}
+try{localStorage.setItem("lumen-run-consent","1")}catch(e){}
+}
+const r=await fetch(CONFIG.RUN_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({language:PISTON[extOf(f.path)],version:"*",files:[{name:baseOf(f.path),content:f.content}]})});
+if(!r.ok)throw new Error("the runner answered with status "+r.status);
+const d=await r.json();
+if(d.message)throw new Error(d.message);
+const add=(level,t)=>{if(t)String(t).replace(/\n$/,"").split("\n").forEach(l=>clLogs.push({level,text:l}))};
+if(d.compile){add("error",d.compile.stderr);if(d.compile.stdout&&!d.compile.stderr)add("info",d.compile.stdout)}
+if(d.run){add("log",d.run.stdout);add("error",d.run.stderr);clLogs.push({level:"info",text:"[exited with code "+(d.run.code??0)+"]"})}
+clRenderLogs()
+}catch(err){
+clLogs.push({level:"error",text:"Couldn't run this online ("+(err.message||err)+"). Check your internet connection, or set your own runner in CONFIG.RUN_ENDPOINT."});clRenderLogs()
+}
+}
+function clFillSel(){
+const sel=$("#clsel");if(!sel)return;
+const p=clP(),pages=p.files.filter(f=>isHtmlPath(f.path)).map(f=>f.path),cur=clEntry(p);
+sel.innerHTML=pages.length?pages.map(x=>`<option value="${esc(x)}"${x===cur?" selected":""}>${esc(x)}</option>`).join(""):`<option value="">No HTML file</option>`
+}
+function clRun(force){
+const frame=$("#clframe");if(!frame)return;
+const p=clP(),entry=clEntry(p);
+clearTimeout(clPvTimer);
+if(!entry){
+frame.srcdoc='<!doctype html><body style="margin:0;display:grid;place-items:center;height:100vh;font:15px Arial,sans-serif;color:#667;background:#f4f6fb;text-align:center;padding:20px"><div>No HTML file to preview yet.<br>Create <b>index.html</b> to get started.</div></body>';
+return
+}
+clPvPath=entry;clFillSel();
+clLogs=[];clRenderLogs();
+frame.srcdoc=clBuildDoc(p,entry,true);
+if(force&&clNarrow()&&clUI.pane!=="preview")clSetPane("preview",true)
+}
+function clPreviewVisible(){
+const ide=$("#ide");if(!ide)return false;
+if(ide.dataset.mode==="narrow")return clUI.pane==="preview";
+return clUI.prev!==false
+}
+function clLiveRun(){
+if(!clUI.live||!clPreviewVisible())return;
+clearTimeout(clPvTimer);clPvTimer=setTimeout(()=>clRun(false),650)
+}
+function clRenderLogs(){
+const el=$("#cllog");if(!el)return;
+el.innerHTML=clLogs.map(l=>`<div class="lg lg-${l.level}">${esc(l.text)}</div>`).join("");
+el.scrollTop=el.scrollHeight;
+const b=$("#clconbadge"),errs=clLogs.filter(l=>l.level==="error").length;
+if(b){b.textContent=errs||"";b.style.display=errs?"block":"none"}
+}
+addEventListener("message",e=>{
+const fr=document.getElementById("clframe"),rn=document.getElementById("clrunner");
+const fromFr=!!fr&&e.source===fr.contentWindow,fromRn=!!rn&&e.source===rn.contentWindow;
+if(!fromFr&&!fromRn)return;
+const d=e.data||{};
+if(d.lumenReady){if(fromRn){clRunnerReady=true;if(clPyJob){rn.contentWindow.postMessage({lumenPy:clPyJob},"*");clPyJob=null}}return}
+if(d.lumenConsole){
+if(d.lumenConsole.level==="clear")clLogs=[];
+else{clLogs.push(d.lumenConsole);if(clLogs.length>300)clLogs.shift()}
+clRenderLogs()
+}else if(fromFr&&typeof d.lumenNav==="string"){
+const t=resolvePath(dirOf(clPvPath||""),d.lumenNav.split(/[?#]/)[0]);
+if(clF(t)&&isHtmlPath(t)){clPvPath=t;clRun(false)}
+else{clLogs.push({level:"error",text:"Page not found: "+d.lumenNav});clRenderLogs()}
+}
+});
+function clOpenBrowser(path){
+const p=clP(),entry=path&&isHtmlPath(path)?path:clEntry(p);
+if(!entry){toast("Create an HTML file first");return}
+const url=URL.createObjectURL(new Blob([clBuildDoc(p,entry,false)],{type:"text/html"}));
+const w=window.open(url,"_blank");
+if(!w)toast("Allow pop-ups to open the browser tab");
+setTimeout(()=>URL.revokeObjectURL(url),180000)
+}
+function clDownloadHTML(){
+const p=clP(),entry=clEntry(p);
+if(!entry){toast("Create an HTML file first");return}
+clSaveBlob(new Blob([clBuildDoc(p,entry,false)],{type:"text/html"}),(baseOf(entry)||"index.html"))
+}
+
+/* ---------- dialogs, menus, projects ---------- */
+function clPrompt(title,value,label,cb,hint){
+clModalCb=cb;
+showModal(`<h2>${esc(title)}</h2>${hint?`<p class="muted" style="font-size:13px">${esc(hint)}</p>`:""}<input id="clinput" value="${esc(value||"")}" autocomplete="off" spellcheck="false" autocapitalize="off"><div class="actions" style="justify-content:flex-end;margin-top:6px"><button class="secondary" data-cl="mcancel">Cancel</button><button class="primary" data-cl="mok">${esc(label||"OK")}</button></div>`);
+setTimeout(()=>{const i=$("#clinput");if(i){i.focus();const n=i.value.length;i.setSelectionRange(n,n)}},60)
+}
+function clMenu(title,items){
+showModal(`<h2 style="font-size:19px">${esc(title)}</h2><div class="cl-menu">${items.map(i=>`<button class="${i.danger?"danger":""}${i.cur?" cur":""}" data-cl="${i.cl||"mact"}" data-do="${i.do||""}" data-path="${esc(i.path||"")}" data-kind="${i.kind||""}">${i.icon?`<span>${i.icon}</span>`:""}${esc(i.label)}</button>`).join("")}</div>`)
+}
+function clProjectsModal(){
+clMenu("Projects",[...cl.projects.map(x=>({label:x.name,cl:"pick",path:x.id,cur:x.id===cl.current,icon:"📂"})),{label:"New project",do:"newproj",icon:"＋"},{label:"Import ZIP as new project",do:"impzip",icon:"⇪"}])
+}
+function clMainMenu(){
+const d=clSelDirV;
+clMenu(clP().name,[
+{label:"New file",do:"newfileIn",path:d,icon:"＋"},
+{label:"New folder",do:"newfolderIn",path:d,icon:"📁"},
+{label:"Upload files / ZIP",do:"uploadIn",path:d,icon:"⇪"},
+{label:"Find & replace",do:"find",icon:"⌕"},
+{label:"Export project as ZIP",do:"zip",icon:"⇩"},
+{label:"Download as one HTML file",do:"dlhtml",icon:"⇩"},
+{label:"Live preview: "+(clUI.live?"On":"Off"),do:"live",icon:"◉"},
+{label:"Rename project",do:"renproj",icon:"✎"},
+{label:"Duplicate project",do:"dupproj",icon:"⧉"},
+{label:"Delete project",do:"delproj",icon:"🗑",danger:true}
+])
+}
+function clFileMenu(path,kind){
+if(kind==="dir")return clMenu(path,[
+{label:"New file here",do:"newfileIn",path,icon:"＋"},
+{label:"New folder here",do:"newfolderIn",path,icon:"📁"},
+{label:"Upload here",do:"uploadIn",path,icon:"⇪"},
+{label:"Rename / move",do:"rename",path,kind,icon:"✎"},
+{label:"Delete folder",do:"delete",path,kind,icon:"🗑",danger:true}
+]);
+const items=[];
+if(isHtmlPath(path)){items.push({label:"Preview this page",do:"setprev",path,icon:"▶"},{label:"Open in browser tab",do:"obrowser",path,icon:"↗"})}
+items.push({label:"Rename / move",do:"rename",path,kind,icon:"✎"},{label:"Duplicate",do:"dup",path,icon:"⧉"},{label:"Download",do:"dl",path,icon:"⇩"},{label:"Delete",do:"delete",path,kind,icon:"🗑",danger:true});
+clMenu(path,items)
+}
+function clNewProject(){
+clPrompt("New project","","Create",val=>{
+const name=cleanText(val)||"Untitled project";
+const np=clNewProjectData(name);
+cl.projects.unshift(np);cl.current=np.id;clPvPath=null;clSelDirV="";clChanged();render()
+})
+}
+function clModalAction(act,path,kind){
+closeModal();
+switch(act){
+case"rename":clRename(path,kind);break;
+case"delete":clDelete(path,kind);break;
+case"dup":clDupFile(path);break;
+case"dl":clDownloadFile(path);break;
+case"obrowser":clOpenBrowser(path);break;
+case"setprev":clPvPath=path;clFillSel();clRun(true);if(clNarrow())clSetPane("preview",true);break;
+case"newfileIn":clNewFile(path);break;
+case"newfolderIn":clNewFolder(path);break;
+case"uploadIn":clSelDirV=path||"";$("#clupload").click();break;
+case"newproj":clNewProject();break;
+case"impzip":$("#clzip").click();break;
+case"find":if(clNarrow())clSetPane("editor");clToggleFind(true);break;
+case"zip":clExportZip();break;
+case"dlhtml":clDownloadHTML();break;
+case"live":clUI.live=!clUI.live;toast("Live preview "+(clUI.live?"on":"off"));break;
+case"renproj":clPrompt("Rename project",clP().name,"Rename",val=>{const n=cleanText(val);if(n){clP().name=n;clChanged();clRenderFiles()}});break;
+case"dupproj":{
+const src=clP(),copy=JSON.parse(JSON.stringify(src));
+copy.id=uid();copy.name=src.name+" copy";copy.created=copy.updated=Date.now();
+cl.projects.unshift(copy);cl.current=copy.id;clPvPath=null;clChanged();render();toast("Project duplicated");break
+}
+case"delproj":
+if(confirm("Delete project “"+clP().name+"” and all its files?")){
+cl.projects=cl.projects.filter(x=>x.id!==cl.current);
+if(!cl.projects.length)cl.projects.push(clNewProjectData("My first project"));
+cl.current=cl.projects[0].id;clPvPath=null;clSelDirV="";clChanged();render()
+}
+break
+}
+}
+function clClick(e){
+if(!cl)return;
+const t=e.target.closest("[data-cl]");if(!t)return;
+const a=t.dataset.cl,path=t.dataset.path;
+switch(a){
+case"togfiles":
+if(clNarrow())clSetPane(clUI.pane==="files"?"editor":"files");
+else{clUI.files=!clUI.files;clResize()}
+break;
+case"togprev":clUI.prev=!clUI.prev;clUI.maxprev=false;clResize();if(clUI.prev)clRun(false);break;
+case"projects":clProjectsModal();break;
+case"pick":closeModal();if(path!==cl.current){cl.current=path;clPvPath=null;clSelDirV="";clChanged();render()}break;
+case"run":clRunActive();break;
+case"openbrowser":clOpenBrowser();break;
+case"menu":clMainMenu();break;
+case"dir":{const p=clP();p.expanded[path]=p.expanded[path]===false;clSelDirV=path;clChanged();clRenderFiles();break}
+case"open":clOpen(path);break;
+case"fmenu":clFileMenu(path,t.dataset.kind);break;
+case"newfile":clNewFile();break;
+case"newfolder":clNewFolder();break;
+case"upload":$("#clupload").click();break;
+case"tab":clOpen(path);break;
+case"closetab":clCloseTab(path);break;
+case"key":clKeyPress(t.dataset.k);break;
+case"pane":clSetPane(t.dataset.p);break;
+case"reload":clRun(true);break;
+case"pvw":{clUI.w=clUI.w==="fit"?"375":clUI.w==="375"?"768":"fit";$("#clpv").dataset.w=clUI.w;toast(clUI.w==="fit"?"Preview: full width":"Preview: "+clUI.w+"px wide");break}
+case"console":clUI.con=!clUI.con;$("#clcon").classList.toggle("on",clUI.con);break;
+case"clearcon":clLogs=[];clRenderLogs();break;
+case"maxprev":clUI.maxprev=!clUI.maxprev;clResize();break;
+case"fprev":clFindNext(-1);break;
+case"fnext":clFindNext(1);break;
+case"frep":clReplace(false);break;
+case"fall":clReplace(true);break;
+case"fclose":clToggleFind(false);break;
+case"mcancel":closeModal();break;
+case"mok":{const i=$("#clinput"),v=i?i.value:"",cb=clModalCb;closeModal();clModalCb=null;if(cb)cb(v);break}
+case"mact":clModalAction(t.dataset.do,path,t.dataset.kind);break
+}
+}
+document.addEventListener("click",clClick);
+document.addEventListener("keydown",e=>{
+if(e.key==="Enter"&&e.target&&e.target.id==="clinput"){e.preventDefault();const ok=document.querySelector('[data-cl="mok"]');if(ok)ok.click()}
+if(view==="lab"&&(e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="s"&&cl){e.preventDefault();clSaveNow();toast("Saved")}
+});
+/* ================= LEARN ================= */
+const D=(b,sc,c)=>`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson</title>${c?`
+  <style>
+${c}
+  </style>`:""}
+</head>
+<body>
+${b}${sc?`
+  <script>
+${sc}
+  <\/script>`:""}
+</body>
+</html>
+`;
+const LEARN=[
+{tag:"START HERE",title:"Coding fundamentals",blurb:"How programs think: variables, decisions, loops and functions. No experience needed.",lessons:[
+{t:"What is programming?",sum:"Instructions, languages and your first program",
+body:`<p>A <b>program</b> is a list of instructions written for a computer. The computer follows them exactly, one after another, so every instruction must be clear and in the right order.</p><p>You write code in a <b>programming language</b> such as JavaScript, Python or Java. Each language has its own words and rules (its <b>syntax</b>), but the big ideas are the same everywhere:</p><ul><li><b>Input</b> – data that comes in (a click, a typed name, a file)</li><li><b>Processing</b> – decisions and calculations</li><li><b>Output</b> – what you see (text, a page, a sound)</li></ul><p>Press <b>Run</b> to see the example work. Errors are normal — learning to read them is a core coding skill.</p>`,
+code:D(`  <h1>Hello!</h1>\n  <p id="msg"></p>`,`    // Anything after // is a comment. The computer ignores it.\n    console.log("Hello, world!");\n    document.getElementById("msg").textContent = "My first program is running.";`),
+task:"Change the text inside the quotes, press Run, and watch both the page and the console output change."},
+{t:"Variables and data types",sum:"Storing information in named boxes",
+body:`<p>A <b>variable</b> is a labelled box that stores a value. Use <code>let</code> for values that can change and <code>const</code> for values that should never change.</p><ul><li><b>String</b> – text in quotes: <code>"Ama"</code></li><li><b>Number</b> – <code>21</code> or <code>3.14</code></li><li><b>Boolean</b> – <code>true</code> or <code>false</code></li></ul><p><code>typeof</code> tells you what kind of value you have. The <code>+</code> sign adds numbers and joins text together.</p>`,
+code:D(`  <h1>Variables</h1>`,`    let name = "Ama";\n    const age = 21;\n    let isStudent = true;\n\n    console.log(name, age, isStudent);\n    console.log(typeof name, typeof age, typeof isStudent);\n\n    name = "Kofi";\n    console.log("Now the name is " + name);\n    console.log("Next year " + name + " will be " + (age + 1));`),
+task:"Add a new variable called city and print a sentence that uses it."},
+{t:"Making decisions",sum:"if, else and comparing values",
+body:`<p>Programs choose what to do using <b>conditions</b>. <code>if</code> runs code when something is true; <code>else</code> runs when it is not.</p><ul><li><code>===</code> equal (same value and type) · <code>!==</code> not equal</li><li><code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> comparisons</li><li><code>&amp;&amp;</code> and · <code>||</code> or · <code>!</code> not</li></ul>`,
+code:D(`  <h1>Decisions</h1>`,`    let age = 17;\n\n    if (age >= 18) {\n      console.log("You can vote.");\n    } else if (age >= 16) {\n      console.log("Almost there!");\n    } else {\n      console.log("Not yet.");\n    }\n\n    console.log(5 > 3, 5 === "5", 5 == "5");`),
+task:"Change age to 20, then to 10. Which message prints each time?"},
+{t:"Loops",sum:"Repeating work without repeating code",
+body:`<p>A <b>loop</b> repeats instructions. A <code>for</code> loop has three parts: where to start, when to stop, and how to count.</p><p>Loops are perfect for going through lists of things. <code>for…of</code> visits every item in an array.</p>`,
+code:D(`  <h1>Loops</h1>`,`    for (let i = 1; i <= 5; i++) {\n      console.log("Step " + i);\n    }\n\n    let total = 0;\n    for (let n = 1; n <= 10; n++) {\n      total += n;\n    }\n    console.log("Sum of 1 to 10 =", total);\n\n    const fruits = ["mango", "pawpaw", "orange"];\n    for (const fruit of fruits) {\n      console.log("I like " + fruit);\n    }`),
+task:"Make the first loop count from 1 to 10, then count only the even numbers."},
+{t:"Functions",sum:"Reusable blocks of code",
+body:`<p>A <b>function</b> is a named set of instructions you can run whenever you like. It can take <b>parameters</b> (inputs) and <code>return</code> a result (output).</p><p>Functions keep programs short and organised: write the idea once, use it everywhere.</p>`,
+code:D(`  <h1>Functions</h1>`,`    function greet(name) {\n      return "Hello, " + name + "!";\n    }\n\n    function add(a, b) {\n      return a + b;\n    }\n\n    console.log(greet("Kofi"));\n    console.log(greet("Ama"));\n    console.log(add(2, 3));`),
+task:"Write a function called square that returns a number multiplied by itself, then print square(7)."}
+]},
+{tag:"WEB",title:"Introduction to HTML",blurb:"The structure of every web page: headings, text, links, images, lists, tables and forms.",lessons:[
+{t:"The structure of a page",sum:"Doctype, html, head and body",
+body:`<p><b>HTML</b> (HyperText Markup Language) describes the <i>structure</i> of a web page using <b>tags</b>. Most tags come in pairs: an opening tag <code>&lt;p&gt;</code> and a closing tag <code>&lt;/p&gt;</code>.</p><ul><li><code>&lt;!DOCTYPE html&gt;</code> tells the browser this is modern HTML</li><li><code>&lt;html&gt;</code> wraps the whole page</li><li><code>&lt;head&gt;</code> holds information about the page (title, settings)</li><li><code>&lt;body&gt;</code> holds everything you can see</li></ul>`,
+code:`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>My first page</title>\n</head>\n<body>\n  <h1>Hello, web!</h1>\n  <p>This is my first web page.</p>\n</body>\n</html>\n`,
+task:"Change the title and the heading, then add a second paragraph."},
+{t:"Text, links and images",sum:"Headings, paragraphs, emphasis, a and img",
+body:`<p>Headings run from <code>&lt;h1&gt;</code> (most important) to <code>&lt;h6&gt;</code>. Paragraphs use <code>&lt;p&gt;</code>. Use <code>&lt;strong&gt;</code> for bold importance and <code>&lt;em&gt;</code> for emphasis.</p><p>Links use <code>&lt;a href="…"&gt;</code>. Images use <code>&lt;img src="…" alt="…"&gt;</code> — always write helpful <code>alt</code> text for people who cannot see the image.</p>`,
+code:`<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="UTF-8"><title>Text and links</title></head>\n<body>\n  <h1>All about me</h1>\n  <p>I love <strong>coding</strong> and <em>music</em>.</p>\n  <h2>Useful links</h2>\n  <p><a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a></p>\n  <img alt="A blue rounded square" width="120"\n    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='24' fill='%234c7dff'/%3E%3C/svg%3E">\n</body>\n</html>\n`,
+task:"Add an h3 heading and a second link to a website you like."},
+{t:"Lists and tables",sum:"Ordered, unordered lists and data tables",
+body:`<p>Use <code>&lt;ul&gt;</code> for bullet lists, <code>&lt;ol&gt;</code> for numbered lists, and <code>&lt;li&gt;</code> for each item.</p><p>Tables show data in rows and columns: <code>&lt;table&gt;</code> contains rows <code>&lt;tr&gt;</code>, which contain header cells <code>&lt;th&gt;</code> and data cells <code>&lt;td&gt;</code>.</p>`,
+code:`<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8"><title>Lists and tables</title>\n  <style>table{border-collapse:collapse}th,td{border:1px solid #888;padding:6px 12px}</style>\n</head>\n<body>\n  <h2>Shopping list</h2>\n  <ul><li>Rice</li><li>Tomatoes</li><li>Onions</li></ul>\n  <h2>Steps</h2>\n  <ol><li>Wash</li><li>Chop</li><li>Cook</li></ol>\n  <h2>Scores</h2>\n  <table>\n    <tr><th>Name</th><th>Score</th></tr>\n    <tr><td>Ama</td><td>92</td></tr>\n    <tr><td>Kofi</td><td>85</td></tr>\n  </table>\n</body>\n</html>\n`,
+task:"Add a third row to the table and a fourth item to the shopping list."},
+{t:"Forms and inputs",sum:"Collecting information from users",
+body:`<p>Forms collect input. The <code>&lt;form&gt;</code> tag wraps fields such as <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code> and <code>&lt;textarea&gt;</code>. Every field needs a <code>&lt;label&gt;</code> so it is clear (and accessible).</p><p>Useful input types: <code>text</code>, <code>email</code>, <code>number</code>, <code>password</code>, <code>checkbox</code>, <code>date</code>. The <code>required</code> attribute makes a field compulsory.</p>`,
+code:`<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="UTF-8"><title>Form</title>\n<style>label{display:block;margin-top:12px}input,select,textarea{padding:8px;width:260px}</style>\n</head>\n<body>\n  <h1>Contact me</h1>\n  <form onsubmit="event.preventDefault();document.getElementById('ok').textContent='Thanks, '+this.name.value+'!'">\n    <label for="name">Your name</label>\n    <input id="name" name="name" required>\n    <label for="email">Email</label>\n    <input id="email" type="email" required>\n    <label for="topic">Topic</label>\n    <select id="topic"><option>Question</option><option>Collaboration</option></select>\n    <label for="msg">Message</label>\n    <textarea id="msg" rows="3"></textarea>\n    <p><button type="submit">Send</button></p>\n  </form>\n  <p id="ok"></p>\n</body>\n</html>\n`,
+task:"Add a number input labelled Age and a checkbox labelled Subscribe."},
+{t:"Semantic layout",sum:"header, nav, main, section and footer",
+body:`<p><b>Semantic</b> tags describe the <i>meaning</i> of each part of a page, which helps search engines, screen readers and other developers.</p><ul><li><code>&lt;header&gt;</code> – top of the page or a section</li><li><code>&lt;nav&gt;</code> – navigation links</li><li><code>&lt;main&gt;</code> – the main content (use once)</li><li><code>&lt;section&gt;</code> / <code>&lt;article&gt;</code> – grouped content</li><li><code>&lt;footer&gt;</code> – bottom of the page</li></ul>`,
+code:`<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="UTF-8"><title>Layout</title></head>\n<body>\n  <header>\n    <h1>My Blog</h1>\n    <nav><a href="#">Home</a> | <a href="#">About</a> | <a href="#">Contact</a></nav>\n  </header>\n  <main>\n    <article>\n      <h2>My first post</h2>\n      <p>Today I started learning HTML.</p>\n    </article>\n    <section>\n      <h2>Latest news</h2>\n      <p>More posts are coming soon.</p>\n    </section>\n  </main>\n  <footer><p>&copy; 2026 My Blog</p></footer>\n</body>\n</html>\n`,
+task:"Add another article inside main with its own heading and paragraph."}
+]},
+{tag:"WEB",title:"Introduction to CSS",blurb:"Make pages beautiful: selectors, colours, the box model, flexbox and responsive design.",lessons:[
+{t:"Selectors and properties",sum:"How CSS targets and styles elements",
+body:`<p><b>CSS</b> (Cascading Style Sheets) controls how HTML looks. A rule has a <b>selector</b> (what to style) and <b>declarations</b> (how to style it):</p><p><code>p { color: blue; }</code></p><ul><li><code>p</code> – every paragraph (element selector)</li><li><code>.note</code> – every element with <code>class="note"</code></li><li><code>#title</code> – the one element with <code>id="title"</code></li></ul>`,
+code:D(`  <h1 id="title">Styling with CSS</h1>\n  <p>A normal paragraph.</p>\n  <p class="note">A highlighted note.</p>`,``,`    body { font-family: Arial, sans-serif; padding: 20px; }\n    #title { color: #2563eb; }\n    p { line-height: 1.6; }\n    .note { background: #fef3c7; padding: 10px; border-left: 4px solid #f59e0b; }`),
+task:"Make the title red and give the note a different background colour."},
+{t:"Colours, text and fonts",sum:"Hex, rgb, hsl and typography",
+body:`<p>Colours can be written as names (<code>tomato</code>), hex codes (<code>#ff6347</code>), <code>rgb(255,99,71)</code> or <code>hsl(9,100%,64%)</code>.</p><p>Text properties: <code>font-family</code>, <code>font-size</code>, <code>font-weight</code>, <code>text-align</code>, <code>letter-spacing</code> and <code>line-height</code> (use about 1.5 for easy reading).</p>`,
+code:D(`  <h1>Typography</h1>\n  <p class="lead">Good text is easy to read.</p>\n  <p class="small">Small print goes here.</p>`,``,`    body { font-family: Georgia, serif; background: #0f172a; color: #e2e8f0; padding: 24px; }\n    h1 { color: hsl(200, 90%, 65%); letter-spacing: 2px; text-transform: uppercase; }\n    .lead { font-size: 22px; line-height: 1.6; }\n    .small { font-size: 13px; color: rgb(148, 163, 184); }`),
+task:"Change the heading to a hex colour of your choice and centre all the text."},
+{t:"The box model",sum:"Content, padding, border and margin",
+body:`<p>Every element is a box made of four layers, from inside to outside:</p><ul><li><b>Content</b> – the text or image</li><li><b>Padding</b> – space inside the border</li><li><b>Border</b> – the edge of the box</li><li><b>Margin</b> – space outside the border</li></ul><p>Add <code>box-sizing: border-box;</code> so that padding and border are included in the width you set.</p>`,
+code:D(`  <div class="box">I am a box</div>\n  <div class="box second">I am another box</div>`,``,`    * { box-sizing: border-box; }\n    body { font-family: Arial, sans-serif; padding: 20px; }\n    .box {\n      width: 260px;\n      padding: 20px;\n      border: 4px solid #2563eb;\n      margin: 16px 0;\n      background: #dbeafe;\n      border-radius: 12px;\n    }\n    .second { margin-left: 40px; border-style: dashed; }`),
+task:"Increase the padding of the first box to 40px and see how the box grows."},
+{t:"Flexbox layout",sum:"Rows, columns, spacing and alignment",
+body:`<p><b>Flexbox</b> arranges items in a row or column. Put <code>display: flex</code> on the <i>parent</i> and the children line up automatically.</p><ul><li><code>gap</code> – space between items</li><li><code>justify-content</code> – spread items along the main axis</li><li><code>align-items</code> – align items on the other axis</li><li><code>flex-wrap: wrap</code> – let items move to the next line</li></ul>`,
+code:D(`  <div class="row">\n    <div class="card">One</div>\n    <div class="card">Two</div>\n    <div class="card">Three</div>\n  </div>`,``,`    body { font-family: Arial, sans-serif; padding: 20px; }\n    .row {\n      display: flex;\n      gap: 16px;\n      justify-content: space-between;\n      align-items: center;\n      flex-wrap: wrap;\n    }\n    .card { flex: 1; min-width: 120px; padding: 30px; text-align: center; background: #e0e7ff; border-radius: 12px; }`),
+task:"Change justify-content to center, then add a fourth card."},
+{t:"Grid, responsive design and hover effects",sum:"Layouts that adapt to every screen",
+body:`<p><b>CSS Grid</b> builds two-dimensional layouts. <code>repeat(auto-fit, minmax(160px, 1fr))</code> creates as many equal columns as will fit — a responsive layout with one line of CSS.</p><p>A <b>media query</b> applies styles only on certain screen sizes. <code>transition</code> makes changes smooth, for example on <code>:hover</code>.</p>`,
+code:D(`  <div class="grid">\n    <div class="tile">A</div><div class="tile">B</div><div class="tile">C</div>\n    <div class="tile">D</div><div class="tile">E</div><div class="tile">F</div>\n  </div>`,``,`    body { font-family: Arial, sans-serif; padding: 20px; }\n    .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }\n    .tile { padding: 28px; text-align: center; background: #2563eb; color: white; border-radius: 12px; transition: transform .25s, background .25s; }\n    .tile:hover { transform: translateY(-6px) scale(1.04); background: #1d4ed8; }\n    @media (max-width: 400px) { .tile { padding: 14px; } }`),
+task:"Hover over a tile, then change the minmax value to 200px and watch the layout adapt."}
+]},
+{tag:"WEB",title:"Introduction to JavaScript",blurb:"Bring pages to life: values, arrays, objects, the DOM and events.",lessons:[
+{t:"Hello, JavaScript",sum:"The console, strings and template literals",
+body:`<p><b>JavaScript</b> makes web pages interactive. Use <code>console.log()</code> to print values while you learn — the console panel under the preview shows them.</p><p><b>Template literals</b> use backticks and let you insert values with <code>\${…}</code>, which is easier than joining text with <code>+</code>.</p>`,
+code:D(`  <h1>Hello, JavaScript</h1>`,`    const name = "Ama";\n    const items = 3;\n    console.log("Hello, " + name);\n    console.log(\`\${name} has \${items} items, total \${items * 2.5} cedis\`);\n    console.log("shout".toUpperCase(), "Lumen".length);`),
+task:"Add your own name and calculate a total using a different price."},
+{t:"Arrays and objects",sum:"Lists and structured data",
+body:`<p>An <b>array</b> is an ordered list: <code>["a","b","c"]</code>. Items are counted from <b>0</b>. Handy methods: <code>push</code>, <code>pop</code>, <code>length</code>.</p><p>An <b>object</b> groups related values using <i>keys</i>: <code>{ name: "Ama", age: 21 }</code>. Read a value with <code>person.name</code>.</p>`,
+code:D(`  <h1>Arrays and objects</h1>`,`    const colours = ["red", "green", "blue"];\n    colours.push("gold");\n    console.log(colours[0], colours.length);\n\n    const person = { name: "Ama", age: 21, skills: ["HTML", "CSS"] };\n    person.age = 22;\n    person.skills.push("JavaScript");\n    console.log(person.name, person.age);\n    console.log(person.skills);\n\n    const students = [{ name: "Ama", score: 92 }, { name: "Kofi", score: 85 }];\n    for (const s of students) console.log(s.name + ": " + s.score);`),
+task:"Add a third student and print their name and score."},
+{t:"Functions and array methods",sum:"Arrow functions, map and filter",
+body:`<p>Arrow functions are a shorter way to write functions: <code>const double = n =&gt; n * 2;</code></p><p>Arrays have powerful methods: <code>map</code> transforms every item, <code>filter</code> keeps items that pass a test, and <code>reduce</code> combines them into one value.</p>`,
+code:D(`  <h1>Array methods</h1>`,`    const numbers = [1, 2, 3, 4, 5, 6];\n\n    const doubled = numbers.map(n => n * 2);\n    const evens = numbers.filter(n => n % 2 === 0);\n    const total = numbers.reduce((sum, n) => sum + n, 0);\n\n    console.log("doubled:", doubled);\n    console.log("evens:", evens);\n    console.log("total:", total);`),
+task:"Use filter to keep only numbers greater than 3."},
+{t:"The DOM",sum:"Selecting and changing page elements",
+body:`<p>The <b>DOM</b> (Document Object Model) is the browser's live version of your HTML. JavaScript can find elements and change them.</p><ul><li><code>document.querySelector("#id")</code> – find an element</li><li><code>el.textContent = "…"</code> – change its text</li><li><code>el.style.color = "red"</code> – change its style</li><li><code>document.createElement("li")</code> – make a new element</li></ul>`,
+code:D(`  <h1 id="title">Original title</h1>\n  <ul id="list"></ul>`,`    const title = document.querySelector("#title");\n    title.textContent = "Changed by JavaScript";\n    title.style.color = "#2563eb";\n\n    const list = document.querySelector("#list");\n    ["HTML", "CSS", "JavaScript"].forEach(topic => {\n      const li = document.createElement("li");\n      li.textContent = topic;\n      list.appendChild(li);\n    });`),
+task:"Add 'Python' to the list of topics."},
+{t:"Events",sum:"Responding to clicks and typing",
+body:`<p>An <b>event</b> is something that happens: a click, a key press, a form submission. Use <code>addEventListener</code> to run a function when it happens.</p><p>Events turn static pages into apps: buttons, menus, games and forms all use them.</p>`,
+code:D(`  <h1>Counter</h1>\n  <p>Count: <strong id="count">0</strong></p>\n  <button id="plus">+1</button>\n  <button id="reset">Reset</button>\n  <p><input id="name" placeholder="Type your name"></p>\n  <p id="hello"></p>`,`    let count = 0;\n    const show = document.querySelector("#count");\n\n    document.querySelector("#plus").addEventListener("click", () => {\n      count++;\n      show.textContent = count;\n      console.log("count is", count);\n    });\n    document.querySelector("#reset").addEventListener("click", () => {\n      count = 0;\n      show.textContent = count;\n    });\n    document.querySelector("#name").addEventListener("input", e => {\n      document.querySelector("#hello").textContent = "Hello, " + e.target.value + "!";\n    });`),
+task:"Add a '-1' button that decreases the count."},
+{t:"Putting it together",sum:"A tiny to-do app",
+body:`<p>Now combine everything: HTML for structure, CSS for style and JavaScript for behaviour. This to-do app reads input, creates elements, handles events and uses an array.</p><p>When you are ready, press <b>Open in Code Lab</b> to turn it into a real project with separate files, then export it as a ZIP.</p>`,
+code:D(`  <main>\n    <h1>My To-Do List</h1>\n    <form id="form"><input id="task" placeholder="Add a task" required><button>Add</button></form>\n    <ul id="list"></ul>\n  </main>`,`    const tasks = [];\n    const list = document.querySelector("#list");\n\n    function draw() {\n      list.innerHTML = "";\n      tasks.forEach((t, i) => {\n        const li = document.createElement("li");\n        li.textContent = t;\n        li.onclick = () => { tasks.splice(i, 1); draw(); };\n        list.appendChild(li);\n      });\n    }\n\n    document.querySelector("#form").addEventListener("submit", e => {\n      e.preventDefault();\n      const input = document.querySelector("#task");\n      tasks.push(input.value);\n      input.value = "";\n      draw();\n    });`,`    body { font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; padding: 24px; }\n    main { max-width: 420px; margin: auto; }\n    input { padding: 10px; border-radius: 8px; border: 0; width: 70%; }\n    button { padding: 10px 14px; border: 0; border-radius: 8px; background: #38bdf8; font-weight: bold; }\n    li { margin: 8px 0; padding: 10px; background: #1e293b; border-radius: 8px; cursor: pointer; }`),
+task:"Click a task to remove it. Then try adding a counter that shows how many tasks are left."}
+]}
+];
+let learn={t:null,l:null},lnLogs=[];
+let lnProg={};try{lnProg=JSON.parse(localStorage.getItem("lumen-learn")||"{}")||{}}catch(e){}
+const lnKey=(t,l)=>LEARN[t].title+"|"+l;
+const lnDone=(t,l)=>!!lnProg[lnKey(t,l)];
+function lnHead(title,sub){return`<div class="topline"><div><div class="eyebrow">Lumen learn</div><div class="status">${esc(sub)}</div></div></div><h1>${esc(title)}</h1>`}
+function lnRender(){
+const app=$("#app");
+if(learn.t===null){
+app.innerHTML=`${lnHead("Learn to code","Start from zero · HTML · CSS · JavaScript")}<p class="sub">Short lessons with a live playground in every one. Read the idea, change the code, press Run, and see what happens.</p><div class="ln-grid">${LEARN.map((tr,i)=>{const n=tr.lessons.filter((_,j)=>lnDone(i,j)).length;return`<button class="panel ln-card" data-ln="track" data-i="${i}"><span class="eyebrow">${esc(tr.tag)}</span><h2>${esc(tr.title)}</h2><p class="muted">${esc(tr.blurb)}</p><p class="status" style="margin-top:12px">${n}/${tr.lessons.length} lessons complete</p></button>`}).join("")}</div><div class="panel" style="margin-top:18px"><h2>Ready to build something?</h2><p class="muted" style="margin-bottom:14px">Open the Code Lab to create files, preview your work, run many programming languages and export your project as a ZIP.</p><button class="primary" data-view="lab">Open Code Lab</button></div>`
+}else if(learn.l===null){
+const tr=LEARN[learn.t];
+app.innerHTML=`${lnHead(tr.title,tr.lessons.length+" lessons")}<p class="sub">${esc(tr.blurb)}</p><div class="actions" style="margin-bottom:16px"><button class="secondary" data-ln="home">← All courses</button></div><div class="panel">${tr.lessons.map((l,j)=>`<button class="ln-item" data-ln="lesson" data-i="${j}"><span class="ln-num${lnDone(learn.t,j)?" done":""}">${lnDone(learn.t,j)?"✓":j+1}</span><span><b>${esc(l.t)}</b><small>${esc(l.sum)}</small></span></button>`).join("")}</div>`
+}else{
+const tr=LEARN[learn.t],l=tr.lessons[learn.l],done=lnDone(learn.t,learn.l);
+app.innerHTML=`${lnHead(l.t,tr.title+" · Lesson "+(learn.l+1)+" of "+tr.lessons.length)}<div class="actions" style="margin:18px 0 16px"><button class="secondary" data-ln="track" data-i="${learn.t}">← ${esc(tr.title)}</button></div><div class="panel"><div class="ln-body">${l.body}<div class="ln-task"><b>Try it:</b> ${esc(l.task)}</div></div><div class="ln-play"><div><textarea id="lncode" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Lesson code">${esc(l.code)}</textarea><div class="actions" style="margin-top:10px"><button class="primary" data-ln="run">▶ Run</button><button class="secondary" data-ln="reset">Reset code</button><button class="secondary" data-ln="tolab">Open in Code Lab</button></div></div><div><iframe id="lnframe" class="ln-frame" title="Lesson result" sandbox="allow-scripts allow-forms allow-modals allow-popups"></iframe><div class="ln-out" id="lnout" aria-live="polite"></div></div></div></div><div class="ln-nav"><button class="secondary" data-ln="prev"${learn.l===0?" disabled":""}>← Previous</button><button class="${done?"secondary":"primary"}" data-ln="done">${done?"✓ Completed":"Mark as complete"}</button><button class="secondary" data-ln="next"${learn.l===tr.lessons.length-1?" disabled":""}>Next →</button></div>`;
+$("#lncode").addEventListener("keydown",e=>{
+if(e.key==="Tab"){e.preventDefault();const ta=e.target;ta.focus();let ok=false;try{ok=document.execCommand("insertText",false,"  ")}catch(_){}if(!ok){ta.setRangeText("  ",ta.selectionStart,ta.selectionEnd,"end")}}
+else if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();lnRun()}
+});
+lnRun()
+}
+const m=$("#main");if(m)m.scrollTop=0
+}
+function lnDoc(code){
+const shim="<script>"+CL_STORAGE_SHIM+";"+CL_BRIDGE+"<\/script>";
+if(/<head\b[^>]*>/i.test(code))return code.replace(/<head\b[^>]*>/i,m=>m+shim);
+if(/<html\b[^>]*>/i.test(code))return code.replace(/<html\b[^>]*>/i,m=>m+"<head>"+shim+"</head>");
+return"<!doctype html><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">"+shim+code
+}
+function lnRun(){
+const fr=$("#lnframe"),ta=$("#lncode");if(!fr||!ta)return;
+lnLogs=[];lnLogsDraw();
+fr.srcdoc=lnDoc(ta.value)
+}
+function lnLogsDraw(){
+const el=$("#lnout");if(!el)return;
+el.innerHTML=lnLogs.length?lnLogs.map(x=>`<div class="lg lg-${x.level}">${esc(x.text)}</div>`).join(""):`<span class="muted">Console output appears here.</span>`;
+el.scrollTop=el.scrollHeight
+}
+addEventListener("message",e=>{
+const fr=document.getElementById("lnframe");
+if(!fr||e.source!==fr.contentWindow)return;
+const d=e.data||{};
+if(d.lumenConsole){
+if(d.lumenConsole.level==="clear")lnLogs=[];else{lnLogs.push(d.lumenConsole);if(lnLogs.length>200)lnLogs.shift()}
+lnLogsDraw()
+}
+});
+async function lnToLab(){
+const ta=$("#lncode");if(!ta)return;
+const tr=LEARN[learn.t],l=tr.lessons[learn.l];
+if(!clReady)await clLoad();
+const np={id:uid(),name:"Lesson: "+l.t,files:[{path:"index.html",content:ta.value}],dirs:[],open:["index.html"],active:"index.html",expanded:{},created:Date.now(),updated:Date.now()};
+cl.projects.unshift(np);cl.current=np.id;clPvPath=null;clChanged();
+view="lab";render();toast("Opened in Code Lab")
+}
+document.addEventListener("click",e=>{
+const t=e.target.closest("[data-ln]");if(!t||view!=="learn")return;
+const a=t.dataset.ln,i=Number(t.dataset.i);
+switch(a){
+case"home":learn={t:null,l:null};lnRender();break;
+case"track":learn={t:i,l:null};lnRender();break;
+case"lesson":learn.l=i;lnRender();break;
+case"run":lnRun();break;
+case"reset":{const l=LEARN[learn.t].lessons[learn.l];$("#lncode").value=l.code;lnRun();break}
+case"tolab":lnToLab();break;
+case"done":{const k=lnKey(learn.t,learn.l);if(lnProg[k])delete lnProg[k];else lnProg[k]=1;try{localStorage.setItem("lumen-learn",JSON.stringify(lnProg))}catch(_){}lnRender();break}
+case"prev":if(learn.l>0){learn.l--;lnRender()}break;
+case"next":if(learn.l<LEARN[learn.t].lessons.length-1){learn.l++;lnRender()}break
+}
+});
 document.addEventListener("click",async e=>{
 const t=e.target.closest("button,a");
 if(!t)return;
@@ -529,7 +1808,7 @@ break
 });
 document.addEventListener("keydown",e=>{
 if(e.key==="Escape")closeModal();
-if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&view==="lab"){e.preventDefault();runCode()}
+if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&view==="lab"){e.preventDefault();clRunActive()}
 });
 render();
 if("serviceWorker"in navigator&&location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
