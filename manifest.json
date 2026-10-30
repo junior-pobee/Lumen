@@ -2,7 +2,6 @@
   "name": "Lumen - Search, Research & Code",
   "short_name": "Lumen",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#06070d",
   "theme_color": "#080a13",
