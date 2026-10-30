@@ -29,6 +29,95 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .orb1{width:48vw;height:48vw;top:-20vw;left:-20vw;background:#1648d2}
 .orb2{width:42vw;height:42vw;right:-20vw;bottom:-20vw;background:#7025bc}
 .orb3{width:30vw;height:30vw;left:30%;top:35%;background:#087e9b;opacity:.18}
+
+/* ===== Lumen Loading Screen Overlay ===== */
+#lumen-loading-screen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#06070d;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:opacity 0.6s ease, visibility 0.6s ease;
+  padding:20px;
+}
+#lumen-loading-screen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.ls-logo{
+  font-size:38px;
+  font-weight:900;
+  letter-spacing:.3em;
+  color:#fff;
+  margin-bottom:24px;
+}
+.ls-logo span{color:var(--accent)}
+.ls-spinner-container{
+  position:relative;
+  width:80px;
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:28px;
+}
+.ls-spinner-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:3px solid transparent;
+  border-top-color:var(--accent);
+  border-right-color:rgba(154,203,255,0.3);
+  animation:ls-spin 1.2s linear infinite;
+}
+.ls-spinner-core{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 20px var(--accent);
+  animation:ls-pulse 1.8s ease-in-out infinite alternate;
+}
+.ls-progress-bar-bg{
+  width:100%;
+  max-width:260px;
+  height:6px;
+  background:rgba(255,255,255,0.1);
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.ls-progress-bar-fill{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#1648d2,var(--accent));
+  border-radius:999px;
+  transition:width 0.1s linear;
+}
+.ls-status-text{
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:700;
+  height:18px;
+}
+.ls-credit{
+  margin-top:20px;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#70809b;
+  font-weight:600;
+  opacity:0.85;
+}
+@keyframes ls-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes ls-pulse{0%{transform:scale(0.7);opacity:0.5}100%{transform:scale(1.1);opacity:1}}
+
 nav{width:250px;flex:0 0 250px;min-height:0;min-width:0;margin:14px;padding:22px 13px;border:1px solid var(--line);border-radius:var(--radius);background:#0c1124e8;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;gap:7px;overflow-y:auto;overscroll-behavior:contain}
 .logo{padding:0 12px 24px;font-size:23px;font-weight:900;letter-spacing:.3em;flex-shrink:0}
 .logo span{color:var(--accent)}
@@ -89,7 +178,7 @@ p{overflow-wrap:anywhere}
 .result a:hover,.link:hover{text-decoration:underline}
 .result p{font-size:13px;color:var(--muted);margin-top:5px}
 .empty{text-align:center;padding:42px 12px;color:var(--muted)}
-.loading{height:12px;margin:15px 0;border-radius:9px;background:linear-gradient(90deg,#ffffff08,#ffffff20,#ffffff08);background-size:200% 100%;animation:shine 1.2s infinite}
+.loading{height:12px;margin:15px 0;border-radius:99px;background:linear-gradient(90deg,#ffffff08,#ffffff20,#ffffff08);background-size:200% 100%;animation:shine 1.2s infinite}
 @keyframes shine{to{background-position:-200% 0}}
 .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
 .row:last-child{border-bottom:0}
@@ -276,6 +365,20 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 </style>
 </head>
 <body>
+<!-- Loading Screen -->
+<div id="lumen-loading-screen">
+  <div class="ls-logo">LUM<span>E</span>N</div>
+  <div class="ls-spinner-container">
+    <div class="ls-spinner-ring"></div>
+    <div class="ls-spinner-core"></div>
+  </div>
+  <div class="ls-progress-bar-bg">
+    <div class="ls-progress-bar-fill" id="ls-progress"></div>
+  </div>
+  <div class="ls-status-text" id="ls-status">Initializing environment…</div>
+  <div class="ls-credit" style="text-align:center;">A product of Emmanuel Pobee foundations</div>
+</div>
+
 <canvas id="stars"></canvas>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
@@ -290,7 +393,7 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 <button data-view="projects">▤ <span>Projects</span></button>
 <div class="navbottom">
 <button data-action="newproject">＋ New project</button>
-<button data-action="clear">↺ Clear search</button>
+<button data-action="clear">↺ Clear current search</button>
 </div>
 </nav>
 <main id="main">
@@ -299,6 +402,50 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 <div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
 <div class="toast" id="toast"></div>
 <script>
+// ===== Loading Screen Script =====
+(function initLoadingScreen(){
+  const duration = 11000; // 11 seconds
+  const startTime = Date.now();
+  const fill = document.getElementById("ls-progress");
+  const status = document.getElementById("ls-status");
+  const screen = document.getElementById("lumen-loading-screen");
+  
+  const messages = [
+    { time: 0, text: "Initializing environment…" },
+    { time: 2500, text: "Connecting workspace…" },
+    { time: 5500, text: "Loading Code Lab engine…" },
+    { time: 8500, text: "Finalizing setups…" }
+  ];
+
+  function updateLoading(){
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(100, (elapsed / duration) * 100);
+    
+    if(fill) fill.style.width = progress + "%";
+    
+    // Update status text based on elapsed time
+    for(let i = messages.length - 1; i >= 0; i--){
+      if(elapsed >= messages[i].time){
+        if(status && status.textContent !== messages[i].text){
+          status.textContent = messages[i].text;
+        }
+        break;
+      }
+    }
+
+    if(elapsed < duration){
+      requestAnimationFrame(updateLoading);
+    } else {
+      if(fill) fill.style.width = "100%";
+      if(status) status.textContent = "Ready";
+      setTimeout(() => {
+        if(screen) screen.classList.add("hidden");
+      }, 300);
+    }
+  }
+  requestAnimationFrame(updateLoading);
+})();
+
 const CONFIG={SEARCH_ENDPOINT:"",AI_ENDPOINT:"",RUN_ENDPOINT:"https://emkc.org/api/v2/piston/execute"};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
