@@ -1,29 +1,14 @@
 {
-  "id": "./index.html",
-  "name": "Lumen — Search, Research & Code",
+  "name": "Lumen - Search, Research & Code",
   "short_name": "Lumen",
-  "description": "Search, research, explore images, and build with code.",
-  "lang": "en",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
   "background_color": "#06070d",
   "theme_color": "#080a13",
-  "categories": ["education", "productivity", "utilities"],
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-        
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
