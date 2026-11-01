@@ -1,4 +1,4 @@
-const CACHE_NAME = "lumen-shell-v11";
+const CACHE_NAME = "lumen-shell-v12";
 const APP_FILES = [
   "./",
   "./index.html",
