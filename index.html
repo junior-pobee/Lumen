@@ -1985,42 +1985,44 @@ resize();
 animate();
 addEventListener("resize",resize);
 </script>
-<button id="installBtn" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999; background:#7c3aed; color:white; border:none; padding:12px 20px; border-radius:12px; font-weight:bold; box-shadow:0 4px 20px rgba(0,0,0,0.3);">Install Lumen</button>
+<!-- PERMANENT INSTALL BUTTON - ALWAYS VISIBLE -->
+<button id="installBtn" style="position:fixed; bottom:85px; right:16px; z-index:99999; background:#7c3aed; color:white; border:none; padding:14px 22px; border-radius:50px; font-weight:800; box-shadow:0 8px 30px rgba(124,58,237,0.5);">↓ Install Lumen</button>
+
+<div id="installHelp" style="display:none; position:fixed; bottom:140px; right:16px; left:16px; z-index:99999; background:#0f1220; color:white; border:1px solid #2a2d45; padding:16px; border-radius:16px;">
+  <b>To install Lumen:</b><br>
+    1. Tap the 3 dots ⋮ on top right<br>
+    2. Tap <b>Install app</b> or <b>Add to Home screen</b><br><br>
+  <button onclick="document.getElementById('installHelp').style.display='none'" style="background:#222; color:white; border:none; padding:8px 16px; border-radius:8px;">Close</button>
+</div>
 
 <script>
 let deferredPrompt = null;
-const installBtn = document.getElementById('installBtn');
+const btn = document.getElementById('installBtn');
+const help = document.getElementById('installHelp');
 
-// Capture the install prompt
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Stop Chrome's one-time popup
+  e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = 'block'; // Show OUR permanent button
-  console.log('Install prompt saved - permanent button shown');
+  console.log('Chrome prompt ready');
 });
 
-// When user clicks OUR button
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt(); // Show the Chrome prompt now
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log('User choice:', outcome);
-  // We keep the button even if they dismiss, so they can try again
-  // If they installed, hide it
-  if (outcome === 'accepted') {
-    installBtn.style.display = 'none';
+btn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice.outcome === 'accepted') btn.style.display = 'none';
+    deferredPrompt = null;
+  } else {
+    // Fallback when Chrome blocks the popup
+    help.style.display = 'block';
   }
-  deferredPrompt = null;
 });
 
-// If already installed, hide button
-window.addEventListener('appinstalled', () => {
-  installBtn.style.display = 'none';
-  deferredPrompt = null;
-  console.log('Lumen installed!');
-});
+// Hide if already installed
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  btn.style.display = 'none';
+}
 
-// Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
