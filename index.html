@@ -363,6 +363,187 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 @media(max-width:800px){.ln-play{grid-template-columns:minmax(0,1fr)}.ln-play textarea{min-height:250px;font-size:16px}.ln-frame{height:230px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
+
+<style id="lumen-v2-ui">
+/* ===== Install button: compact rectangle, slightly curved ===== */
+#installBtn{position:fixed;z-index:40;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:5px;
+background:linear-gradient(135deg,#7c3aed,#5b5bf0);color:#fff;border:1px solid #ffffff2e;padding:5px 10px;border-radius:7px;
+font-size:12px;font-weight:700;line-height:1.3;letter-spacing:.01em;box-shadow:0 4px 16px -4px #7c3aedaa;
+transition:transform .2s,box-shadow .2s;animation:instIn .6s .3s cubic-bezier(.34,1.56,.64,1) both}
+#installBtn:hover{transform:translateY(-1px);box-shadow:0 6px 20px -4px #7c3aedcc}
+#installBtn:active{transform:scale(.94)}
+#installBtn .arr{display:inline-block;animation:instBounce 1.8s ease-in-out infinite}
+#installHelp{display:none;position:fixed;z-index:41;right:14px;bottom:54px;width:min(300px,calc(100vw - 28px));
+background:#0f1220f2;color:#fff;border:1px solid #2a2d45;padding:14px;border-radius:12px;font-size:13px;line-height:1.55;
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 18px 50px -12px #000;animation:instIn .35s cubic-bezier(.34,1.56,.64,1) both}
+#installHelp button{margin-top:4px;background:#ffffff14;color:#fff;border:1px solid #ffffff1f;padding:5px 12px;border-radius:7px;font-size:12px}
+@keyframes instIn{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes instBounce{0%,100%{transform:translateY(-1px)}50%{transform:translateY(2px)}}
+body.labmode #installBtn{right:auto;left:10px;bottom:calc(10px + env(safe-area-inset-bottom))}
+
+#fab,#navScrim{display:none}
+
+/* ===== Phones: floating orb menu ===== */
+@media(max-width:800px){
+#installBtn{top:calc(8px + env(safe-area-inset-top));bottom:auto;right:10px}
+#installHelp{top:calc(44px + env(safe-area-inset-top));bottom:auto;right:10px}
+body.labmode #installBtn{top:auto;right:auto;left:10px;bottom:calc(10px + env(safe-area-inset-bottom))}
+body.labmode #installHelp{top:auto;bottom:calc(48px + env(safe-area-inset-bottom));right:auto;left:10px}
+
+body{flex-direction:column}
+main{padding:46px 14px calc(96px + env(safe-area-inset-bottom))}
+
+nav{position:fixed;z-index:60;right:16px;bottom:calc(92px + env(safe-area-inset-bottom));width:auto;max-height:calc(100dvh - 130px);
+flex:none;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+flex-direction:column;align-items:flex-end;justify-content:flex-end;gap:10px;overflow:visible;pointer-events:none}
+nav .logo,nav .navbottom{display:none}
+
+nav button{--n:6;position:relative;flex:none;width:auto;display:flex;flex-direction:row-reverse;align-items:center;justify-content:flex-start;gap:10px;
+padding:5px 6px 5px 18px;font-size:14px;font-weight:700;letter-spacing:.02em;text-align:right;color:#e8ecff;border-radius:999px;
+background:linear-gradient(135deg,#121936f0,#0b0f24f0);border:1px solid #9acbff30;
+box-shadow:0 10px 30px -10px #000,0 0 0 0 #9acbff00,inset 0 1px #ffffff12;
+backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+opacity:0;visibility:hidden;pointer-events:none;transform-origin:100% 100%;
+transform:translate(18px,34px) scale(.5) rotate(8deg);
+transition:opacity .2s ease,transform .25s ease,visibility 0s .3s}
+nav button:hover{background:linear-gradient(135deg,#17204a,#0e1330)}
+nav button .ico{font-style:normal;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;font-size:18px;line-height:1;color:#fff;
+background:linear-gradient(135deg,#2f6bff,#8b5cf6);box-shadow:0 0 16px -2px #6d7bff99}
+nav button:nth-of-type(2) .ico{background:linear-gradient(135deg,#06b6d4,#3b82f6)}
+nav button:nth-of-type(3) .ico{background:linear-gradient(135deg,#8b5cf6,#d946ef)}
+nav button:nth-of-type(4) .ico{background:linear-gradient(135deg,#f59e0b,#ef4444)}
+nav button:nth-of-type(5) .ico{background:linear-gradient(135deg,#eab308,#f97316)}
+nav button:nth-of-type(6) .ico{background:linear-gradient(135deg,#10b981,#06b6d4)}
+nav button.on{border-color:#9acbffaa;box-shadow:0 10px 30px -10px #000,0 0 22px -4px #7aa7ff88,inset 0 1px #ffffff18;color:#fff}
+nav button.on::after{content:"";position:absolute;left:8px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:#9acbff;box-shadow:0 0 10px #9acbff;animation:dotPulse 1.6s ease-in-out infinite}
+
+body.menu-open nav{pointer-events:auto}
+body.menu-open nav button{opacity:1;visibility:visible;pointer-events:auto;transform:none;
+transition:opacity .3s ease,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s;
+transition-delay:calc((var(--n) - 1 - var(--i,0)) * 55ms + 40ms)}
+body.menu-open nav button:active{transform:scale(.95)}
+
+#navScrim{display:block;position:fixed;inset:0;z-index:50;opacity:0;pointer-events:none;
+background:radial-gradient(circle at 90% 95%,#5b3bd055,#05060dd9 62%);
+backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);transition:opacity .35s ease}
+body.menu-open #navScrim{opacity:1;pointer-events:auto}
+
+#fab{display:grid;place-items:center;position:fixed;z-index:70;right:16px;bottom:calc(20px + env(safe-area-inset-bottom));
+width:58px;height:58px;padding:0;border:0;border-radius:50%;color:#fff;
+background:radial-gradient(circle at 30% 25%,#7aa7ff,#4a3df0 55%,#8b2fd8);
+box-shadow:0 12px 30px -8px #5b4bff,0 0 30px -4px #7a5cff99,inset 0 1px #ffffff55;
+-webkit-tap-highlight-color:transparent;animation:fabFloat 3.4s ease-in-out infinite;
+transition:scale .25s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+#fab::before{content:"";position:absolute;inset:-5px;border-radius:50%;
+background:conic-gradient(from 0deg,#9acbff,#a855f7,#22d3ee,#9acbff);
+-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));
+mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));
+animation:fabSpin 4s linear infinite}
+#fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #9acbff;opacity:0;animation:fabPulse 2.6s ease-out infinite;pointer-events:none}
+#fab:active{scale:.88}
+#fab .bars{position:relative;width:22px;height:16px}
+#fab .bars i{position:absolute;left:0;height:2.5px;border-radius:2px;background:#fff;box-shadow:0 0 8px #fff9;transition:transform .45s cubic-bezier(.34,1.56,.64,1),width .3s,opacity .2s,top .3s}
+#fab .bars i:nth-child(1){top:0;width:22px}
+#fab .bars i:nth-child(2){top:6.7px;width:15px}
+#fab .bars i:nth-child(3){top:13.4px;width:19px}
+body.menu-open #fab{animation:none;box-shadow:0 12px 34px -8px #a855f7,0 0 40px -2px #a855f7aa,inset 0 1px #ffffff55}
+body.menu-open #fab::after{animation:none}
+body.menu-open #fab .bars i:nth-child(1){top:6.7px;width:22px;transform:rotate(45deg)}
+body.menu-open #fab .bars i:nth-child(2){opacity:0;width:0}
+body.menu-open #fab .bars i:nth-child(3){top:6.7px;width:22px;transform:rotate(-45deg)}
+body.menu-open #fab::before{animation-duration:1.4s}
+}
+@keyframes fabFloat{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes fabSpin{to{transform:rotate(360deg)}}
+@keyframes fabPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+@keyframes dotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+</style>
+<style id="lumen-v3-ui">
+nav button .ico{font-style:normal}
+@media(min-width:801px){
+nav button .ico{display:inline-grid;place-items:center;width:1.2em;flex:none}
+nav button .ico svg{width:17px;height:17px}
+.qx{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);column-gap:20px;align-items:start}
+.qx>:nth-child(-n+4){grid-column:1/-1}
+.qx>:nth-child(5){grid-column:2;grid-row:5}
+.qx>:nth-child(6){grid-column:1;grid-row:5/span 3}
+.qx>:nth-child(7){grid-column:2;grid-row:6}
+.qx>:nth-child(8){grid-column:2;grid-row:7}
+.qx-edit textarea{min-height:430px}
+.qx-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mp-tabs{flex-wrap:wrap;overflow:visible}
+.mp-tab:hover{border-color:var(--accent);color:#fff}
+.mp-tab.on:hover{color:#000}
+.cx{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);column-gap:20px;align-items:start}
+.cx>:nth-child(-n+2){grid-column:1/-1}
+.cx>:nth-child(3){grid-column:1;grid-row:3/span 4}
+.cx>:nth-child(n+4){grid-column:2}
+.cx-hero{max-width:760px}
+}
+@media(max-width:800px){
+nav{gap:7px;bottom:calc(88px + env(safe-area-inset-bottom))}
+nav button{padding:4px 5px 4px 16px;font-size:13.5px}
+nav button .ico,nav button:nth-of-type(n) .ico{width:34px;height:34px;font-size:16px;background:#000;border:1px solid #ffffff3d;box-shadow:0 0 12px -3px #ffffff30}
+nav button .ico svg{width:17px;height:17px}
+nav button.on .ico{border-color:#9acbff;box-shadow:0 0 14px -2px #9acbffaa}
+}
+@media(max-width:800px) and (max-height:620px){nav{gap:5px;bottom:calc(80px + env(safe-area-inset-bottom))}nav button{font-size:12.5px}nav button .ico,nav button:nth-of-type(n) .ico{width:30px;height:30px}}
+
+/* shared page bits */
+.mp-h1{font-size:clamp(30px,9vw,44px);line-height:1.05;letter-spacing:-.04em;font-weight:900}
+.mp-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 1px 12px;margin:0 -2px}
+.mp-tabs::-webkit-scrollbar{display:none}
+.mp-tab{flex:none;border:1px solid var(--line);background:#ffffff0a;color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;transition:background .2s,color .2s,border-color .2s,transform .15s}
+.mp-tab:active{transform:scale(.95)}
+.mp-tab.on{background:#fff;color:#000;border-color:#fff}
+.qx input,.qx textarea,.qx select,.cx input[type=text],.cx textarea,.cx select{width:100%;background:#ffffff0d;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:16px;outline:none}
+.qx textarea:focus,.cx input:focus,.cx textarea:focus,.cx select:focus{border-color:var(--accent)}
+.cx select option{background:#10141f;color:#fff}
+.qx-guide summary{cursor:pointer;font-weight:800;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.qx-guide summary::-webkit-details-marker{display:none}
+.qx-guide summary::after{content:"+";font-size:20px;color:var(--accent);transition:transform .25s}
+.qx-guide[open] summary::after{transform:rotate(45deg)}
+.qx-guide ol,.qx-guide ul{margin:12px 0 4px 20px;display:grid;gap:7px;color:#d5dbea}
+.qx-guide h3{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:16px 0 0}
+.qx-guide .secondary{margin-top:14px}
+.qx-edit textarea{min-height:280px;resize:vertical;line-height:1.6}
+.qx-goal{margin-top:14px}
+.qx-bar{position:relative;height:8px;border-radius:99px;background:#ffffff14;overflow:visible}
+.qx-bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--accent);transition:width .3s ease,background .3s}
+.qx-bar i.ok{background:#34d399}.qx-bar i.high{background:#fbbf24}
+.qx-bar u{position:absolute;top:-3px;width:2px;height:14px;background:#ffffff80;border-radius:2px}
+.qx-goal p{font-size:12.5px;margin-top:8px}
+.qx-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.qx-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.qx-stat{background:#ffffff08;border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;min-width:0}
+.qx-stat b{display:block;font-size:19px;line-height:1.2;overflow-wrap:anywhere}
+.qx-stat span{font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+.qx-check{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.qx-check li{display:flex;gap:10px;align-items:center;color:var(--muted);transition:color .2s}
+.qx-check li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);font-size:12px;flex:none}
+.qx-check li.ok{color:#fff}.qx-check li.ok span{background:#34d399;border-color:#34d399;color:#000;font-weight:900}
+.cx-hero{display:flex;gap:14px;align-items:center}
+.cx-ic{flex:none;width:54px;height:54px;border-radius:16px;background:#fff;display:grid;place-items:center}
+.cx-form{display:grid;gap:14px}
+.cx-l{display:grid;gap:6px;font-size:13px;font-weight:700;color:#dfe5f5}
+.cx-l small{font-weight:400}
+.cx-stars{display:flex;gap:6px}
+.cx-stars button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#ffffff0a;color:#ffffff55;font-size:24px;line-height:1;transition:transform .2s cubic-bezier(.34,1.56,.64,1),color .2s,background .2s}
+.cx-stars button.on{color:#fbbf24;background:#fbbf2418;border-color:#fbbf2466}
+.cx-stars button:active{transform:scale(.85)}
+.cx-moods{display:flex;gap:8px;flex-wrap:wrap}
+.cx-chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#d5dbea}
+.cx-chk input{width:18px;height:18px;margin-top:2px;accent-color:#fff;flex:none}
+.cx-send{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;border-radius:14px;font-weight:800;font-size:15px}
+.cx-prev{white-space:pre-wrap;overflow-wrap:anywhere;font:12.5px/1.6 monospace;color:#d5dbea;margin-top:12px;background:#ffffff08;border:1px solid var(--line);border-radius:12px;padding:12px}
+.cx-num{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cx-num div{display:flex;align-items:center;gap:10px;font-size:18px}
+.cx-num div svg{background:#fff;border-radius:8px;padding:5px;width:30px;height:30px;box-sizing:border-box}
+.cx-hist{padding:10px 0;border-bottom:1px solid var(--line)}
+.cx-hist b{font-size:13px;margin-right:8px}.cx-hist span{font-size:11px;color:var(--muted)}
+.cx-hist p{font-size:13px;color:#cfd6e8;margin-top:3px;overflow-wrap:anywhere}
+.cx,.qx{animation:appear .3s ease both}
+</style>
 </head>
 <body>
 <!-- Loading Screen -->
@@ -383,7 +564,7 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
-<nav aria-label="Main navigation">
+<nav id="mainNav" aria-label="Main navigation">
 <div class="logo">LUM<span>E</span>N</div>
 <button data-view="search" class="on">⌕ <span>Ask</span></button>
 <button data-view="research">◉ <span>Research</span></button>
@@ -391,11 +572,15 @@ body.labmode .wrap{max-width:none;flex:1 1 0;min-height:0;height:auto}
 <button data-view="learn">◈ <span>Learn</span></button>
 <button data-view="saved">☆ <span>Saved</span></button>
 <button data-view="projects">▤ <span>Projects</span></button>
+<button data-view="connect"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span>Connect</span></button>
+<button data-view="quill">✎ <span>Quill</span></button>
 <div class="navbottom">
 <button data-action="newproject">＋ New project</button>
 <button data-action="clear">↺ Clear search</button>
 </div>
 </nav>
+<div id="navScrim"></div>
+<button id="fab" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span class="bars"><i></i><i></i><i></i></span></button>
 <main id="main">
 <div class="wrap" id="app"></div>
 </main>
@@ -1985,15 +2170,302 @@ resize();
 animate();
 addEventListener("resize",resize);
 </script>
-<!-- PERMANENT INSTALL BUTTON - ALWAYS VISIBLE -->
-<button id="installBtn" style="position:fixed; bottom:85px; right:16px; z-index:99999; background:#7c3aed; color:white; border:none; padding:14px 22px; border-radius:50px; font-weight:800; box-shadow:0 8px 30px rgba(124,58,237,0.5);">↓ Install Lumen</button>
+<!-- INSTALL BUTTON (compact) -->
+<button id="installBtn" type="button"><span class="arr">↓</span> Install Lumen</button>
 
-<div id="installHelp" style="display:none; position:fixed; bottom:140px; right:16px; left:16px; z-index:99999; background:#0f1220; color:white; border:1px solid #2a2d45; padding:16px; border-radius:16px;">
+<div id="installHelp">
   <b>To install Lumen:</b><br>
-    1. Tap the 3 dots ⋮ on top right<br>
-    2. Tap <b>Install app</b> or <b>Add to Home screen</b><br><br>
-  <button onclick="document.getElementById('installHelp').style.display='none'" style="background:#222; color:white; border:none; padding:8px 16px; border-radius:8px;">Close</button>
+  1. Tap the 3 dots ⋮ on top right<br>
+  2. Tap <b>Install app</b> or <b>Add to Home screen</b><br>
+  <button type="button" onclick="document.getElementById('installHelp').style.display='none'">Close</button>
 </div>
+
+<script>
+// ===== Mobile floating orb menu =====
+(function(){
+  const nav=document.getElementById('mainNav'),fab=document.getElementById('fab'),scrim=document.getElementById('navScrim');
+  const items=[...nav.querySelectorAll('button[data-view]')];
+  items.forEach((b,i)=>{
+    b.style.setProperty('--i',i);
+    b.style.setProperty('--n',items.length);
+    const t=[...b.childNodes].find(n=>n.nodeType===3&&n.textContent.trim());
+    if(t){const ico=document.createElement('i');ico.className='ico';ico.textContent=t.textContent.trim();b.replaceChild(ico,t)}else{const sv=b.querySelector('svg');if(sv){const ico=document.createElement('i');ico.className='ico';b.insertBefore(ico,sv);ico.appendChild(sv)}}
+  });
+  const set=o=>{document.body.classList.toggle('menu-open',o);fab.setAttribute('aria-expanded',o);fab.setAttribute('aria-label',o?'Close menu':'Open menu');if(o&&navigator.vibrate)try{navigator.vibrate(8)}catch(e){}};
+  fab.addEventListener('click',()=>set(!document.body.classList.contains('menu-open')));
+  scrim.addEventListener('click',()=>set(false));
+  nav.addEventListener('click',e=>{if(e.target.closest('button[data-view]'))setTimeout(()=>set(false),120)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')set(false)});
+  addEventListener('resize',()=>{if(innerWidth>800)set(false)});
+})();
+</script>
+
+<script>
+// ===== Pages for all screens: Connect (WhatsApp) + Quill (writing studio) =====
+(function(){
+"use strict";
+const MV=["connect","quill"];
+const WA_NUM="233203446793";      // 020 344 6793 in international format (Ghana +233)
+const WA_SHOW="020 344 6793";
+const WA_PATH="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z";
+const WA_SVG=(c,s)=>`<svg viewBox="0 0 24 24" width="${s||20}" height="${s||20}" fill="${c||"#000"}" aria-hidden="true"><path d="${WA_PATH}"/></svg>`;
+const E=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $id=i=>document.getElementById(i);
+const say=m=>{try{toast(m)}catch(e){}};
+function copyText(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);
+  return new Promise((res,rej)=>{try{const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();const ok=document.execCommand("copy");a.remove();ok?res():rej()}catch(e){rej(e)}});
+}
+
+/*PURE_START*/
+function stats(t){
+  const words=(t.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu)||[]).length;
+  const sentences=t.split(/[.!?…]+["')\]]*(?:\s+|$)/).filter(x=>/[\p{L}\p{N}]/u.test(x)).length;
+  return{words,chars:t.length,nospace:t.replace(/\s/g,"").length,sentences,
+    paragraphs:t.split(/\n\s*\n/).filter(x=>x.trim()).length,
+    lines:t.split("\n").filter(x=>x.trim()).length,
+    avg:sentences?Math.round(words/sentences*10)/10:0};
+}
+function fmtTime(words,wpm){
+  if(!words)return"0 sec";
+  const sec=Math.max(1,Math.round(words/wpm*60));
+  if(sec<60)return sec+" sec";
+  const m=Math.floor(sec/60),r=sec%60;
+  return m+" min"+(r?" "+r+" sec":"");
+}
+/*PURE_END*/
+
+/* ---------------- QUILL ---------------- */
+const TYPES={
+formal:{label:"Formal letter",min:150,max:300,
+ steps:["Put your address and the date at the top.","Add the recipient’s name, title, organisation and address.","Greet them: “Dear Sir/Madam,” or “Dear Mr/Ms Surname,”.","Write a one-line subject that states your purpose.","Opening paragraph: say clearly why you are writing.","Body: give the facts, reasons or requests. One idea per paragraph.","Closing paragraph: say what you expect next and thank them.","Sign off: “Yours faithfully” (Dear Sir/Madam) or “Yours sincerely” (named person), then your signature and printed name."],
+ tips:["Keep a polite, serious tone. No slang or text-speak.","Avoid contractions (write “I am”, not “I’m”).","Be brief and specific. Short sentences read best.","Proofread names, dates and spellings before sending."],
+ tpl:`[Your Name]\n[Your Address]\n[City / Town]\n[Date]\n\n[Recipient’s Name]\n[Position]\n[Organisation]\n[Address]\n\nDear Sir/Madam,\n\nSubject: [State the purpose in one line]\n\nI am writing to [explain the reason for your letter].\n\n[Give the main details, facts or request here. Keep to one idea per paragraph.]\n\nI would be grateful if you could [state the action you expect]. Thank you for your time and attention.\n\nYours faithfully,\n\n[Your Name]`,
+ checks:[["Greeting (Dear …)",t=>/^\s*dear\b/im.test(t)],["Subject line",t=>/^\s*(subject|re)\s*:/im.test(t)],["Formal sign-off",t=>/(yours\s+(faithfully|sincerely|truly)|respectfully|kind regards|best regards)/i.test(t)],["No contractions",t=>t.trim()&&!/\b\w+['’](m|re|ve|ll|d|t)\b/i.test(t)],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]},
+informal:{label:"Informal letter",min:100,max:250,
+ steps:["Write your address (optional) and the date at the top.","Greet your friend warmly: “Dear Kofi,” or “Hi Ama,”.","Start with a friendly line: “How are you? I hope you are well.”","Share your main news in a natural, chatty way.","Ask questions so they want to reply.","End warmly: “Write back soon.”","Sign off: “Love,” “Cheers,” “Your friend,” then your first name."],
+ tips:["Write the way you talk, but keep it clear.","Contractions and friendly phrases are fine.","Add a personal detail or memory to make it real.","Do not write the whole letter in one block. Use paragraphs."],
+ tpl:`[Date]\n\nDear [Name],\n\nHow are you? I hope you and everyone at home are doing well.\n\n[Share your main news here. Tell it the way you would tell it in person.]\n\n[Ask a question or two about their life, plans or family.]\n\nWrite back soon. I can’t wait to hear from you!\n\nYour friend,\n[Your Name]`,
+ checks:[["Friendly greeting",t=>/^\s*(dear|hi|hello|hey)\b/im.test(t)],["Asks a question",t=>/\?/.test(t)],["Warm sign-off",t=>/(love|cheers|take care|your friend|yours|best wishes|write back|see you|bye)/i.test(t)],["At least 2 paragraphs",t=>stats(t).paragraphs>=2],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]},
+article:{label:"Article",min:400,max:800,
+ steps:["Headline: short, clear and interesting.","Byline: your name and the date.","Hook the reader in the first two lines with a fact, question or scene.","Intro: answer who, what, when, where and why.","Body: group points under short subheadings. Support with facts, quotes or examples.","Conclusion: summarise and leave the reader with a thought or a call to action."],
+ tips:["Short paragraphs (2–4 sentences) are easier on a phone.","Use active voice: “Students built the school”, not “The school was built by students”.","Back up claims with a name, number or source.","Read it aloud to catch clumsy sentences."],
+ tpl:`[Headline]\n\nBy [Your Name] · [Date]\n\n[Hook: a surprising fact, question or short scene.]\n\n[Introduction: who, what, when, where and why it matters.]\n\n[Subheading 1]\n[Main point with a fact, quote or example.]\n\n[Subheading 2]\n[Next point and supporting detail.]\n\nIn conclusion, [sum up the key message and end with a thought or call to action].`,
+ checks:[["Headline on first line",t=>{const f=t.trim().split("\n")[0]||"";const w=f.trim().split(/\s+/).filter(Boolean).length;return w>0&&w<=14&&!/[.]$/.test(f.trim())}],["At least 3 paragraphs",t=>stats(t).paragraphs>=3],["Has a conclusion",t=>/(in conclusion|to sum up|in summary|overall|finally|all in all)/i.test(t)],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]},
+story:{label:"Story",min:500,max:1500,
+ steps:["Title that hints at the story without telling it all.","Opening: a strong first line, plus who, where and when.","Problem: something goes wrong or a character wants something badly.","Rising action: things get harder. Add obstacles and small surprises.","Climax: the most exciting or emotional moment.","Resolution: show how things end and what changed."],
+ tips:["Show, don’t tell: “Her hands shook”, not “She was nervous”.","Use the five senses: sight, sound, smell, touch, taste.","Dialogue makes characters come alive. Start a new line for each speaker.","Vary sentence length to control the pace."],
+ tpl:`[Title]\n\n[Strong opening line that makes the reader curious.]\n\n[Introduce the main character, the place and the time.]\n\n[The problem: what goes wrong, or what does the character want?]\n\n“[A line of dialogue],” said [Name].\n\n[Rising action: obstacles and surprises.]\n\n[The climax: the biggest moment.]\n\n[Resolution: how it ends and what has changed.]`,
+ checks:[["Title on first line",t=>{const f=t.trim().split("\n")[0]||"";return f.trim().length>0&&f.trim().split(/\s+/).length<=12}],["At least 3 paragraphs",t=>stats(t).paragraphs>=3],["Has dialogue",t=>/[“"][^”"]{2,}[”"]/.test(t)],["Ends with proper punctuation",t=>/[.!?…”"]\s*$/.test(t.trim())],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]},
+essay:{label:"Essay",min:400,max:900,
+ steps:["Introduction: hook, brief background, then your thesis (main argument).","Body paragraph 1: Point, Evidence, Explain, Link (PEEL).","Body paragraph 2: a second point with its own evidence.","Body paragraph 3: a counter-argument and your answer to it.","Conclusion: restate the thesis in new words and end with a final thought."],
+ tips:["One main idea per paragraph.","Use linking words: however, moreover, therefore, for example.","Every paragraph should help prove your thesis.","Do not introduce new arguments in the conclusion."],
+ tpl:`[Essay title]\n\n[Introduction: hook, background and your thesis statement.]\n\nFirstly, [point]. For example, [evidence]. This shows that [explanation].\n\nMoreover, [second point with evidence and explanation].\n\nHowever, some people argue that [counter-argument]. Yet [your response].\n\nIn conclusion, [restate your thesis in new words and finish with a final thought].`,
+ checks:[["At least 4 paragraphs",t=>stats(t).paragraphs>=4],["Uses linking words",t=>/(however|moreover|furthermore|therefore|in addition|for example|firstly|consequently)/i.test(t)],["Has a conclusion",t=>/(in conclusion|to conclude|to sum up|in summary|overall)/i.test(t)],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]},
+speech:{label:"Speech",min:250,max:600,
+ steps:["Greet the audience and thank the host.","Open with a hook: a question, story or surprising fact.","State your purpose in one sentence.","Give 2–3 main points, one at a time.","Use a short story or example to make it memorable.","Conclude with a call to action, then thank the audience."],
+ tips:["Write for the ear: short, simple sentences.","The rule of three (three points, three examples) is easy to remember.","Mark pauses with “/” and practise out loud.","Speaking pace is about 130 words a minute."],
+ tpl:`Good [morning/afternoon/evening], [title of host], distinguished guests, ladies and gentlemen.\n\n[Hook: a question, story or fact.]\n\nToday I want to talk to you about [topic].\n\nFirst, [point one].\n\nSecond, [point two].\n\nThird, [point three].\n\nLet me tell you a short story: [example].\n\nSo I urge you to [call to action].\n\nThank you for listening.`,
+ checks:[["Greets the audience",t=>/(ladies and gentlemen|good (morning|afternoon|evening)|distinguished|honourable|fellow|friends)/i.test(t)],["At least 3 paragraphs",t=>stats(t).paragraphs>=3],["Closes with thanks",t=>/thank you/i.test(t)],["All [placeholders] replaced",t=>t.trim()&&!/\[[^\]]+\]/.test(t)]]}
+};
+const Q=Object.assign({type:"formal",drafts:{},guide:true},ls.get("lumen_quill_v1",{}));
+const qSave=()=>ls.set("lumen_quill_v1",Q);
+
+function renderQuill(app){
+  const T=TYPES[Q.type]||TYPES.formal;
+  app.innerHTML=`<div class="qx">
+  <div class="eyebrow">Lumen writing studio</div>
+  <h1 class="mp-h1">Quill</h1>
+  <p class="sub" style="margin:8px 0 14px">Write letters, articles and stories. Get live counts and step-by-step guidance.</p>
+  <div class="mp-tabs" role="tablist">${Object.keys(TYPES).map(k=>`<button class="mp-tab${k===Q.type?" on":""}" data-qt="${k}">${E(TYPES[k].label)}</button>`).join("")}</div>
+  <details class="panel qx-guide" id="qxGuide"${Q.guide?" open":""}><summary>How to write a ${E(T.label.toLowerCase())}</summary>
+    <ol>${T.steps.map(s=>`<li>${E(s)}</li>`).join("")}</ol>
+    <h3>Tips</h3><ul>${T.tips.map(s=>`<li>${E(s)}</li>`).join("")}</ul>
+    <button class="secondary" data-qa="tpl">Insert template</button>
+  </details>
+  <div class="panel qx-edit">
+    <textarea id="qxText" spellcheck="true" autocapitalize="sentences" placeholder="Start writing your ${E(T.label.toLowerCase())} here…"></textarea>
+    <div class="qx-goal"><div class="qx-bar"><i id="qxBar"></i><u id="qxMin"></u></div><p id="qxGoal" class="muted"></p></div>
+    <div class="qx-actions">
+      <button class="secondary" data-qa="copy">Copy</button>
+      <button class="secondary" data-qa="save">Save .txt</button>
+      <button class="secondary" data-qa="clear">Clear</button>
+    </div>
+  </div>
+  <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Live count</div><div class="qx-stats" id="qxStats"></div></div>
+  <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Checklist</div><ul class="qx-check" id="qxCheck"></ul></div>
+  </div>`;
+  const ta=$id("qxText");ta.value=Q.drafts[Q.type]||"";
+  qUpdate();
+  app.oninput=e=>{if(e.target.id==="qxText"){Q.drafts[Q.type]=ta.value;qSave();qUpdate()}};
+  app.onclick=e=>{
+    const sum=e.target.closest("summary");
+    if(sum){setTimeout(()=>{Q.guide=$id("qxGuide").open;qSave()},0);return}
+    const b=e.target.closest("button");if(!b)return;
+    if(b.dataset.qt){Q.type=b.dataset.qt;qSave();renderQuill(app);return}
+    const a=b.dataset.qa;if(!a)return;
+    const txt=Q.drafts[Q.type]||"";
+    if(a==="tpl"){
+      if(txt.trim()&&!confirm("Replace your current text with the template?"))return;
+      Q.drafts[Q.type]=T.tpl;qSave();ta.value=T.tpl;qUpdate();say("Template added. Replace the [brackets].");ta.focus();
+    }else if(a==="copy"){
+      if(!txt.trim())return say("Nothing to copy yet");
+      copyText(txt).then(()=>say("Copied to clipboard")).catch(()=>say("Could not copy"));
+    }else if(a==="save"){
+      if(!txt.trim())return say("Nothing to save yet");
+      const url=URL.createObjectURL(new Blob([txt],{type:"text/plain"}));
+      const l=document.createElement("a");l.href=url;l.download="quill-"+Q.type+".txt";document.body.appendChild(l);l.click();l.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);say("Saved as .txt");
+    }else if(a==="clear"){
+      if(!txt.trim())return;
+      if(!confirm("Clear this draft?"))return;
+      Q.drafts[Q.type]="";qSave();ta.value="";qUpdate();
+    }
+  };
+}
+function qUpdate(){
+  const T=TYPES[Q.type],t=Q.drafts[Q.type]||"",s=stats(t);
+  const items=[["Words",s.words],["Sentences",s.sentences],["Paragraphs",s.paragraphs],["Lines",s.lines],["Characters",s.chars],["No spaces",s.nospace],["Read time",fmtTime(s.words,200)],["Speak time",fmtTime(s.words,130)],["Words / sentence",s.avg]];
+  $id("qxStats").innerHTML=items.map(([k,v])=>`<div class="qx-stat"><b>${E(v)}</b><span>${E(k)}</span></div>`).join("");
+  const bar=$id("qxBar"),g=$id("qxGoal");
+  bar.style.width=Math.min(100,s.words/T.max*100)+"%";
+  $id("qxMin").style.left=(T.min/T.max*100)+"%";
+  bar.className=s.words===0?"":s.words<T.min?"low":s.words<=T.max?"ok":"high";
+  g.textContent=s.words===0?`Suggested length: ${T.min}–${T.max} words`:s.words<T.min?`${T.min-s.words} more words to reach the suggested ${T.min}–${T.max}`:s.words<=T.max?`Great. You are in the suggested ${T.min}–${T.max} range`:`${s.words-T.max} words over the suggested ${T.min}–${T.max}`;
+  $id("qxCheck").innerHTML=T.checks.map(([l,f])=>{let ok=false;try{ok=!!f(t)}catch(e){}return`<li class="${ok?"ok":""}"><span>${ok?"✓":"○"}</span>${E(l)}</li>`}).join("");
+}
+
+/* ---------------- CONNECT ---------------- */
+const CATS={
+ connect:{label:"Connection request",ph:"Tell me who you are and what you would like to connect about…"},
+ rate:{label:"Rate the app",ph:"What do you like? What could be better?"},
+ bug:{label:"Report a bug",ph:"What happened? What did you expect? List the steps so I can repeat it."},
+ exp:{label:"My experience",ph:"Tell me how Lumen has worked for you…"},
+ idea:{label:"Feature idea",ph:"Describe the feature you would love to see…"},
+ ask:{label:"Question",ph:"Type your question…"}
+};
+const STAR_WORDS=["","Poor","Fair","Good","Very good","Excellent"];
+const WHERE=["Ask","Research","Code Lab","Learn","Saved","Projects","Quill","Connect","Install button","Other"];
+const SEVER=["Low: small visual issue","Medium: annoying","High: blocks my work","Crash: app stops"];
+const REASONS=["Collaboration","Partnership","Mentorship","Project or job","Just saying hello"];
+const MOODS=["Loved it","Good","Okay","Frustrating"];
+const saved=ls.get("lumen_connect_v1",{name:"",contact:"",hist:[]});
+const C={cat:"connect",name:saved.name||"",contact:saved.contact||"",reason:REASONS[0],rating:0,sev:SEVER[1],where:WHERE[0],mood:"Good",msg:"",device:true};
+const cSave=()=>ls.set("lumen_connect_v1",{name:C.name,contact:C.contact,hist:saved.hist});
+
+function buildMsg(){
+  const L=["*Lumen · "+CATS[C.cat].label+"*","Name: "+(C.name.trim()||"Anonymous")];
+  if(C.contact.trim())L.push("Reply to: "+C.contact.trim());
+  if(C.cat==="connect")L.push("Reason: "+C.reason);
+  if(C.cat==="rate")L.push("Rating: "+C.rating+"/5 ("+STAR_WORDS[C.rating]+")");
+  if(C.cat==="bug"){L.push("Where: "+C.where);L.push("Severity: "+C.sev)}
+  if(C.cat==="exp")L.push("Overall feeling: "+C.mood);
+  L.push("","Message:",C.msg.trim()||"…");
+  if(C.cat==="bug"&&C.device)L.push("","Device: "+innerWidth+"x"+innerHeight+" screen · "+(navigator.userAgent||"").slice(0,110));
+  L.push("","Sent from the Lumen app");
+  return L.join("\n");
+}
+function extraFields(){
+  if(C.cat==="connect")return`<label class="cx-l">What is it about?<select id="cxReason">${REASONS.map(r=>`<option${r===C.reason?" selected":""}>${E(r)}</option>`).join("")}</select></label>`;
+  if(C.cat==="rate")return`<div class="cx-l">Your rating<div class="cx-stars">${[1,2,3,4,5].map(n=>`<button type="button" class="${n<=C.rating?"on":""}" data-cxstar="${n}" aria-label="${n} star${n>1?"s":""}">★</button>`).join("")}</div><small class="muted" id="cxStarTxt">${C.rating?STAR_WORDS[C.rating]:"Tap a star"}</small></div>`;
+  if(C.cat==="bug")return`<label class="cx-l">Where did it happen?<select id="cxWhere">${WHERE.map(r=>`<option${r===C.where?" selected":""}>${E(r)}</option>`).join("")}</select></label>
+  <label class="cx-l">How serious is it?<select id="cxSev">${SEVER.map(r=>`<option${r===C.sev?" selected":""}>${E(r)}</option>`).join("")}</select></label>
+  <label class="cx-chk"><input type="checkbox" id="cxDev"${C.device?" checked":""}> Include my device info (helps me fix it faster)</label>`;
+  if(C.cat==="exp")return`<div class="cx-l">How did it feel?<div class="cx-moods">${MOODS.map(m=>`<button type="button" class="mp-tab${m===C.mood?" on":""}" data-cxmood="${E(m)}">${E(m)}</button>`).join("")}</div></div>`;
+  return"";
+}
+function histHTML(){
+  const h=saved.hist||[];
+  if(!h.length)return`<p class="muted">Messages you send from this phone will be listed here.</p>`;
+  return h.map(x=>`<div class="cx-hist"><b>${E(x.cat)}</b><span>${E(x.date)}</span><p>${E(x.snip)}</p></div>`).join("")+`<button class="secondary" data-cxa="clearhist" style="margin-top:8px">Clear history</button>`;
+}
+function renderConnect(app){
+  const cat=CATS[C.cat];
+  app.innerHTML=`<div class="cx">
+  <div class="cx-hero panel">
+    <div class="cx-ic">${WA_SVG("#000",28)}</div>
+    <div><div class="eyebrow">Connect</div><h1 class="mp-h1" style="margin:2px 0 4px">Talk to Lumen</h1>
+    <p class="muted">Requests, ratings, bug reports and stories. Everything arrives in one WhatsApp chat with the creator.</p></div>
+  </div>
+  <div class="mp-tabs">${Object.keys(CATS).map(k=>`<button class="mp-tab${k===C.cat?" on":""}" data-cxcat="${k}">${E(CATS[k].label)}</button>`).join("")}</div>
+  <div class="panel cx-form">
+    <label class="cx-l">Your name<input id="cxName" type="text" autocomplete="name" placeholder="Your name" value="${E(C.name)}" maxlength="60"></label>
+    <label class="cx-l">Email or phone <small class="muted">(optional)</small><input id="cxContact" type="text" autocomplete="off" placeholder="So I can reply outside WhatsApp" value="${E(C.contact)}" maxlength="80"></label>
+    <div id="cxExtra">${extraFields()}</div>
+    <label class="cx-l">Your message<textarea id="cxMsg" rows="6" maxlength="1200" placeholder="${E(cat.ph)}">${E(C.msg)}</textarea><small class="muted" id="cxCount">${C.msg.length} / 1200</small></label>
+    <button class="primary cx-send" data-cxa="send">${WA_SVG("#000",20)}<span>Send on WhatsApp</span></button>
+    <div class="actions" style="margin-top:10px"><button class="secondary" data-cxa="copy">Copy message</button><button class="secondary" data-cxa="open">Open chat only</button></div>
+  </div>
+  <details class="panel qx-guide"><summary>Preview message</summary><pre class="cx-prev" id="cxPrev">${E(buildMsg())}</pre></details>
+  <div class="panel"><div class="eyebrow" style="margin-bottom:8px">Direct line</div>
+    <div class="cx-num"><div>${WA_SVG("#000",18)}<b>${WA_SHOW}</b></div><button class="secondary" data-cxa="copynum">Copy number</button></div>
+  </div>
+  <div class="panel"><div class="eyebrow" style="margin-bottom:8px">Recent messages</div><div id="cxHist">${histHTML()}</div></div>
+  </div>`;
+  const prev=()=>{const p=$id("cxPrev");if(p)p.textContent=buildMsg()};
+  app.oninput=e=>{
+    const id=e.target.id;
+    if(id==="cxName"){C.name=e.target.value;cSave()}
+    else if(id==="cxContact"){C.contact=e.target.value;cSave()}
+    else if(id==="cxMsg"){C.msg=e.target.value;$id("cxCount").textContent=C.msg.length+" / 1200"}
+    else return;
+    prev();
+  };
+  app.onchange=e=>{
+    const id=e.target.id;
+    if(id==="cxReason")C.reason=e.target.value;
+    else if(id==="cxWhere")C.where=e.target.value;
+    else if(id==="cxSev")C.sev=e.target.value;
+    else if(id==="cxDev")C.device=e.target.checked;
+    else return;
+    prev();
+  };
+  app.onclick=e=>{
+    const sm=e.target.closest("summary");if(sm)return;
+    const b=e.target.closest("button");if(!b)return;
+    if(b.dataset.cxcat){C.cat=b.dataset.cxcat;renderConnect(app);return}
+    if(b.dataset.cxstar){C.rating=+b.dataset.cxstar;$id("cxExtra").innerHTML=extraFields();prev();return}
+    if(b.dataset.cxmood){C.mood=b.dataset.cxmood;$id("cxExtra").innerHTML=extraFields();prev();return}
+    const a=b.dataset.cxa;if(!a)return;
+    if(a==="send"){
+      if(C.cat==="rate"&&!C.rating)return say("Please tap a star rating first");
+      if(C.msg.trim().length<5)return say("Please write a short message first");
+      const text=buildMsg(),url="https://wa.me/"+WA_NUM+"?text="+encodeURIComponent(text);
+      saved.hist=[{cat:CATS[C.cat].label,date:new Date().toLocaleString([], {dateStyle:"medium",timeStyle:"short"}),snip:C.msg.trim().slice(0,90)}].concat(saved.hist||[]).slice(0,5);
+      cSave();$id("cxHist").innerHTML=histHTML();
+      say("Opening WhatsApp…");
+      if(!window.open(url,"_blank"))location.href=url;
+    }else if(a==="copy"){
+      if(C.msg.trim().length<5)return say("Write your message first");
+      copyText(buildMsg()).then(()=>say("Message copied")).catch(()=>say("Could not copy"));
+    }else if(a==="open"){
+      if(!window.open("https://wa.me/"+WA_NUM,"_blank"))location.href="https://wa.me/"+WA_NUM;
+    }else if(a==="copynum"){
+      copyText("+"+WA_NUM).then(()=>say("Number copied")).catch(()=>say("Could not copy"));
+    }else if(a==="clearhist"){
+      saved.hist=[];cSave();$id("cxHist").innerHTML=histHTML();
+    }
+  };
+}
+
+/* ---------------- hook into the app's render ---------------- */
+const _render=render;
+render=function(){
+  const app=$id("app");
+  app.onclick=app.oninput=app.onchange=null;
+  if(MV.includes(view)){
+    clTeardown();document.body.classList.remove("labmode");
+    document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===view));
+    view==="connect"?renderConnect(app):renderQuill(app);
+    $id("main").scrollTop=0;
+    return;
+  }
+  _render();
+};
+})();
+
+</script>
 
 <script>
 let deferredPrompt = null;
@@ -2030,4 +2502,3 @@ if ('serviceWorker' in navigator) {
   
 </body>
 </html>
-
