@@ -1,20 +1,70 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Lumen · Created by Emmanuel Pobee Okpoti -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a13">
-<meta name="description" content="Lumen — search, research, discover images, and build with code.">
+<meta name="google-site-verification" content="m--DOILDHifyKtVJ7cGM-1IxAiVgpPeIpDyWUbjMbQ8" />
+<!-- 1. Page identity -->
+<title>Lumen — Search, Research & Code</title>
+<meta name="description" content="Lumen: search, research, learn and code in one app — live Code Lab, saved projects, calculator and dictionary. Created by Emmanuel Pobee Okpoti.">
 <meta name="application-name" content="Lumen">
+<meta name="author" content="Emmanuel Pobee Okpoti">
+<meta name="creator" content="Emmanuel Pobee Okpoti">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://lumen-lm.vercel.app/">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+<!-- 2. App / install settings -->
+<meta name="theme-color" content="#080a13">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Lumen">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#080a13">
 <link rel="icon" href="./icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <link rel="apple-touch-icon" sizes="512x512" href="./icon-512.png">
-<title>Lumen — Search, Research & Code</title>
+
+<!-- 3. Social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lumen">
+<meta property="og:title" content="Lumen — Search, Research & Code">
+<meta property="og:description" content="Lumen is an all-in-one workspace for curious minds. Search the web, explore images and videos, run in-depth research, learn HTML, CSS and JavaScript, and build and test your own projects in a live Code Lab. Save what matters, work with built-in tools like a calculator and dictionary, and install it on your phone or computer. Created by Emmanuel Pobee Okpoti.">
+<meta property="og:url" content="https://lumen-lm.vercel.app/">
+<meta property="og:image" content="https://lumen-lm.vercel.app/icon-512.png">
+<meta property="og:image:alt" content="Lumen logo">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lumen — Search, Research & Code">
+<meta name="twitter:description" content="Lumen: search, research, learn and code in one app — live Code Lab, saved projects, calculator and dictionary. Created by Emmanuel Pobee Okpoti.">
+<meta name="twitter:image" content="https://lumen-lm.vercel.app/icon-512.png">
+
+
+<!-- 4. Structured data -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Person","@id":"https://lumen-lm.vercel.app/#creator","name":"Emmanuel Pobee Okpoti"},
+{"@type":"WebSite","@id":"https://lumen-lm.vercel.app/#website","url":"https://lumen-lm.vercel.app/","name":"Lumen","description":"Lumen: search, research, learn and code in one app — live Code Lab, saved projects, calculator and dictionary. Created by Emmanuel Pobee Okpoti.","inLanguage":"en","publisher":{"@id":"https://lumen-lm.vercel.app/#creator"}},
+{"@type":"WebApplication","@id":"https://lumen-lm.vercel.app/#app","name":"Lumen","url":"https://lumen-lm.vercel.app/","description":"Lumen is an all-in-one workspace for curious minds. Search the web, explore images and videos, run in-depth research, learn HTML, CSS and JavaScript, and build and test your own projects in a live Code Lab. Save what matters, work with built-in tools like a calculator and dictionary, and install it on your phone or computer. Created by Emmanuel Pobee Okpoti.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires a modern web browser","image":"https://lumen-lm.vercel.app/icon-512.png","creator":{"@id":"https://lumen-lm.vercel.app/#creator"},"author":{"@id":"https://lumen-lm.vercel.app/#creator"},"isPartOf":{"@id":"https://lumen-lm.vercel.app/#website"},"featureList":["Web search with images and videos","In-depth research","Interactive coding lessons","Live HTML, CSS and JavaScript Code Lab","Saved results and projects","Calculator and dictionary","Installable on phone and computer"]}
+]}
+</script>
+
+ <script type="application/ld+json">
+   {
+     "@context": "https://schema.org",
+     "@type": "Person",
+     "name": "Emmanuel Pobee Okpoti",
+     "url": "https://lumen-lm.vercel.app",
+     "jobTitle": "Frontend Developer & Builder of ADAPT OS and Lumen",
+     "address": { "@type": "PostalAddress", "addressLocality": "Accra", "addressCountry": "GH" },
+     "sameAs": [
+       "https://www.linkedin.com/in/emmanuel-pobee-359718432",
+       "https://www.facebook.com/profile.php?id=61585641626567"
+     ]
+   }
+ </script>
+
 <style>
 :root{color-scheme:dark;--bg:#06070d;--ink:#f8f9ff;--muted:#a0aac1;--line:#ffffff19;--accent:#9acbff;--glass:#ffffff09;--radius:22px}
 *{box-sizing:border-box;margin:0}
@@ -594,6 +644,36 @@ body.tmenu-open #tmenu{pointer-events:auto}
 body.tmenu-open #tmenu button{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .5s cubic-bezier(.34,1.56,.64,1),visibility 0s;transition-delay:calc((var(--n) - 1 - var(--i)) * 55ms + 40ms)}
 }
 </style>
+<style id="lumen-menu-split">
+/* Phones & small screens only: menu split half left / half right. Large screens untouched. */
+@media(max-width:800px){
+#mainNav{left:16px;right:16px;width:auto;max-width:540px;margin-left:auto;display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--rows,6),auto);
+column-gap:10px;row-gap:9px;align-items:center;justify-items:stretch;justify-content:stretch;flex-direction:row}
+#mainNav button{width:100%;min-width:0;max-width:100%;gap:9px;font-size:13.5px}
+#mainNav button span{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mainNav button .ico{flex:none}
+/* right half: icon on the right (as before) */
+#mainNav button.nr{flex-direction:row-reverse;justify-content:flex-start;text-align:right;padding:5px 6px 5px 14px}
+/* left half: icon on the left, pops in from the left */
+#mainNav button.nl{flex-direction:row;justify-content:flex-start;text-align:left;padding:5px 14px 5px 6px;
+transform-origin:0 100%;transform:translate(-18px,34px) scale(.5) rotate(-8deg)}
+#mainNav button.nl.on::after{left:auto;right:9px}
+body.menu-open #mainNav button.nl,body.menu-open #mainNav button.nr{transform:none}
+body.menu-open #mainNav button:active{transform:scale(.95)}
+}
+@media(max-width:360px){
+#mainNav{left:10px;right:10px;column-gap:7px}
+#mainNav button{font-size:12.5px;gap:7px}
+#mainNav button.nr{padding-left:10px}#mainNav button.nl{padding-right:10px}
+}
+@media(max-width:800px) and (max-height:720px){
+#mainNav{bottom:calc(94px + env(safe-area-inset-bottom))}
+}
+@media(max-width:800px) and (max-height:520px){
+#mainNav{row-gap:5px;max-height:calc(100dvh - 108px);overflow-y:auto}
+}
+</style>
 </head>
 <body>
 <!-- Loading Screen -->
@@ -624,6 +704,7 @@ body.tmenu-open #tmenu button{opacity:1;visibility:visible;transform:none;transi
 <button data-view="projects">▤ <span>Projects</span></button>
 <button data-view="connect"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span>Connect</span></button>
 <button data-view="quill">✎ <span>Quill</span></button>
+<button data-view="apis">⌬ <span>APIs</span></button>
 <button data-tool="calc">▦ <span>Calculator</span></button>
 <button data-tool="dict">Aa <span>Dictionary</span></button>
 <div class="navbottom">
@@ -2237,9 +2318,14 @@ addEventListener("resize",resize);
 (function(){
   const nav=document.getElementById('mainNav'),fab=document.getElementById('fab'),scrim=document.getElementById('navScrim');
   const items=[...nav.querySelectorAll('button[data-view],button[data-tool]')];
+  const rows=Math.ceil(items.length/2),rc=items.length-rows;
+  nav.style.setProperty('--rows',rows);
   items.forEach((b,i)=>{
-    b.style.setProperty('--i',i);
-    b.style.setProperty('--n',items.length);
+    const left=i<rows,row=left?i:i-rc;
+    b.classList.add(left?'nl':'nr');
+    b.style.gridColumn=left?1:2;b.style.gridRow=row+1;
+    b.style.setProperty('--i',row);
+    b.style.setProperty('--n',rows);
     const t=[...b.childNodes].find(n=>n.nodeType===3&&n.textContent.trim());
     if(t){const ico=document.createElement('i');ico.className='ico';ico.textContent=t.textContent.trim();b.replaceChild(ico,t)}else{const sv=b.querySelector('svg');if(sv){const ico=document.createElement('i');ico.className='ico';b.insertBefore(ico,sv);ico.appendChild(sv)}}
   });
@@ -2718,6 +2804,117 @@ addEventListener("resize",()=>{if(innerWidth<801)sm(false)});
 /* phone pop-up: calculator + dictionary */
 $q("#mainNav").addEventListener("click",e=>{const k=e.target.closest("button[data-tool]");if(k)open(k.dataset.tool)});
 setScene(mode);
+})();
+</script>
+
+<script>
+// ===== API Library: free APIs catalogue + live playground =====
+(function(){
+"use strict";
+const E=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $i=i=>document.getElementById(i);
+const KEY={none:["No key","#34d399"],free:["Free key","#fbbf24"],opt:["Key optional","#9acbff"],tok:["Token needed","#fbbf24"]};
+const CATS=[
+{id:"space",t:"Space & knowledge",n:"Space exploration and encyclopedic content.",i:[
+ ["NASA Open APIs","Build a Space Exploration section: astronomy picture of the day, Mars photos and more.","https://api.nasa.gov","free"],
+ ["Wikipedia REST API","Article summaries and encyclopedic content.","https://www.mediawiki.org/wiki/API:REST_API","none"]]},
+{id:"news",t:"News & information",n:"Some news APIs require free registration and have usage restrictions. Article content may also have copyright restrictions, so display permitted excerpts and link to original sources where necessary.",i:[
+ ["GNews","News headlines and articles metadata.","https://gnews.io","free"],
+ ["The Guardian Open Platform","News articles and search results.","https://open-platform.theguardian.com","free"],
+ ["Hacker News API","Technology news and discussions.","https://github.com/HackerNews/API","none","hn"],
+ ["DEV Community API","Programming tutorials and developer articles.","https://developers.forem.com/api","opt"]]},
+{id:"img",t:"Images & creative content",n:"",i:[
+ ["Unsplash API","Search high-quality photographs. Display image galleries inside Lumen.","https://unsplash.com/developers","free"],
+ ["Pexels API","Search photographs and videos. Create an in-app visual discovery engine.","https://www.pexels.com/api/","free"],
+ ["Pixabay API","Search illustrations, photographs and other visual assets.","https://pixabay.com/api/docs/","free"]]},
+{id:"sci",t:"Science, weather & geography",n:"Open-Meteo is particularly attractive because its non-commercial API supports browser requests without an API key.",i:[
+ ["Open-Meteo","Weather forecasts, historical weather and air quality.","https://open-meteo.com/en/docs","none","weather"],
+ ["World Bank API","Economic indicators, population and development statistics.","https://datahelpdesk.worldbank.org/knowledgebase/topics/125589","none"],
+ ["Frankfurter","Currency exchange reference rates.","https://frankfurter.dev","none","currency"],
+ ["Nager.Date","Public holidays across countries.","https://date.nager.at/Api","none","holidays"],
+ ["OpenStreetMap","Geographic information and mapping data.","https://wiki.openstreetmap.org/wiki/API","none"]]},
+{id:"tech",t:"Programming & technology",n:"These could make Lumen more attractive to developers.",i:[
+ ["GitHub REST API","Repositories, commits, users and project information.","https://docs.github.com/en/rest","opt"],
+ ["NPM Registry API","JavaScript packages and package information.","https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md","none"],
+ ["Stack Exchange API","Programming questions, answers and tags.","https://api.stackexchange.com/docs","opt"],
+ ["Hugging Face","AI models, datasets and model information.","https://huggingface.co/docs/hub/api","tok"]]},
+{id:"fun",t:"Food, entertainment & general interest",n:"",i:[
+ ["TheMealDB","Recipe search and meal discovery.","https://www.themealdb.com/api.php","none","meal"],
+ ["PokéAPI","Interactive Pokémon encyclopedia.","https://pokeapi.co/docs/v2","none","pokemon"],
+ ["Open Food Facts","Food products and nutritional information.","https://openfoodfacts.github.io/openfoodfacts-server/api/","none"],
+ ["TVmaze API","TV shows, episodes and cast information.","https://www.tvmaze.com/api","none"]]}
+];
+const j=async u=>{const r=await fetch(u);if(!r.ok)throw Error(r.status);return r.json()};
+const stats=rows=>'<div class="qx-stats">'+rows.map(r=>'<div class="qx-stat"><b>'+E(r[1])+'</b><span>'+E(r[0])+'</span></div>').join("")+'</div>';
+const head=s=>'<div class="word" style="font-size:22px;margin-bottom:12px">'+s+'</div>';
+const http=u=>/^https?:\/\//i.test(u||"")?u:"";
+const DEMOS={
+weather:{l:"Weather",ph:"City, e.g. Accra",d:"Accra",api:"Open-Meteo",run:async v=>{
+ const g=await j("https://geocoding-api.open-meteo.com/v1/search?count=1&name="+encodeURIComponent(v));const p=g.results&&g.results[0];if(!p)return"No place found.";
+ const w=await j("https://api.open-meteo.com/v1/forecast?latitude="+p.latitude+"&longitude="+p.longitude+"&current=temperature_2m,relative_humidity_2m,wind_speed_10m&timezone=auto");const c=w.current,u=w.current_units;
+ return head(E(p.name)+(p.country?", "+E(p.country):""))+stats([["Temperature",c.temperature_2m+u.temperature_2m],["Humidity",c.relative_humidity_2m+u.relative_humidity_2m],["Wind",c.wind_speed_10m+" "+u.wind_speed_10m]])}},
+currency:{l:"Currency",ph:"e.g. 100 USD to EUR",d:"100 USD to EUR",api:"Frankfurter",run:async v=>{
+ const m=v.match(/^([\d.,]+)\s*([a-z]{3})\s*(?:to|in|>|->|=)?\s*([a-z]{3})$/i);if(!m)return"Use the format: 100 USD to EUR";
+ const a=parseFloat(m[1].replace(/,/g,"")),f=m[2].toUpperCase(),t=m[3].toUpperCase();let d;
+ try{d=await j("https://api.frankfurter.dev/v1/latest?base="+f+"&symbols="+t+"&amount="+a)}catch(e){d=await j("https://api.frankfurter.app/latest?from="+f+"&to="+t+"&amount="+a)}
+ const r=d.rates&&d.rates[t];if(r==null)return"That currency pair is not supported.";
+ return head(E(a+" "+f+" = "+r.toLocaleString(undefined,{maximumFractionDigits:4})+" "+t))+'<p class="muted" style="font-size:13px">Reference rate for '+E(d.date)+'. Frankfurter covers major currencies only.</p>'}},
+holidays:{l:"Holidays",ph:"Country code + year, e.g. GH 2026",d:"GH "+new Date().getFullYear(),api:"Nager.Date",run:async v=>{
+ const m=v.match(/^([a-z]{2})\s*(\d{4})?$/i);if(!m)return"Use a 2-letter country code, e.g. GH 2026";
+ const d=await j("https://date.nager.at/api/v3/PublicHolidays/"+(m[2]||new Date().getFullYear())+"/"+m[1].toUpperCase());
+ return d.length?d.slice(0,14).map(h=>'<div class="row"><div><strong>'+E(h.name)+'</strong><small>'+E(h.localName)+'</small></div><span class="status">'+E(h.date)+'</span></div>').join(""):"No holidays found."}},
+pokemon:{l:"Pokémon",ph:"Name or number, e.g. pikachu",d:"pikachu",api:"PokéAPI",run:async v=>{
+ const p=await j("https://pokeapi.co/api/v2/pokemon/"+encodeURIComponent(v.toLowerCase()));const img=http(p.sprites&&p.sprites.front_default);
+ return '<div class="cx-hero">'+(img?'<img src="'+E(img)+'" alt="" width="96" height="96" style="image-rendering:pixelated">':"")+'<div>'+head(E(p.name[0].toUpperCase()+p.name.slice(1)))+'<p class="muted">Type: '+E(p.types.map(x=>x.type.name).join(", "))+'</p></div></div>'+stats([["Height",p.height/10+" m"],["Weight",p.weight/10+" kg"],["Base XP",p.base_experience||"—"]])}},
+meal:{l:"Recipes",ph:"Dish, e.g. chicken",d:"chicken",api:"TheMealDB",run:async v=>{
+ const d=await j("https://www.themealdb.com/api/json/v1/1/search.php?s="+encodeURIComponent(v));if(!d.meals)return"No recipes found.";
+ return d.meals.slice(0,4).map(m=>{const u=http(m.strSource)||http(m.strYoutube);return'<div class="result"><img src="'+E(http(m.strMealThumb))+'/preview" alt=""><div>'+(u?'<a href="'+E(u)+'" target="_blank" rel="noopener">'+E(m.strMeal)+'</a>':'<strong>'+E(m.strMeal)+'</strong>')+'<p>'+E(m.strCategory)+' · '+E(m.strArea)+'</p></div></div>'}).join("")}},
+hn:{l:"Tech news",ph:"",d:"",api:"Hacker News API",noin:1,run:async()=>{
+ const ids=(await j("https://hacker-news.firebaseio.com/v0/topstories.json")).slice(0,6);
+ const it=await Promise.all(ids.map(i=>j("https://hacker-news.firebaseio.com/v0/item/"+i+".json")));
+ return it.filter(Boolean).map(s=>{const u=http(s.url)||"https://news.ycombinator.com/item?id="+s.id;return'<div class="result"><div><a href="'+E(u)+'" target="_blank" rel="noopener">'+E(s.title)+'</a><p>'+E(s.score)+' points · by '+E(s.by)+' · '+E(s.descendants||0)+' comments</p></div></div>'}).join("")}}
+};
+const S={q:"",cat:"all",demo:"weather",star:ls.get("lumen_api_star",[])};
+function list(){
+ const q=S.q.trim().toLowerCase();let out="",n=0;
+ CATS.forEach(c=>{if(S.cat!=="all"&&S.cat!=="star"&&S.cat!==c.id)return;
+  const it=c.i.filter(a=>(S.cat!=="star"||S.star.includes(a[0]))&&(!q||(a[0]+" "+a[1]+" "+c.t).toLowerCase().includes(q)));if(!it.length)return;n+=it.length;
+  out+='<div class="panel"><div class="eyebrow">'+E(c.t)+'</div>'+(c.n?'<p class="muted" style="margin:8px 0 4px;font-size:13px">'+E(c.n)+'</p>':'')+it.map(a=>{const k=KEY[a[3]],on=S.star.includes(a[0]);
+  return'<div class="row ap-row"><div><a class="link" href="'+E(a[2])+'" target="_blank" rel="noopener">'+E(a[0])+' ↗</a><small>'+E(a[1])+'</small></div><div class="actions"><span class="apb" style="--c:'+k[1]+'">'+k[0]+'</span>'+(a[4]?'<button class="secondary" data-ax="try" data-d="'+a[4]+'">Try it</button>':'')+'<button class="secondary" data-ax="star" data-n="'+E(a[0])+'" aria-label="Star '+E(a[0])+'" aria-pressed="'+on+'">'+(on?'★':'☆')+'</button></div></div>'}).join("")+'</div>'});
+ return out||'<div class="panel"><p class="muted">No APIs match your search.</p></div>'}
+function demoHTML(){
+ const d=DEMOS[S.demo];
+ return'<div class="panel"><div class="eyebrow">Live playground</div><h2 style="margin-top:8px">Try an API right here</h2><p class="muted" style="font-size:13px">These run directly in your browser. No API key needed.</p><div class="tabs">'+Object.keys(DEMOS).map(k=>'<button class="tab'+(k===S.demo?' on':'')+'" data-ax="demo" data-d="'+k+'">'+DEMOS[k].l+'</button>').join("")+'</div><form id="apForm" class="ap-in">'+(d.noin?'':'<input type="text" id="apIn" value="'+E(d.d)+'" placeholder="'+E(d.ph)+'" autocomplete="off" aria-label="'+E(d.l)+' input">')+'<button class="primary" type="submit">Run</button></form><p class="status" style="margin-top:10px">Powered by '+E(d.api)+'</p><div class="ap-out" id="apOut" aria-live="polite"></div></div>'}
+async function run(){
+ const d=DEMOS[S.demo],o=$i("apOut"),inp=$i("apIn"),v=inp?inp.value.trim():"";if(!o)return;if(!d.noin&&!v){o.innerHTML='<p class="muted">Type something first.</p>';return}
+ const k=S.demo;o.innerHTML='<p class="muted">Loading…</p>';
+ try{const h=await d.run(v);if(k===S.demo&&$i("apOut"))$i("apOut").innerHTML=h}
+ catch(e){if(k===S.demo&&$i("apOut"))$i("apOut").innerHTML='<p class="muted">Could not get a result. Check the spelling or your connection and try again.</p>'}}
+function bindDemo(){const f=$i("apForm");if(f)f.onsubmit=e=>{e.preventDefault();run()}}
+function renderApis(app){
+ const chips=[["all","All"],["star","★ Starred"]].concat(CATS.map(c=>[c.id,c.t.split(" &")[0]]));
+ app.innerHTML='<div class="ap"><div class="topline"><div><div class="eyebrow">Lumen workspace</div><div class="status">Free APIs you can build with</div></div></div><h1>API Library</h1><p class="sub">A curated collection of free APIs for Lumen. Open the docs, star your favourites, or try the key-free ones live below.</p>'
+ +'<div id="apDemoBox">'+demoHTML()+'</div>'
+ +'<div class="panel"><input type="text" id="apSearch" class="ap-search" placeholder="Search APIs…" value="'+E(S.q)+'" autocomplete="off" aria-label="Search APIs"><div class="tabs" id="apChips" style="margin:12px 0 0;padding-bottom:4px">'+chips.map(c=>'<button class="tab'+(c[0]===S.cat?' on':'')+'" data-ax="cat" data-c="'+c[0]+'">'+E(c[1])+'</button>').join("")+'</div></div>'
+ +'<div id="apList">'+list()+'</div></div>';
+ bindDemo();
+ app.onclick=e=>{const b=e.target.closest("[data-ax]");if(!b)return;const a=b.dataset.ax;
+  if(a==="cat"){S.cat=b.dataset.c;app.querySelectorAll("#apChips .tab").forEach(x=>x.classList.toggle("on",x.dataset.c===S.cat));$i("apList").innerHTML=list()}
+  else if(a==="star"){const n=b.dataset.n,k=S.star.indexOf(n);k>-1?S.star.splice(k,1):S.star.push(n);ls.set("lumen_api_star",S.star);$i("apList").innerHTML=list()}
+  else if(a==="demo"||a==="try"){S.demo=b.dataset.d;$i("apDemoBox").innerHTML=demoHTML();bindDemo();if(a==="try"){$i("apDemoBox").scrollIntoView({behavior:"smooth",block:"start"});run()}}};
+ app.oninput=e=>{if(e.target.id==="apSearch"){S.q=e.target.value;$i("apList").innerHTML=list()}};
+}
+const _r=render;
+render=function(){
+ const app=$i("app");
+ if(view==="apis"){app.onclick=app.oninput=app.onchange=null;clTeardown();document.body.classList.remove("labmode");
+  document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===view));
+  renderApis(app);$i("main").scrollTop=0;return}
+ _r()};
+const css=document.createElement("style");
+css.textContent=".ap{animation:appear .3s ease both}.ap input[type=text]{width:100%;background:#ffffff0d;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:16px;outline:none}.ap input[type=text]:focus{border-color:var(--accent)}.ap-in{display:flex;gap:8px;flex-wrap:wrap}.ap-in input{flex:1 1 200px;width:auto!important}.ap-out{margin-top:14px;min-height:20px;overflow-wrap:anywhere}.ap-row{flex-wrap:wrap}.ap-row>div:first-child{flex:1 1 240px}.apb{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;border:1px solid var(--c);color:var(--c);background:#ffffff08;white-space:nowrap}";
+document.head.appendChild(css);
 })();
 </script>
 </body>
