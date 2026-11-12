@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <!-- Lumen · Created by Emmanuel Pobee Okpoti -->
@@ -2915,6 +2915,60 @@ render=function(){
 const css=document.createElement("style");
 css.textContent=".ap{animation:appear .3s ease both}.ap input[type=text]{width:100%;background:#ffffff0d;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:16px;outline:none}.ap input[type=text]:focus{border-color:var(--accent)}.ap-in{display:flex;gap:8px;flex-wrap:wrap}.ap-in input{flex:1 1 200px;width:auto!important}.ap-out{margin-top:14px;min-height:20px;overflow-wrap:anywhere}.ap-row{flex-wrap:wrap}.ap-row>div:first-child{flex:1 1 240px}.apb{font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;border:1px solid var(--c);color:var(--c);background:#ffffff08;white-space:nowrap}";
 document.head.appendChild(css);
+})();
+</script>
+<!-- Lumen · Self-writing placeholders (typewriter effect) -->
+<style id="lumen-typewriter-css">
+.tw-on::placeholder{color:var(--accent);opacity:.72;font-weight:500;letter-spacing:.01em}
+.tw-on:focus::placeholder{opacity:.5}
+</style>
+<script id="lumen-typewriter-js">
+(()=>{
+"use strict";
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SETS={
+search:["Ask anything or search the web…","How does Starlink work?","Ghana technology news","Why is the sky blue?","Solar system","HTML and CSS basics"],
+research:["Research anything in depth…","How do solar panels turn light into power?","The history of the internet in Africa","What causes earthquakes?","Compare HTML, CSS and JavaScript"],
+din:["Look up an English word…","resilience","ephemeral","serendipity","ubiquitous"],
+apSearch:["Search APIs…","weather","currency exchange rates","free, no key needed","maps and locations"],
+tin:["Add a task…","Finish today’s HTML lesson","Build a page in Code Lab","Save an answer to a project"]
+};
+const LABELS={din:"Look up an English word",tin:"Add a task"};
+const lines=el=>{
+if(el.id==="query"){const v=document.querySelector("[data-view].on");return v&&v.dataset.view==="research"?SETS.research:SETS.search}
+return SETS[el.id]
+};
+const bound=new WeakSet();
+function start(el){
+if(bound.has(el))return;
+const L0=lines(el);if(!L0)return;
+bound.add(el);
+if(!el.getAttribute("aria-label")&&LABELS[el.id])el.setAttribute("aria-label",LABELS[el.id]);
+el.classList.add("tw-on");
+if(RM){el.placeholder=L0[0];return}
+let i=0,p=0,dir=1,caret=true,txt="",t=0,b=0;
+const paint=()=>{el.placeholder=txt+(caret&&document.activeElement!==el?"|":"")};
+const tick=()=>{
+if(!el.isConnected){clearInterval(b);return}
+if(document.hidden||el.value){t=setTimeout(tick,700);return}
+const L=lines(el)||L0,s=L[i%L.length];
+if(dir>0){
+p++;txt=s.slice(0,p);paint();
+if(p>=s.length){dir=-1;t=setTimeout(tick,1700);return}
+t=setTimeout(tick,48+Math.random()*52)
+}else{
+p--;txt=s.slice(0,Math.max(p,0));paint();
+if(p<=0){dir=1;p=0;i++;t=setTimeout(tick,450);return}
+t=setTimeout(tick,24)
+}};
+b=setInterval(()=>{if(!el.isConnected){clearInterval(b);return}caret=!caret;paint()},530);
+paint();
+t=setTimeout(tick,500)
+}
+let q=0;
+const scan=()=>{q=0;document.querySelectorAll("#query,#din,#apSearch,#tin").forEach(start)};
+new MutationObserver(()=>{if(!q)q=requestAnimationFrame(scan)}).observe(document.body,{childList:true,subtree:true});
+scan()
 })();
 </script>
 </body>
